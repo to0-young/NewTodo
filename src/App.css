@@ -1,0 +1,14 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+html,
+#root,
+body {
+  height: 100%;
+}
+
+#root {
+  display: flex;
+}
