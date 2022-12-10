@@ -1,13 +1,10 @@
 import React from 'react';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { useTheme } from '@mui/material/styles';
-
 import "./sign-in.css"
+import {Link} from "react-router-dom";
 
 function SignIn(props) {
-  const theme = useTheme();
-  console.log(theme.palette)
   return (
     <div className="sign-in">
       <form className="sign-in__form">
@@ -16,8 +13,10 @@ function SignIn(props) {
         <label htmlFor="email"></label><br/>
         <TextField className="sign-in__password"  id="standard-basic" type="password" label="Password" variant="standard" fullWidth />
         <label htmlFor="password"></label><br/>
+        <p className="sign-in__advice">Don`t have an account, then you can <Link to="/sign_up">create one</Link></p>
         <br/>
-        <Button variant="contained" color="info">Sign in</Button>
+        <br/>
+        <Button variant="contained" color="info">log in</Button>
       </form>
     </div>
   );
