@@ -12,7 +12,7 @@ function SignUp(props) {
         <label htmlFor="Fname"></label><br/>
         <TextField  className="sign-up__last-name" id="standard-basic" label="Last name" variant="standard" fullWidth  />
         <label htmlFor="email"></label><br/>
-        <TextField className="sign-up__email" id="standard-basic" type="Email" label="Email" variant="standard"  fullWidth />
+        <TextField className="sign-up__email" id="standard-basic" type="email" label="Email" variant="standard"  fullWidth />
         <label htmlFor="email"></label><br/>
         <TextField className="sign-up__password" id="standard-basic" type="password" label="Password" variant="standard" fullWidth />
         <br/>
