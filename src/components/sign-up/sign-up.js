@@ -19,7 +19,6 @@ function SignUp(props) {
     const newFirst = Object.assign({},user, {firstName: e.target.value})
     changeUser(newFirst)
   }
-  console.log()
   const onChangeLastName = (e) => {
     const newLast = Object.assign({},user, {lastName: e.target.value})
     changeUser(newLast)
