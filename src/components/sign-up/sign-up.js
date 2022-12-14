@@ -102,6 +102,7 @@ return (
         <TextField
           helperText={error.firstName}
           error={"" !== error.firstName}
+          value={user.firstName}
           onChange={onChangeFirstName}
           className="sign-up__first-name"
           id="standard-basic"
