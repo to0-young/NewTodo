@@ -19,31 +19,43 @@ function SignUp(props) {
     password: ""
   })
 
-  const SignUpValidate = () => {
-    if (user.firstName.length < 3 ) {
-      changeError({ ...error, firstName: "Sorry your first name is too short" })
-    if (user.lastName.length < 3 ) {
-      changeError({...error, lastName: "Sorry your last name is too short" })
-    if (user.email.length < 8 ) {
-      changeError({...error, email: "Sorry your email is too short" })}
-    if (user.password.length < 1 ) {
-      changeError({...error, password: "Sorry your password is too short" })}
-    }
-      return false
-    }
-    return true
-  }
-
-
-  const onSignUp = async (e) => {
-    e.preventDefault();
-    changeError({
+  const onValidate = () => {
+    let valid = true
+    const newError = {
       firstName: "",
       lastName: "",
       email: "",
       password: ""
-    })
-    if (SignUpValidate()) {
+    }
+    if (user.firstName.length < 3 ) {
+      valid = false
+      newError.firstName = "Sorry your first name is too short"
+    }
+
+    if (user.lastName.length < 3 ) {
+      valid = false
+      newError.lastName = "Sorry your last name is too short"
+    }
+
+    if (user.email.length < 8 ) {
+      valid = false
+      newError.email = "Sorry your email is too short"
+    }
+
+    if (user.password.length < 1 ) {
+      valid = false
+      newError.password = "Sorry your password is too short"
+    }
+
+    if (!valid) {
+      changeError(newError)
+    }
+    return valid
+  }
+
+  const onSignUp = async (e) => {
+    e.preventDefault();
+    if (onValidate()) {
       await createUser()
     }
   }
@@ -83,7 +95,7 @@ function SignUp(props) {
     return createUser
   }
 
-  return (
+return (
     <div className="sign-up">
       <form onSubmit={onSignUp} className="sign-up__form">
         <h2>Sign up</h2>
