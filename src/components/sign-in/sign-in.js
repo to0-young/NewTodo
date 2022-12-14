@@ -4,11 +4,13 @@ import Button from "@mui/material/Button";
 import "./sign-in.css"
 import {Link} from "react-router-dom";
 
+
 function SignIn(props) {
   const [user, changeUser] = React.useState( {
     email: "",
     password: ""
   })
+
   const onChangeEmail = (e) => {
     const newEmail = Object.assign({},user, {email: e.target.value})
     changeUser(newEmail)
@@ -16,6 +18,17 @@ function SignIn(props) {
   const onChangePassword = (e) => {
     const newPassword = Object.assign({},user, {password: e.target.value})
     changeUser(newPassword)
+  }
+
+  const createUser = async () => {
+    const res = await fetch('http://localhost:3000/', {
+      method: 'POST',
+      body: JSON.stringify({
+        email: 'opapapa@gmail.com',
+      })
+    })
+    const data = await res.json()
+    console.log(data)
   }
 
   return (
