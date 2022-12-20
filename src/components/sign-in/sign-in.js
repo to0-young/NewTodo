@@ -22,18 +22,18 @@ function SignIn(props) {
       email: "",
       password: ""
     }
-  if (user.email.length < 8 ) {
-    valid = false
-    appError.email = "Sorry your email is too short"
-  }
-  if (user.password.length < 1 ) {
-    valid = false
-    appError.password = "Sorry your password is too short"
-  }
-  if(!valid) {
-    changeError(appError)
-  }
-  return valid
+    if (user.email.length < 8 ) {
+      valid = false
+      appError.email = "Sorry your email is too short"
+    }
+    if (user.password.length < 1 ) {
+      valid = false
+      appError.password = "Sorry your password is too short"
+    }
+    if(!valid) {
+      changeError(appError)
+    }
+    return valid
   }
   const onSignIn = async (e) => {
     e.preventDefault()
@@ -75,8 +75,9 @@ function SignIn(props) {
          type="Email"
          label="Email"
          variant="standard"
-         fullWidth />
-         <br/>
+         fullWidth
+        />
+        <br/>
         <TextField
           helperText={error.password}
           error={"" !== error.password}

@@ -8,14 +8,14 @@ function SignUp(props) {
   const [user, changeUser] = React.useState({
     firstName: "",
     lastName: "",
-    email : "",
+    email: "",
     password: ""
   })
 
-  const [error,changeError] = React.useState({
+  const [error, changeError] = React.useState({
     firstName: "",
     lastName: "",
-    email : "",
+    email: "",
     password: ""
   })
 
@@ -27,22 +27,22 @@ function SignUp(props) {
       email: "",
       password: ""
     }
-    if (user.firstName.length < 3 ) {
+    if (user.firstName.length < 3) {
       valid = false
       newError.firstName = "Sorry your first name is too short"
     }
 
-    if (user.lastName.length < 3 ) {
+    if (user.lastName.length < 3) {
       valid = false
       newError.lastName = "Sorry your last name is too short"
     }
 
-    if (user.email.length < 8 ) {
+    if (user.email.length < 8) {
       valid = false
       newError.email = "Sorry your email is too short"
     }
 
-    if (user.password.length < 1 ) {
+    if (user.password.length < 1) {
       valid = false
       newError.password = "Sorry your password is too short"
     }
@@ -55,34 +55,34 @@ function SignUp(props) {
 
   const onSignUp = async (e) => {
     e.preventDefault();
-    if (onValidate()) {
+    // if (onValidate()) {
       await createUser()
-    }
+    // }
   }
 
   const onChangeFirstName = (e) => {
-    const newFirst = Object.assign({},user, {firstName: e.target.value})
+    const newFirst = Object.assign({}, user, {firstName: e.target.value})
     changeUser(newFirst)
   }
   const onChangeLastName = (e) => {
-    const newLast = Object.assign({},user, {lastName: e.target.value})
+    const newLast = Object.assign({}, user, {lastName: e.target.value})
     changeUser(newLast)
   }
   const onChangeEmail = (e) => {
-    changeUser( {
+    changeUser({
       ...user,
       email: e.target.value
     })
   }
   const onChangePassword = (e) => {
-    changeUser( {
+    changeUser({
       ...user,
       password: e.target.value
     })
   }
 
   const createUser = async () => {
-    const res = await fetch('http://localhost:3001/users', {
+    const res = await fetch('http://localhost:3000/api/v1/users', {
       method: 'POST',
       body: JSON.stringify({
         email: user.email,
@@ -91,11 +91,25 @@ function SignUp(props) {
         last_name: user.lastName
       })
     })
-    const createUser = await res.json()
-    return createUser
+    const json = await res.json()
+
+    if (res.ok) {
+      //  todo redirect  login page
+    } else {
+      if (json.errors) {
+        const firstError = json.errors.first_name[0]
+        const lastError = json.errors.last_name[0]
+        const emailError = json.errors.email[0]
+        const passwordError = json.errors.password[0]
+        changeError({firstName: firstError, lastName: lastError, password: passwordError, email: emailError})
+
+      }
+    }
+
+    return json
   }
 
-return (
+  return (
     <div className="sign-up">
       <form onSubmit={onSignUp} className="sign-up__form">
         <h2>Sign up</h2>
@@ -112,48 +126,58 @@ return (
         />
         <br/>
         <TextField
-            helperText={error.lastName}
-            error={"" !== error.lastName}
-            value={user.lastName}
-            onChange={onChangeLastName}
-            className="sign-up__last-name"
-            id="standard-basic"
-            label="Last name"
-            variant="standard"
-            fullWidth/>
+          helperText={error.lastName}
+          error={"" !== error.lastName}
+          value={user.lastName}
+          onChange={onChangeLastName}
+          className="sign-up__last-name"
+          id="standard-basic"
+          label="Last name"
+          variant="standard"
+          fullWidth
+        />
         <br/>
         <TextField
-            helperText={error.email}
-            error={"" !== error.email}
-            value={user.email}
-            onChange={onChangeEmail}
-            className="sign-up__email"
-            id="standard-basic"
-            type="email"
-            label="Email"
-            variant="standard"
-            fullWidth />
+          helperText={error.email}
+          error={"" !== error.email}
+          value={user.email}
+          onChange={onChangeEmail}
+          className="sign-up__email"
+          id="standard-basic"
+          type="email"
+          label="Email"
+          variant="standard"
+          fullWidth
+        />
+
         <br/>
+
         <TextField
-            helperText={error.password}
-            error={"" !== error.password}
-            value={user.password}
-            onChange={onChangePassword}
-            className="sign-up__password"
-            id="standard-basic"
-            type="password"
-            label="Password"
-            variant="standard"
-            fullWidth />
+          helperText={error.password}
+          error={"" !== error.password}
+          value={user.password}
+          onChange={onChangePassword}
+          className="sign-up__password"
+          id="standard-basic"
+          type="password"
+          label="Password"
+          variant="standard"
+          fullWidth
+        />
+
         <br/>
-        <p className="sign-up__advice">Already have an account, then <Link to="/">log in</Link></p>
+
+        <p className="sign-up__advice">
+          Already have an account, then <Link to="/">log in</Link></p>
         <br/>
-        <Button type={'submit'}  variant="contained">create</Button>
+
+        <Button type={'submit'} variant="contained">create</Button>
+
         <br/>
+
       </form>
     </div>
   );
 }
 
 export default SignUp;
-
