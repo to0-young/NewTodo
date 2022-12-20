@@ -37,9 +37,9 @@ function SignIn(props) {
   }
   const onSignIn = async (e) => {
     e.preventDefault()
-    if (onValidate()) {
+    // if (onValidate()) {
       await createUser()
-    }
+    // }
   }
   const onChangeEmail = (e) => {
     const newEmail = Object.assign({},user, {email: e.target.value})
@@ -57,14 +57,25 @@ function SignIn(props) {
         password: user.password
       })
     })
-    const loginUser = await res.json()
-    return loginUser
+    const json = await res.json()
+
+      // if (res.ok) {
+      //
+      // } else {
+      //   if (json.errors) {
+      //     const emailError = json.errors.email[0],
+      //       passwordError = json.errors.password[0]
+      //       changeError ({email: emailError, passwordError: passwordError})
+      //   }
+      // }
+    return json
   }
 
   return (
     <div className="sign-in">
       <form onSubmit={onSignIn} className="sign-in__form">
         <h2>Sign in</h2>
+
         <TextField
          helperText={error.email}
          error={"" !== error.email}
@@ -77,7 +88,10 @@ function SignIn(props) {
          variant="standard"
          fullWidth
         />
-        <br/>
+
+        <br
+        />
+
         <TextField
           helperText={error.password}
           error={"" !== error.password}
@@ -88,9 +102,13 @@ function SignIn(props) {
           type="password"
           label="Password"
           variant="standard"
-          fullWidth />
+          fullWidth
+        />
+
         <p className="sign-in__advice">Don`t have an account, then you can <Link to="/sign_up">create one</Link></p>
+
         <br/>
+
         <br/>
         <Button variant="contained" color="info">log in</Button>
       </form>

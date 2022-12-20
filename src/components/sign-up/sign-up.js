@@ -56,7 +56,7 @@ function SignUp(props) {
   const onSignUp = async (e) => {
     e.preventDefault();
     // if (onValidate()) {
-      await createUser()
+    await createUser()
     // }
   }
 
@@ -82,13 +82,13 @@ function SignUp(props) {
   }
 
   const createUser = async () => {
-    const res = await fetch('http://localhost:3000/api/v1/users', {
+    const res = await fetch('http://localhost:3001/api/v1/users', {
       method: 'POST',
       body: JSON.stringify({
-        email: user.email,
-        password: user.password,
         first_name: user.firstName,
-        last_name: user.lastName
+        last_name: user.lastName,
+        email: user.email,
+        password: user.password
       })
     })
     const json = await res.json()
@@ -97,15 +97,13 @@ function SignUp(props) {
       //  todo redirect  login page
     } else {
       if (json.errors) {
-        const firstError = json.errors.first_name[0]
-        const lastError = json.errors.last_name[0]
-        const emailError = json.errors.email[0]
-        const passwordError = json.errors.password[0]
+        const firstError = json.errors.first_name[0],
+              lastError = json.errors.last_name[0],
+              emailError = json.errors.email[0],
+              passwordError = json.errors.password[0]
         changeError({firstName: firstError, lastName: lastError, password: passwordError, email: emailError})
-
       }
     }
-
     return json
   }
 
@@ -124,7 +122,9 @@ function SignUp(props) {
           variant="standard"
           fullWidth
         />
+
         <br/>
+
         <TextField
           helperText={error.lastName}
           error={"" !== error.lastName}
@@ -136,7 +136,9 @@ function SignUp(props) {
           variant="standard"
           fullWidth
         />
+
         <br/>
+
         <TextField
           helperText={error.email}
           error={"" !== error.email}
