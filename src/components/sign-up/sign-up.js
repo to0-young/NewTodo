@@ -6,10 +6,10 @@ import {Link} from "react-router-dom";
 
 function SignUp(props) {
   const [user, changeUser] = React.useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: ""
+    firstName: "igor",
+    lastName: "franklyn",
+    email: "user1@example.com",
+    password: "12345"
   })
 
   const [error, changeError] = React.useState({
@@ -18,6 +18,7 @@ function SignUp(props) {
     email: "",
     password: ""
   })
+
 
   const onValidate = () => {
     let valid = true
@@ -55,9 +56,9 @@ function SignUp(props) {
 
   const onSignUp = async (e) => {
     e.preventDefault();
-    // if (onValidate()) {
+    if (onValidate()) {
     await createUser()
-    // }
+    }
   }
 
   const onChangeFirstName = (e) => {
@@ -65,8 +66,9 @@ function SignUp(props) {
     changeUser(newFirst)
   }
   const onChangeLastName = (e) => {
-    const newLast = Object.assign({}, user, {lastName: e.target.value})
-    changeUser(newLast)
+    changeUser({
+      ... user,
+      lastName: e.target.value})
   }
   const onChangeEmail = (e) => {
     changeUser({
@@ -82,8 +84,11 @@ function SignUp(props) {
   }
 
   const createUser = async () => {
-    const res = await fetch('http://localhost:3001/api/v1/users', {
+    const res = await fetch('http://localhost:3000/api/v1/users', {
       method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'},
       body: JSON.stringify({
         first_name: user.firstName,
         last_name: user.lastName,
@@ -111,6 +116,7 @@ function SignUp(props) {
     <div className="sign-up">
       <form onSubmit={onSignUp} className="sign-up__form">
         <h2>Sign up</h2>
+
         <TextField
           helperText={error.firstName}
           error={"" !== error.firstName}

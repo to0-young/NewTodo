@@ -3,18 +3,20 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "./sign-in.css"
 import {Link} from "react-router-dom";
-
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 function SignIn(props) {
   const [user, changeUser] = React.useState( {
-    email: "",
-    password: ""
+    email: "user1@example.com",
+    password: "111111"
   })
 
   const [error, changeError] = React.useState({
     email: "",
     password: ""
   })
+  const [errorMsg, setErrorMsg] = React.useState()
 
   const onValidate = () => {
     let valid = true
@@ -37,9 +39,9 @@ function SignIn(props) {
   }
   const onSignIn = async (e) => {
     e.preventDefault()
-    // if (onValidate()) {
-      await createUser()
-    // }
+    if (onValidate()) {
+    await createSignUp()
+    }
   }
   const onChangeEmail = (e) => {
     const newEmail = Object.assign({},user, {email: e.target.value})
@@ -49,25 +51,19 @@ function SignIn(props) {
     const newPassword = Object.assign({},user, {password: e.target.value})
     changeUser(newPassword)
   }
-  const createUser = async () => {
-    const res = await fetch('http://localhost:3000/', {
+  const createSignUp = async () => {
+    const res = await fetch('http://localhost:3000/api/v1/sessions', {
       method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'},
       body: JSON.stringify({
         email: user.email,
         password: user.password
       })
     })
     const json = await res.json()
-
-      // if (res.ok) {
-      //
-      // } else {
-      //   if (json.errors) {
-      //     const emailError = json.errors.email[0],
-      //       passwordError = json.errors.password[0]
-      //       changeError ({email: emailError, passwordError: passwordError})
-      //   }
-      // }
+    setErrorMsg(json.message)
     return json
   }
 
@@ -89,8 +85,7 @@ function SignIn(props) {
          fullWidth
         />
 
-        <br
-        />
+        <br/>
 
         <TextField
           helperText={error.password}
@@ -105,12 +100,19 @@ function SignIn(props) {
           fullWidth
         />
 
+        <br/>
         <p className="sign-in__advice">Don`t have an account, then you can <Link to="/sign_up">create one</Link></p>
-
         <br/>
 
+
+        {errorMsg ? (
+          <Stack sx={{ width: '100%' }} spacing={2}>
+            <Alert severity="error">{errorMsg}</Alert>
+          </Stack>
+        ) : null}
+
         <br/>
-        <Button variant="contained" color="info">log in</Button>
+        <Button type={"submit"} variant="contained" color="info">log in</Button>
       </form>
     </div>
   );

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/NewTodo.iml" filepath="$PROJECT_DIR$/.idea/NewTodo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../TodoBackend/.idea/TodoBackend.iml" filepath="$PROJECT_DIR$/../TodoBackend/.idea/TodoBackend.iml" />
     </modules>
   </component>
 </project>
