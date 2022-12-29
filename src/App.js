@@ -1,35 +1,55 @@
-import logo from './logo.svg';
-import {BrowserRouter as Router, Switch, Route,} from "react-router-dom";
-import SignUp from "./components/sign-up/sign-up"
+import {BrowserRouter as Router, Switch, Redirect} from "react-router-dom";
 import './App.css'
-import SignIn from "./components/sign-in/sign-in";
-import React from "react";
+import React, {useEffect} from "react";
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import '@fontsource/roboto/700.css';
+import UserRoutes from "./services/routing/user-routes";
+import GuestRoutes from "./services/routing/guest-routes";
+import {useDispatch, useSelector} from "react-redux";
 
-function App() {
+function App(props) {
+  const dispatch = useDispatch()
+  const item = useSelector(state => state)
+
+  const addDIS = (item,index) => {
+    item({
+      type: "GET_SESSION",
+      payload: ""
+    })
+  }
+
+  useEffect(() => {
+    console.log(item)
+  }, [])
+
+  const fetchSessions = async () => {
+    const getSessions = await fetch('http://localhost:3000/api/v1/sessions', {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+
+    const json = await getSessions.json()
+    fetchSessions()
+    return json
+  }
+
+  const isGuest = true
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
-          <SignIn/>
-        </Route>
-
-        <Route path="/sign_up">
-          <SignUp/>
-        </Route>
-
+        {isGuest ? <GuestRoutes/> : <UserRoutes/>}
       </Switch>
     </Router>
   )
-
-
-  // <SignIn/>;
-  // <SignUp/>;
 }
 
 export default App;
+
 
 

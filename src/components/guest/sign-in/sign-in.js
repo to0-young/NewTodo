@@ -8,8 +8,8 @@ import Stack from '@mui/material/Stack';
 
 function SignIn(props) {
   const [user, changeUser] = React.useState( {
-    email: "user1@example.com",
-    password: "111111"
+    email: "user_0@gmail.com",
+    password: "123"
   })
 
   const [error, changeError] = React.useState({
@@ -44,12 +44,16 @@ function SignIn(props) {
     }
   }
   const onChangeEmail = (e) => {
-    const newEmail = Object.assign({},user, {email: e.target.value})
-    changeUser(newEmail)
+    changeUser({
+      ...user,
+      email: e.target.value
+    })
   }
   const onChangePassword = (e) => {
-    const newPassword = Object.assign({},user, {password: e.target.value})
-    changeUser(newPassword)
+    changeUser({
+      ...user,
+      password: e.target.value
+    })
   }
   const createSignUp = async () => {
     const res = await fetch('http://localhost:3000/api/v1/sessions', {
