@@ -24,6 +24,7 @@ function SignIn(props) {
       email: "",
       password: ""
     }
+
     if (user.email.length < 8 ) {
       valid = false
       appError.email = "Sorry your email is too short"
