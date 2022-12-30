@@ -43,15 +43,14 @@ function App(props) {
   }
 
   const isGuest = !session
-  console.log(fetched)
-
-
-  return (
-    <Stack sx={{ color: 'grey.500', width: '100%' }} spacing={2}>
-      <CircularProgress style={{ margin: 'auto'}} color="inherit" />
-    </Stack>
-  )
-
+  
+  if (fetched === false) {
+    return (
+      <Stack sx={{color: 'grey.500', width: '100%'}} spacing={2}>
+        {<CircularProgress style={{margin: 'auto'}} color="inherit"/>}
+      </Stack>
+    )
+  }
 
   return (
       <Router>
