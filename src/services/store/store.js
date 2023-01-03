@@ -16,6 +16,8 @@ const defaultState = {
    switch (action.type) {
      case actionTypes.getSessionSuccess:
        return { ...state, fetched: true, loading: false, details: action.payload }
+     case actionTypes.getSessionError:
+       return { ...state, fetched: true, loading: false, details: null }
      default:
        return state
    }

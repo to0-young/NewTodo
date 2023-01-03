@@ -19,8 +19,13 @@ function App(props) {
   const session = useSelector((state) => state.session.details)
   const fetched = useSelector((state) => state.session.fetched)
 
-  const getSessionAction = payload => {
+  const getSessionSuccess = payload => {
     const action = { type: actionTypes.getSessionSuccess, payload }
+    return dispatch(action)
+  }
+
+  const getSessionError = () => {
+    const action = { type: actionTypes.getSessionError }
     return dispatch(action)
   }
 
@@ -38,12 +43,12 @@ function App(props) {
     })
 
     const json = await getSessions.json()
-    getSessionAction(json)
-    return json
+    if (getSessions.status === 401) return getSessionError()
+    getSessionSuccess(json)
   }
 
   const isGuest = !session
-  
+
   if (fetched === false) {
     return (
       <Stack sx={{color: 'grey.500', width: '100%'}} spacing={2}>
@@ -54,9 +59,7 @@ function App(props) {
 
   return (
       <Router>
-        <Switch>
-          {isGuest ? <GuestRoutes/> : <UserRoutes/>}
-        </Switch>
+        {isGuest ? <GuestRoutes/> : <UserRoutes/>}
       </Router>
     )
 }

@@ -1,12 +1,12 @@
 import React from 'react';
-import {Route} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import SignIn from "../../components/guest/sign-in/sign-in";
 import SignUp from "../../components/guest/sign-up/sign-up";
 import { Redirect } from 'react-router-dom';
 
 const GuestRoutes = () => {
   return (
-    <>
+    <Switch>
       <Route exact path="/login">
         <SignIn/>
       </Route>
@@ -15,8 +15,8 @@ const GuestRoutes = () => {
         <SignUp/>
       </Route>
 
-      <Redirect to="/login"/>
-    </>
+      <Redirect to="login"/>
+    </Switch>
   )
 }
 export default GuestRoutes;
