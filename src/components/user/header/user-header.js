@@ -17,7 +17,7 @@ function UserHeader(props) {
         </div>
 
         <div className="header__section_right">
-          <div className="header__item header__button"><a href="#">Log-out</a></div>
+          <div className="header__item header__button"><a href="#">Log</a></div>
           <div className="header__item header__button"><a href="#">Log-out</a></div>
         </div>
       </div>
