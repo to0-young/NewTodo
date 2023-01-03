@@ -1,0 +1,47 @@
+
+a {
+    color: aliceblue;
+    text-decoration: none;
+}
+
+.header {
+    display: flex;
+    padding: 15px;
+    background: lightskyblue;
+    color: white;
+    font-family: Ubuntu;
+}
+
+.header__section_left {
+    display: flex;
+}
+
+.header__section {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header__section_right {
+    display: flex;
+}
+
+.header__item {
+    padding: 10px 15px;
+    font-size: 20px;
+    margin-left: 5px;
+}
+
+.header__item:hover{
+    background-color: darkgray;
+    border-radius: 4px;
+}
+
+.header__logo {
+    font-weight: bold;
+}
+
+.header__button {
+    cursor: pointer;
+}
