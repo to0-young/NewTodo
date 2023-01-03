@@ -11,5 +11,5 @@ body {
 }
 
 #root {
-  display: block;
+  display: flex;
 }
