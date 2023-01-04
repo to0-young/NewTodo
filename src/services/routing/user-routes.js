@@ -10,11 +10,11 @@ const UserRoutes = () => {
         <UserHeader />
 
         <Switch>
-          <Route path="#">
+          <Route path="/dashboard">
             <Dashboard/>
           </Route>
 
-          <Redirect to="#"/>
+          <Redirect to="/dashboard"/>
         </Switch>
     </div>
   )

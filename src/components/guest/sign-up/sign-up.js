@@ -19,7 +19,6 @@ function SignUp(props) {
     password: ""
   })
 
-
   const onValidate = () => {
     let valid = true
     const newError = {
@@ -57,7 +56,7 @@ function SignUp(props) {
   const onSignUp = async (e) => {
     e.preventDefault();
     if (onValidate()) {
-    await createUser()
+      await createUser()
     }
   }
 
@@ -68,7 +67,8 @@ function SignUp(props) {
   const onChangeLastName = (e) => {
     changeUser({
       ... user,
-      lastName: e.target.value})
+      lastName: e.target.value
+    })
   }
   const onChangeEmail = (e) => {
     changeUser({
@@ -87,8 +87,7 @@ function SignUp(props) {
     const res = await fetch('http://localhost:3000/api/v1/users', {
       method: 'POST',
       credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         first_name: user.firstName,
         last_name: user.lastName,
@@ -99,7 +98,7 @@ function SignUp(props) {
     const json = await res.json()
 
     if (res.ok) {
-      //  todo redirect  login page
+      // TODO redirect login page
     } else {
       if (json.errors) {
         const firstError = json.errors.first_name[0],

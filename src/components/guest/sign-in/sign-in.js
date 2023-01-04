@@ -2,11 +2,15 @@ import React from 'react';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "./sign-in.css"
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
+import {connect} from "react-redux";
+import actionCreator from "../../../services/store/action-creator";
 
 function SignIn(props) {
+  const history = useHistory()
+
   const [user, changeUser] = React.useState( {
     email: "user_0@gmail.com",
     password: "123"
@@ -41,7 +45,7 @@ function SignIn(props) {
   const onSignIn = async (e) => {
     e.preventDefault()
     if (onValidate()) {
-    await createSignUp()
+    await onLogIn()
     }
   }
   const onChangeEmail = (e) => {
@@ -56,19 +60,25 @@ function SignIn(props) {
       password: e.target.value
     })
   }
-  const createSignUp = async () => {
+
+  const onLogIn = async () => {
     const res = await fetch('http://localhost:3000/api/v1/sessions', {
       method: 'POST',
       credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         email: user.email,
         password: user.password
       })
     })
+
     const json = await res.json()
-    setErrorMsg(json.message)
+    if (res.ok) {
+      props.getSessionSuccess(json)
+      history.push("/dashboard")
+    } else {
+      setErrorMsg(json.message)
+    }
     return json
   }
 
@@ -109,7 +119,6 @@ function SignIn(props) {
         <p className="sign-in__advice">Don`t have an account, then you can <Link to="/sign_up">create one</Link></p>
         <br/>
 
-
         {errorMsg ? (
           <Stack sx={{ width: '100%' }} spacing={2}>
             <Alert severity="error">{errorMsg}</Alert>
@@ -123,5 +132,5 @@ function SignIn(props) {
   );
 }
 
-
-export default SignIn;
+const ConnectedSignIn = connect(null, actionCreator)(SignIn);
+export default ConnectedSignIn
