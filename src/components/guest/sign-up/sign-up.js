@@ -105,7 +105,12 @@ function SignUp(props) {
               lastError = json.errors.last_name[0],
               emailError = json.errors.email[0],
               passwordError = json.errors.password[0]
-        changeError({firstName: firstError, lastName: lastError, password: passwordError, email: emailError})
+        changeError({
+          firstName: firstError,
+          lastName: lastError,
+          password: passwordError,
+          email: emailError
+        })
       }
     }
     return json

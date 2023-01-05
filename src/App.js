@@ -33,7 +33,6 @@ function App(props) {
 
     const json = await getSessions.json()
     if (getSessions.status === 401) return props.getSessionError()
-    // getSessionSuccess(json)
     props.getSessionSuccess(json)
   }
 

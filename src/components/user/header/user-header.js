@@ -2,18 +2,11 @@ import React from 'react';
 import { useHistory } from 'react-router-dom'
 import './user-header.css'
 import Button from "@mui/material/Button";
-import actionTypes from "../../../services/store/action-types";
-import {useDispatch} from "react-redux";
+import {connect} from "react-redux";
+import actionCreator from "../../../services/store/action-creator";
 
 function UserHeader(props) {
   const history = useHistory()
-  const dispatch = useDispatch()
-
-  // TODO move to action creators
-  const deleteSessionSuccess = () => {
-    const action = { type: actionTypes.deleteSessionSuccess }
-    return dispatch(action)
-  }
 
   const onLogOut = async () => {
     const res = await fetch('http://localhost:3000/api/v1/sessions', {
@@ -21,10 +14,9 @@ function UserHeader(props) {
       credentials: 'include',
       headers: {'Content-Type': 'application/json'},
     })
-
     const json = await res.json()
     if (res.ok) {
-      deleteSessionSuccess()
+      props.deleteSessionSuccess()
       history.push('/login')
     }
     return json
@@ -45,5 +37,5 @@ function UserHeader(props) {
     </div>
   );
 }
-
-export default UserHeader;
+const ConnectedUserHeader = connect(null, actionCreator)(UserHeader);
+export default ConnectedUserHeader;
