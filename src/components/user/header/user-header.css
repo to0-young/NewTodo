@@ -13,16 +13,20 @@ a {
     font-family: Ubuntu;
 }
 
+.header__section {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+
 .header__section_left {
     display: flex;
     width: 100%;
 }
 
-
-.header__section {
-    display: flex;
-    align-items: center;
-    width: 100%;
+.header__logo {
+    font-weight: bold;
 }
 
 .header__section_right {
@@ -40,9 +44,6 @@ a {
     border-radius: 4px;
 }
 
-.header__logo {
-    font-weight: bold;
-}
 
 .header__button {
     cursor: pointer;
