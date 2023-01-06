@@ -1,16 +1,16 @@
 import * as React from 'react';
 import './dashboard.css'
 
-
 export default function DataTable() {
   const myRows = [
-    { title: 'Посрати', desc: 'Піти посрати в туалет', priority: 1, dueDate: new Date().toDateString() },
-    { title: 'Посрати', desc: 'Піти посрати в туалет', priority: 1, dueDate: new Date().toDateString() },
+    { title: 'Training', desc: 'To train in the hall', priority: 1, dueDate: new Date().toDateString() },
+    { title: 'Vacation', desc: 'Go with friends to nature', priority: 1, dueDate: new Date().toDateString() },
+    { title: 'Vacation', desc: 'Go with friends to nature', priority: 1, dueDate: new Date().toDateString() },
   ]
 
   const myRows2 = [
-    { title: 'Посрати', desc: 'Піти посрати в туалет', priority: 1, dueDate: new Date().toDateString() },
-    { title: 'Посрати', desc: 'Піти посрати в туалет', priority: 1, dueDate: new Date().toDateString() },
+    { title: 'Cooking', desc: 'Prepare Borscht', priority: 1, dueDate: new Date().toDateString() },
+    { title: 'Dog', desc: 'Walk the dog', priority: 1, dueDate: new Date().toDateString() },
   ]
   return (
     <div className='dashboard'>

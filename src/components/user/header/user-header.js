@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import './user-header.css'
 import Button from "@mui/material/Button";
 import {connect} from "react-redux";
@@ -27,7 +27,8 @@ function UserHeader(props) {
       <div className="header__section">
         <div className="header__section_left">
           <div className="header__item header__logo">TODO</div>
-          <div className="header__item header__button"><a href="#">Dashboard</a></div>
+          <div className="header__item header__button"><Link to="/dashboard">Dashboard</Link></div>
+          <div className="header__item header__button"><Link to="/tasks/new">New Task</Link></div>
         </div>
 
         <div className="header__section_right">
