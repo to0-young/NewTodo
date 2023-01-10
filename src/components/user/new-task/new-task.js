@@ -4,10 +4,11 @@ import TextField from "@mui/material/TextField";
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import Button from "@mui/material/Button";
 
 export default function NewTask() {
   return (
-    <div>
+    <div className="new-task">
       <form className="new-task__form">
         <br/>
         <h2>New Task</h2>
@@ -50,6 +51,10 @@ export default function NewTask() {
             renderInput={(params) => <TextField {...params} />}
           />
         </LocalizationProvider>
+
+        <br/>
+        <Button type={"submit"} variant="contained" color="info">Choice</Button>
+        <br/>
       </form>
     </div>
   );
