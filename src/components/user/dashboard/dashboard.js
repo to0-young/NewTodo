@@ -1,7 +1,26 @@
 import * as React from 'react';
 import './dashboard.css'
+import {useEffect} from "react";
 
 export default function DataTable() {
+
+  useEffect(() => {
+    console.log("useEffect")
+    getTasks()
+  }, [])
+
+  const getTasks = async () => {
+    const res = await fetch('http://localhost:3000/api/v1/tasks', {
+      method: 'GET',
+      credentials: 'include',
+      headers: {'Content-Type': 'application/json'},
+    })
+
+    const json = await res.json()
+    console.log(getTasks)
+    return json
+  }
+
   const myRows = [
     { title: 'Training', desc: 'To train in the hall', priority: 1, dueDate: new Date().toDateString() },
     { title: 'Vacation', desc: 'Go with friends to nature', priority: 1, dueDate: new Date().toDateString() },

@@ -53,7 +53,7 @@ export default function NewTask() {
         </LocalizationProvider>
 
         <br/>
-        <Button type={"submit"} variant="contained" color="info">Choice</Button>
+        <Button onClick={NewTask}  variant="contained" color="info">Choice</Button>
         <br/>
       </form>
     </div>
