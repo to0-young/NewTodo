@@ -180,7 +180,7 @@ function SignUp(props) {
         <br/>
 
         <p className="sign-up__advice">
-          Already have an account, then <Link to="/">log in</Link></p>
+          Already have an account, then <Link className="sign-in_link" to="/">log in</Link></p>
         <br/>
 
         <Button type={'submit'} variant="contained">create</Button>

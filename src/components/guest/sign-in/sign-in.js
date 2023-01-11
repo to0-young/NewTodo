@@ -116,7 +116,7 @@ function SignIn(props) {
         />
 
         <br/>
-        <p className="sign-in__advice">Don`t have an account, then you can <Link to="/sign_up">create one</Link></p>
+        <p className="sign-in__advice">Don`t have an account, then you can <Link className="sign-up_link" to="/sign_up">create one</Link></p>
         <br/>
 
         {errorMsg ? (

@@ -23,13 +23,14 @@ export default function DataTable() {
 
   const myRows = [
     { title: 'Training', desc: 'To train in the hall', priority: 1, dueDate: new Date().toDateString() },
-    { title: 'Vacation', desc: 'Go with friends to nature', priority: 1, dueDate: new Date().toDateString() },
-    { title: 'Vacation', desc: 'Go with friends to nature', priority: 1, dueDate: new Date().toDateString() },
+    { title: 'Vacation', desc: 'Go with friends to nature', priority: 4, dueDate: new Date().toDateString() },
+    { title: 'Vacation', desc: 'Go with friends to nature', priority: 2, dueDate: new Date().toDateString() },
   ]
 
   const myRows2 = [
     { title: 'Cooking', desc: 'Prepare Borscht', priority: 1, dueDate: new Date().toDateString() },
-    { title: 'Dog', desc: 'Walk the dog', priority: 1, dueDate: new Date().toDateString() },
+    { title: 'Dog', desc: 'Walk the dog', priority: 2, dueDate: new Date().toDateString() },
+    { title: 'Cat', desc: 'Walk the cat', priority: 3, dueDate: new Date().toDateString() },
   ]
   return (
     <div className='dashboard'>
