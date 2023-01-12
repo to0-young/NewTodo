@@ -9,8 +9,7 @@ import '@fontsource/roboto/700.css';
 import UserRoutes from "./services/routing/user-routes";
 import GuestRoutes from "./services/routing/guest-routes";
 import { useSelector } from 'react-redux'
-import CircularProgress from '@mui/material/CircularProgress';
-import Stack from '@mui/material/Stack';
+import  Spinner from  "./components/reusable/spinner"
 import { connect } from "react-redux";
 import actionCreator from "./services/store/action-creator";
 
@@ -38,13 +37,7 @@ function App(props) {
 
   const isGuest = !session
 
-  if (fetched === false) {
-    return (
-      <Stack sx={{color: 'grey.500', width: '100%'}} spacing={2}>
-        {<CircularProgress style={{margin: 'auto'}} color="inherit"/>}
-      </Stack>
-    )
-  }
+  if (fetched === false) return <Spinner />
 
   return (
       <Router>

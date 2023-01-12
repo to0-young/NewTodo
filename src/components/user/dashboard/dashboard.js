@@ -1,11 +1,15 @@
 import * as React from 'react';
 import './dashboard.css'
 import {useEffect} from "react";
+import {connect, useSelector} from "react-redux";
+import actionCreator from "../../../services/store/action-creator";
+import Spinner from "../../reusable/spinner";
 
-export default function DataTable() {
+function Dashboard(props) {
+  const tasks = useSelector((state) => state.task.list)
+  const fetched = useSelector((state) => state.task.fetched)
 
   useEffect(() => {
-    console.log("useEffect")
     getTasks()
   }, [])
 
@@ -17,51 +21,58 @@ export default function DataTable() {
     })
 
     const json = await res.json()
-    console.log(getTasks)
+    if (res.ok) {
+      props.getTaskSuccess(json)
+    }
     return json
   }
 
   const myRows = [
-    { title: 'Training', desc: 'To train in the hall', priority: 1, dueDate: new Date().toDateString() },
-    { title: 'Vacation', desc: 'Go with friends to nature', priority: 4, dueDate: new Date().toDateString() },
-    { title: 'Vacation', desc: 'Go with friends to nature', priority: 2, dueDate: new Date().toDateString() },
+    { title: 'Training', desc: 'To train in the hall', priority: 1, dueDate: new Date().toLocaleString() },
+    { title: 'Vacation', desc: 'Go with friends to nature', priority: 4, dueDate: new Date().toLocaleString() },
+    { title: 'Vacation', desc: 'Go with friends to nature', priority: 2, dueDate: new Date().toLocaleString() },
   ]
 
-  const myRows2 = [
-    { title: 'Cooking', desc: 'Prepare Borscht', priority: 1, dueDate: new Date().toDateString() },
-    { title: 'Dog', desc: 'Walk the dog', priority: 2, dueDate: new Date().toDateString() },
-    { title: 'Cat', desc: 'Walk the cat', priority: 3, dueDate: new Date().toDateString() },
-  ]
+  if (fetched === false) return <Spinner />
+
   return (
     <div className='dashboard'>
       <table>
-        <tr>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Priority</th>
-          <th>Due date</th>
-        </tr>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Priority</th>
+            <th>Due date</th>
+          </tr>
+        </thead>
 
-        {myRows2.map((row, index) => {
-          return (
-            <tr key={index}>
-              <td>{row.title}</td>
-              <td>{row.desc}</td>
-              <td>{row.priority}</td>
-              <td>{row.dueDate}</td>
-            </tr>
-          )
-        })}
+        <tbody>
+          {tasks.map((row, index) => {
+            return (
+              <tr key={index}>
+                <td>{row.title}</td>
+                <td>{row.description}</td>
+                <td>{row.priority}</td>
+                <td>{new Date(row.due_date).toLocaleString()}</td>
+              </tr>
+            )
+          })}
+        </tbody>
       </table>
 
-      <table>
-        <tr>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Priority</th>
-          <th>Due date</th>
-        </tr>
 
+      <table>
+       <thead>
+       <tr>
+         <th>Title</th>
+         <th>Description</th>
+         <th>Priority</th>
+         <th>Due date</th>
+       </tr>
+       </thead>
+
+        <tbody>
         {myRows.map((row, index) => {
           return (
             <tr key={index}>
@@ -72,7 +83,12 @@ export default function DataTable() {
             </tr>
           )
         })}
+        </tbody>
       </table>
     </div>
   )
 }
+
+const ConnectedDashboard = connect(null, actionCreator)(Dashboard);
+export default ConnectedDashboard;
+

@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createLogger } from 'redux-logger'
 import { sessionReducer } from '././reducers/session-reducer'
+import {taskReducer} from "./reducers/task-reducer";
 
 const logger = createLogger({
   collapsed: true,
@@ -9,6 +10,7 @@ const logger = createLogger({
  const store = configureStore({
    reducer: {
      session: sessionReducer,
+     task: taskReducer
    },
    middleware: [logger]
  })

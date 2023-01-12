@@ -41,7 +41,6 @@ export default function NewTask() {
 
         <br/>
         <br/>
-        <br/>
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DateTimePicker
