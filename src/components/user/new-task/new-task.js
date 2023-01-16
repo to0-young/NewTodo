@@ -5,8 +5,13 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Button from "@mui/material/Button";
+import {useHistory} from "react-router-dom";
+import {connect} from "react-redux";
+import actionCreator from "../../../services/store/action-creator";
 
-export default function NewTask() {
+ function NewTask(props) {
+  const history = useHistory()
+
   const [task, changeTask] = React.useState( {
     title: "",
     description: "",
@@ -21,31 +26,27 @@ export default function NewTask() {
     dueDate: ""
   })
 
+  const onValidation = () => {
+    let valid = true
+    const appError = {
+      title: "",
+      priority: "",
+      dueDate: ""
+    }
 
-const onValidation = () => {
-  let valid = true
-  const appError = {
-    title: "",
-    priority: "",
-    dueDate: ""
-  }
+    if (task.title.length < 3 ) {
+      valid = false
+      appError.title = "Sorry your title is too short"
+    }
+    if (task.priority.length < 1 ) {
+      valid = false
+      appError.priority = "Sorry your priority is missing"
+    }
 
-  if (task.title.length < 3 ) {
-    valid = false
-    appError.title = "Sorry your title is too short"
-  }
-  if (task.priority.length < 1 ) {
-    valid = false
-    appError.priority = "Sorry your priority is too short"
-  }
-  if (task.dueDate) {
-    valid = false
-    appError.dueDate = "Sorry your due-Date is too short"
-  }
-  if(!valid) {
-    changeError(appError)
-  }
-  return valid
+    if(!valid) {
+      changeError(appError)
+    }
+    return valid
   }
 
   const onNewTask = async (e) => {
@@ -92,23 +93,13 @@ const onValidation = () => {
         title: task.title,
         description: task.description,
         priority: task.priority,
-        due_date: task.dueDate
+        due_date: task.dueDate,
       })
     })
 
     const json = await res.json()
     if (res.ok) {
-    } else {
-      if (json.errors) {
-        const titleError = json.errors.title[0],
-          priorityError = json.errors.priority[0],
-          due_dateError = json.errors.dueDate[0]
-        changeError({
-          title: titleError,
-          priority: priorityError,
-          due_date: due_dateError
-        })
-      }
+      history.push("/dashboard")
     }
     return json
   }
@@ -119,7 +110,9 @@ const onValidation = () => {
           <br/>
           <h2>New Task</h2>
           <br/>
+
           <TextField
+            className="title"
             value={task.title}
             error={"" !== error.title}
             helperText={error.title}
@@ -134,6 +127,7 @@ const onValidation = () => {
           <br/>
 
           <TextField
+            className="description"
             value={task.description}
             onChange={onChangeDescription}
             label="Description"
@@ -145,6 +139,7 @@ const onValidation = () => {
           <br/>
 
           <TextField
+            className="priority"
             value={task.priority}
             error={"" !== error.priority}
             helperText={error.priority}
@@ -170,9 +165,13 @@ const onValidation = () => {
 
 
           <br/>
-          <Button type={"submit"}  variant="contained" color="info">Create</Button>
+          <Button type={"submit"}  variant="contained" color="info">create</Button>
           <br/>
         </form>
       </div>
     );
 }
+
+const ConnectedNewTask = connect(null, actionCreator)(NewTask);
+export default ConnectedNewTask;
+
