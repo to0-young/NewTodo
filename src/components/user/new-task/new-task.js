@@ -11,21 +11,23 @@ export default function NewTask() {
     title: "",
     description: "",
     priority: 1,
-    dueDate: new Date(),
+    dueDate: new Date()
   })
-
 
   const [error, changeError] = React.useState({
     title: "",
     description: "",
-    priority: ""
+    priority: "",
+    dueDate: ""
   })
+
 
 const onValidation = () => {
   let valid = true
   const appError = {
     title: "",
-    priority: ""
+    priority: "",
+    dueDate: ""
   }
 
   if (task.title.length < 3 ) {
@@ -35,6 +37,10 @@ const onValidation = () => {
   if (task.priority.length < 1 ) {
     valid = false
     appError.priority = "Sorry your priority is too short"
+  }
+  if (task.dueDate) {
+    valid = false
+    appError.dueDate = "Sorry your due-Date is too short"
   }
   if(!valid) {
     changeError(appError)
@@ -89,8 +95,22 @@ const onValidation = () => {
         due_date: task.dueDate
       })
     })
+
     const json = await res.json()
-    console.log(json)
+    if (res.ok) {
+    } else {
+      if (json.errors) {
+        const titleError = json.errors.title[0],
+          priorityError = json.errors.priority[0],
+          due_dateError = json.errors.dueDate[0]
+        changeError({
+          title: titleError,
+          priority: priorityError,
+          due_date: due_dateError
+        })
+      }
+    }
+    return json
   }
 
     return (
@@ -101,10 +121,10 @@ const onValidation = () => {
           <br/>
           <TextField
             value={task.title}
-            helperText={error.title}
             error={"" !== error.title}
-            helperText={task.title}
+            helperText={error.title}
             onChange={onChangeTitle}
+            type="string"
             label="Title"
             variant="standard"
             fullWidth
@@ -134,7 +154,6 @@ const onValidation = () => {
             variant="standard"
             fullWidth
           />
-
           <br/>
           <br/>
 
@@ -143,10 +162,12 @@ const onValidation = () => {
               label="Due date"
               onChange={onChangeDate}
               value={task.dueDate}
+              minDate={new Date()}
               fullWidth
               renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider>
+
 
           <br/>
           <Button type={"submit"}  variant="contained" color="info">Create</Button>
