@@ -29,6 +29,7 @@ function UserHeader(props) {
           <h2 className="todo_logo">TODO</h2>
           <div className="header__item header__button"><Link className="Dashboard_link" to="/dashboard">Dashboard</Link></div>
           <div className="header__item header__button"><Link className="New-Task_link" to="/tasks/new">New Task</Link></div>
+          <div className="header__item header__button"><Link className="Edit-Task_link" to="/tasks/edit">Edit Task</Link></div>
         </div>
 
         <div className="header__section_right">

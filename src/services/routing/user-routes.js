@@ -19,6 +19,10 @@ const UserRoutes = () => {
             <NewTask/>
           </Route>
 
+          <Route path="/tasks/:id">
+            <NewTask/>
+          </Route>
+
           <Redirect to="/dashboard"/>
         </Switch>
     </div>

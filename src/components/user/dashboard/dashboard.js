@@ -5,6 +5,8 @@ import {connect, useSelector} from "react-redux";
 import actionCreator from "../../../services/store/action-creator";
 import Spinner from "../../reusable/spinner";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from '@mui/icons-material/Edit';
+import {Link} from "react-router-dom";
 
 function Dashboard(props) {
   const tasks = useSelector((state) => state.task.list)
@@ -67,6 +69,7 @@ function Dashboard(props) {
 
         <tbody>
           {tasks.map((row, index) => {
+            console.log(row)
             return (
               <tr key={index}>
                 <td>{row.title}</td>
@@ -74,7 +77,8 @@ function Dashboard(props) {
                 <td>{row.priority}</td>
                 <td>{new Date(row.due_date).toLocaleString()}</td>
                 <td>
-                  <button onClick={deleteTask(row.id)}><DeleteForeverIcon /></button>
+                  <button className="dashboard__delete-btn" onClick={deleteTask(row.id)}><DeleteForeverIcon /></button>
+                  <Link to={`/tasks/${row.id}`}><EditIcon /></Link>
                 </td>
               </tr>
             )
