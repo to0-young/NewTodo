@@ -5,15 +5,15 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import Button from '@mui/material/Button'
-import { useHistory } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 import { useParams } from 'react-router-dom'
+import { useEffect } from 'react'
+import Spinner from '../../reusable/spinner'
 
-function EditTask() {
-  const history = useHistory()
+function EditTask(props) {
   const params = useParams()
-  console.log(params)
+  const received = useSelector((state) => state.task.received)
 
   const [task, changeTask] = React.useState({
     title: '',
@@ -55,57 +55,58 @@ function EditTask() {
   const onEditTask = async (e) => {
     e.preventDefault()
     if (onValidation()) {
-      await postEditTask()
     }
   }
 
-  const editChangeTitle = (e) => {
+  useEffect(() => {
+    getTask()
+  }, [])
+
+  const changeTitle = (e) => {
     changeTask({
       ...task,
+      color: 'blue',
       title: e.target.value,
     })
   }
 
-  const editChangeDescription = (e) => {
+  const changeDescription = (e) => {
     changeTask({
       ...task,
       description: e.target.value,
     })
   }
 
-  const editChangePriority = (e) => {
+  const changePriority = (e) => {
     changeTask({
       ...task,
       priority: e.target.value,
     })
   }
 
-  const editChangeDate = (value) => {
+  const ChangeDate = (value) => {
     changeTask({
       ...task,
       dueDate: value,
     })
   }
 
-  const postEditTask = async () => {
-    const res = await fetch('http://localhost:3000/api/v1/tasks', {
-      method: 'POST',
+  const getTask = async () => {
+    const res = await fetch(`http://localhost:3000/api/v1/tasks/${params.id}`, {
+      method: 'GET',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: task.title,
-        description: task.description,
-        priority: task.priority,
-        due_date: task.dueDate,
-      }),
     })
 
     const json = await res.json()
     if (res.ok) {
-      history.push('/dashboard')
+      props.getTaskSuccess(json)
+      console.log(json)
     }
     return json
   }
+
+  if (received === false) return <Spinner />
 
   return (
     <div className='edit-task'>
@@ -119,7 +120,8 @@ function EditTask() {
           value={task.title}
           error={'' !== error.title}
           helperText={error.title}
-          onChange={editChangeTitle}
+          onChange={changeTitle}
+          id='standard-basic'
           type='string'
           label='Title'
           variant='standard'
@@ -132,7 +134,8 @@ function EditTask() {
         <TextField
           className='description'
           value={task.description}
-          onChange={editChangeDescription}
+          onChange={changeDescription}
+          id='standard-basic'
           label='Description'
           variant='standard'
           fullWidth
@@ -146,7 +149,8 @@ function EditTask() {
           value={task.priority}
           error={'' !== error.priority}
           helperText={error.priority}
-          onChange={editChangePriority}
+          onChange={changePriority}
+          id='standard-basic'
           label='Priority'
           type={'number'}
           variant='standard'
@@ -158,7 +162,7 @@ function EditTask() {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DateTimePicker
             label='Due date'
-            onChange={editChangeDate}
+            onChange={ChangeDate}
             value={task.dueDate}
             minDate={new Date()}
             fullWidth

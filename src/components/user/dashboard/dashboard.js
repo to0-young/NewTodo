@@ -41,7 +41,7 @@ function Dashboard(props) {
 
     const json = await res.json()
     if (res.ok) {
-      props.getTaskSuccess(json)
+      props.fetchTasksSuccess(json)
     }
     return json
   }
@@ -69,7 +69,6 @@ function Dashboard(props) {
 
         <tbody>
           {tasks.map((row, index) => {
-            console.log(row)
             return (
               <tr key={index}>
                 <td>{row.title}</td>

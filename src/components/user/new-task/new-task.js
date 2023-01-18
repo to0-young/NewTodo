@@ -49,7 +49,7 @@ function NewTask() {
     return valid
   }
 
-  const onNewTask = async (e) => {
+  const onCreateTask = async (e) => {
     e.preventDefault()
     if (onValidation()) {
       await postTask()
@@ -106,7 +106,7 @@ function NewTask() {
 
   return (
     <div className='new-task'>
-      <form onSubmit={onNewTask} className='new-task__form'>
+      <form onSubmit={onCreateTask} className='new-task__form'>
         <br />
         <h2>New Task</h2>
         <br />

@@ -3,8 +3,9 @@ const actionTypes = {
   getSessionError: 'GET_SESSION_ERROR',
   deleteSessionSuccess: 'DELETE_SESSION_SUCCESS',
 
-  getTaskSuccess: 'GET_TASKS_SUCCESS',
+  fetchTasksSuccess: 'GET_TASKS_SUCCESS',
   deleteTaskSuccess: 'DELETE_TASK_SUCCESS',
+  getTaskSuccess: 'GET_TASK_SUCCESS',
 }
 
 export default actionTypes
