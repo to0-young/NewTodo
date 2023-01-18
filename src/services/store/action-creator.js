@@ -1,9 +1,9 @@
-import sessionActions from "./actions/session-actions";
-import taskActions from "./actions/task-actions";
+import sessionActions from './actions/session-actions'
+import taskActions from './actions/task-actions'
 
 const actionCreator = {
   ...sessionActions,
-  ...taskActions
+  ...taskActions,
 }
 
 export default actionCreator

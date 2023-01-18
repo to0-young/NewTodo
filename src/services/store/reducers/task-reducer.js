@@ -1,14 +1,14 @@
-import actionTypes from "../action-types";
+import actionTypes from '../action-types'
 
 const defaultState = {
   fetched: false,
-  list: null
+  list: null,
 }
 
 export const taskReducer = (state = defaultState, action) => {
   switch (action.type) {
     case actionTypes.getTaskSuccess:
-      return { ...state, fetched: true, list: action.payload  }
+      return { ...state, fetched: true, list: action.payload }
     case actionTypes.deleteTaskSuccess:
       if (!state.list) return state
       const taskIdToDelete = action.payload.id

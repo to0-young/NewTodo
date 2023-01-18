@@ -1,12 +1,12 @@
-import * as React from 'react';
+import * as React from 'react'
 import './dashboard.css'
-import {useEffect} from "react";
-import {connect, useSelector} from "react-redux";
-import actionCreator from "../../../services/store/action-creator";
-import Spinner from "../../reusable/spinner";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import EditIcon from '@mui/icons-material/Edit';
-import {Link} from "react-router-dom";
+import { useEffect } from 'react'
+import { connect, useSelector } from 'react-redux'
+import actionCreator from '../../../services/store/action-creator'
+import Spinner from '../../reusable/spinner'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import EditIcon from '@mui/icons-material/Edit'
+import { Link } from 'react-router-dom'
 
 function Dashboard(props) {
   const tasks = useSelector((state) => state.task.list)
@@ -21,7 +21,7 @@ function Dashboard(props) {
       const res = await fetch(`http://localhost:3000/api/v1/tasks/${taskId}`, {
         method: 'DELETE',
         credentials: 'include',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
       })
 
       const json = await res.json()
@@ -36,7 +36,7 @@ function Dashboard(props) {
     const res = await fetch('http://localhost:3000/api/v1/tasks', {
       method: 'GET',
       credentials: 'include',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
     })
 
     const json = await res.json()
@@ -77,8 +77,12 @@ function Dashboard(props) {
                 <td>{row.priority}</td>
                 <td>{new Date(row.due_date).toLocaleString()}</td>
                 <td>
-                  <button className="dashboard__delete-btn" onClick={deleteTask(row.id)}><DeleteForeverIcon /></button>
-                  <Link to={`/tasks/${row.id}`}><EditIcon /></Link>
+                  <button className='dashboard__delete-btn' onClick={deleteTask(row.id)}>
+                    <DeleteForeverIcon />
+                  </button>
+                  <Link to={`/tasks/${row.id}`}>
+                    <EditIcon />
+                  </Link>
                 </td>
               </tr>
             )
@@ -86,34 +90,32 @@ function Dashboard(props) {
         </tbody>
       </table>
 
-
       <table>
-       <thead>
-       <tr>
-         <th>Title</th>
-         <th>Description</th>
-         <th>Priority</th>
-         <th>Due date</th>
-       </tr>
-       </thead>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Priority</th>
+            <th>Due date</th>
+          </tr>
+        </thead>
 
         <tbody>
-        {myRows.map((row, index) => {
-          return (
-            <tr key={index}>
-              <td>{row.title}</td>
-              <td>{row.desc}</td>
-              <td>{row.priority}</td>
-              <td>{row.dueDate}</td>
-            </tr>
-          )
-        })}
+          {myRows.map((row, index) => {
+            return (
+              <tr key={index}>
+                <td>{row.title}</td>
+                <td>{row.desc}</td>
+                <td>{row.priority}</td>
+                <td>{row.dueDate}</td>
+              </tr>
+            )
+          })}
         </tbody>
       </table>
     </div>
   )
 }
 
-const ConnectedDashboard = connect(null, actionCreator)(Dashboard);
-export default ConnectedDashboard;
-
+const ConnectedDashboard = connect(null, actionCreator)(Dashboard)
+export default ConnectedDashboard

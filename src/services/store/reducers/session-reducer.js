@@ -1,4 +1,4 @@
-import actionTypes from "../action-types";
+import actionTypes from '../action-types'
 
 const defaultState = {
   loading: false,

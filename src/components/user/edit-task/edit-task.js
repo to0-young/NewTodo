@@ -1,5 +1,5 @@
 import * as React from 'react'
-import '../new-task/new-task.css'
+import './edit-task.css'
 import TextField from '@mui/material/TextField'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
@@ -8,9 +8,12 @@ import Button from '@mui/material/Button'
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
+import { useParams } from 'react-router-dom'
 
-function NewTask() {
+function EditTask() {
   const history = useHistory()
+  const params = useParams()
+  console.log(params)
 
   const [task, changeTask] = React.useState({
     title: '',
@@ -49,42 +52,42 @@ function NewTask() {
     return valid
   }
 
-  const onNewTask = async (e) => {
+  const onEditTask = async (e) => {
     e.preventDefault()
     if (onValidation()) {
-      await postTask()
+      await postEditTask()
     }
   }
 
-  const onChangeTitle = (e) => {
+  const editChangeTitle = (e) => {
     changeTask({
       ...task,
       title: e.target.value,
     })
   }
 
-  const onChangeDescription = (e) => {
+  const editChangeDescription = (e) => {
     changeTask({
       ...task,
       description: e.target.value,
     })
   }
 
-  const onChangePriority = (e) => {
+  const editChangePriority = (e) => {
     changeTask({
       ...task,
       priority: e.target.value,
     })
   }
 
-  const onChangeDate = (value) => {
+  const editChangeDate = (value) => {
     changeTask({
       ...task,
       dueDate: value,
     })
   }
 
-  const postTask = async () => {
+  const postEditTask = async () => {
     const res = await fetch('http://localhost:3000/api/v1/tasks', {
       method: 'POST',
       credentials: 'include',
@@ -105,10 +108,10 @@ function NewTask() {
   }
 
   return (
-    <div className='new-task'>
-      <form onSubmit={onNewTask} className='new-task__form'>
+    <div className='edit-task'>
+      <form onSubmit={onEditTask} className='edit-task__form'>
         <br />
-        <h2>New Task</h2>
+        <h2>Edit Task</h2>
         <br />
 
         <TextField
@@ -116,7 +119,7 @@ function NewTask() {
           value={task.title}
           error={'' !== error.title}
           helperText={error.title}
-          onChange={onChangeTitle}
+          onChange={editChangeTitle}
           type='string'
           label='Title'
           variant='standard'
@@ -129,7 +132,7 @@ function NewTask() {
         <TextField
           className='description'
           value={task.description}
-          onChange={onChangeDescription}
+          onChange={editChangeDescription}
           label='Description'
           variant='standard'
           fullWidth
@@ -143,7 +146,7 @@ function NewTask() {
           value={task.priority}
           error={'' !== error.priority}
           helperText={error.priority}
-          onChange={onChangePriority}
+          onChange={editChangePriority}
           label='Priority'
           type={'number'}
           variant='standard'
@@ -155,7 +158,7 @@ function NewTask() {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DateTimePicker
             label='Due date'
-            onChange={onChangeDate}
+            onChange={editChangeDate}
             value={task.dueDate}
             minDate={new Date()}
             fullWidth
@@ -165,13 +168,14 @@ function NewTask() {
 
         <br />
         <Button type={'submit'} variant='contained' color='info'>
-          create
+          save
         </Button>
+
         <br />
       </form>
     </div>
   )
 }
 
-const ConnectedNewTask = connect(null, actionCreator)(NewTask)
-export default ConnectedNewTask
+const ConnectedEditTask = connect(null, actionCreator)(EditTask)
+export default ConnectedEditTask

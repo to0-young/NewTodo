@@ -1,10 +1,10 @@
 .dashboard {
-    display: flex;
+  display: flex;
 }
 
 .dashboard__delete-btn {
-    margin-right: 5px;
-    /*padding: 0;*/
-    /*border: none;*/
-    /*background-color: transparent;*/
+  margin-right: 5px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
 }
