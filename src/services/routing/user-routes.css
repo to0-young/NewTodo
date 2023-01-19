@@ -3,3 +3,6 @@
   flex-direction: column;
   width: 100vw;
 }
+.spinner {
+  margin: auto;
+}

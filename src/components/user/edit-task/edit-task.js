@@ -7,12 +7,13 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import Button from '@mui/material/Button'
 import { connect, useSelector } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import Spinner from '../../reusable/spinner'
 
 function EditTask(props) {
   const params = useParams()
+  const history = useHistory()
   const received = useSelector((state) => state.task.received)
 
   const [task, changeTask] = React.useState({
@@ -65,7 +66,6 @@ function EditTask(props) {
   const changeTitle = (e) => {
     changeTask({
       ...task,
-      color: 'blue',
       title: e.target.value,
     })
   }
@@ -84,11 +84,32 @@ function EditTask(props) {
     })
   }
 
-  const ChangeDate = (value) => {
+  const changeDate = (value) => {
     changeTask({
       ...task,
       dueDate: value,
     })
+  }
+
+  const updateTask = async () => {
+    const res = await fetch(`http://localhost:3000/api/v1/tasks/${task.id}`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: task.title,
+        description: task.description,
+        priority: task.priority,
+        due_date: task.dueDate,
+      }),
+    })
+
+    const json = await res.json()
+    if (res.ok) {
+      history.push('/dashboard')
+      alert('Task updated')
+      return json
+    }
   }
 
   const getTask = async () => {
@@ -101,9 +122,8 @@ function EditTask(props) {
     const json = await res.json()
     if (res.ok) {
       props.getTaskSuccess(json)
-      console.log(json)
+      changeTask({ ...json, dueDate: json.due_date })
     }
-    return json
   }
 
   if (received === false) return <Spinner />
@@ -162,16 +182,16 @@ function EditTask(props) {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DateTimePicker
             label='Due date'
-            onChange={ChangeDate}
+            type={'date'}
+            onChange={changeDate}
             value={task.dueDate}
-            minDate={new Date()}
             fullWidth
             renderInput={(params) => <TextField {...params} />}
           />
         </LocalizationProvider>
 
         <br />
-        <Button type={'submit'} variant='contained' color='info'>
+        <Button type={'submit'} className='task__update-btn' onClick={updateTask} variant='contained' color='info'>
           save
         </Button>
 

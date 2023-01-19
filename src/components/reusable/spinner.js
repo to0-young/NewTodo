@@ -4,8 +4,10 @@ import React from 'react'
 
 export default function Spinner() {
   return (
-    <Stack sx={{ color: 'grey.500', width: '100%' }} spacing={2}>
-      {<CircularProgress style={{ margin: 'auto' }} color='inherit' />}
-    </Stack>
+    <div className='spinner'>
+      <Stack sx={{ color: 'grey.500', width: '100%' }} spacing={2}>
+        {<CircularProgress style={{ margin: 'auto' }} color='inherit' />}
+      </Stack>
+    </div>
   )
 }
