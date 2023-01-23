@@ -7,6 +7,8 @@ import Spinner from '../../reusable/spinner'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import EditIcon from '@mui/icons-material/Edit'
 import { Link } from 'react-router-dom'
+import Brightness1OutlinedIcon from '@mui/icons-material/Brightness1Outlined'
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
 
 function Dashboard(props) {
   const tasks = useSelector((state) => state.task.list)
@@ -16,9 +18,43 @@ function Dashboard(props) {
     getTasks()
   }, [])
 
-  const deleteTask = (taskId) => async () => {
-    if (window.confirm(`Are you sure you want to delete task with ID ${taskId}`)) {
-      const res = await fetch(`http://localhost:3000/api/v1/tasks/${taskId}`, {
+  const updateCompletedTask = (taskId) => async () => {
+    const res = await fetch(`http://localhost:3000/api/v1/tasks/${taskId}`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        completed: true,
+      }),
+    })
+
+    const json = await res.json()
+    if (res.ok) {
+      props.updateTaskSuccess(json)
+      return json
+    }
+  }
+
+  const donCompletedTask = (taskId) => async () => {
+    const res = await fetch(`http://localhost:3000/api/v1/tasks/${taskId}`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        completed: false,
+      }),
+    })
+
+    const json = await res.json()
+    if (res.ok) {
+      props.updateTaskSuccess(json)
+      return json
+    }
+  }
+
+  const deleteTask = (task) => async () => {
+    if (window.confirm(`Are you sure you want to delete task with ID ${task.id}`)) {
+      const res = await fetch(`http://localhost:3000/api/v1/tasks/${task.id}`, {
         method: 'DELETE',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -26,7 +62,7 @@ function Dashboard(props) {
 
       const json = await res.json()
       if (res.ok) {
-        props.deleteTaskSuccess(taskId)
+        props.deleteTaskSuccess(task)
       }
       return json
     }
@@ -46,12 +82,6 @@ function Dashboard(props) {
     return json
   }
 
-  const myRows = [
-    { title: 'Training', desc: 'To train in the hall', priority: 1, dueDate: new Date().toLocaleString() },
-    { title: 'Vacation', desc: 'Go with friends to nature', priority: 4, dueDate: new Date().toLocaleString() },
-    { title: 'Vacation', desc: 'Go with friends to nature', priority: 2, dueDate: new Date().toLocaleString() },
-  ]
-
   if (fetched === false) return <Spinner />
 
   return (
@@ -69,44 +99,31 @@ function Dashboard(props) {
 
         <tbody>
           {tasks.map((row, index) => {
+            const crossedClass = row.completed ? 'dashboard__td_crossed' : ''
             return (
               <tr key={index}>
-                <td>{row.title}</td>
-                <td>{row.description}</td>
-                <td>{row.priority}</td>
-                <td>{new Date(row.due_date).toLocaleString()}</td>
-                <td>
-                  <button className='dashboard__delete-btn' onClick={deleteTask(row.id)}>
+                <td className={crossedClass}>{row.title}</td>
+                <td className={crossedClass}>{row.description}</td>
+                <td className={crossedClass}>{row.priority}</td>
+                <td className={crossedClass}>{new Date(row.due_date).toLocaleString()}</td>
+                <td className={`dashboard__task-btns ${crossedClass}`}>
+                  <button className='dashboard__task-btn' onClick={deleteTask(row)}>
                     <DeleteForeverIcon />
                   </button>
                   <Link to={`/tasks/${row.id}`}>
                     <EditIcon />
                   </Link>
+
+                  {row.completed ? (
+                    <button className='dashboard__task-btn' onClick={donCompletedTask(row.id)}>
+                      <Brightness1OutlinedIcon />
+                    </button>
+                  ) : (
+                    <button className='dashboard__task-btn' onClick={updateCompletedTask(row.id)}>
+                      <CheckCircleOutlineOutlinedIcon />
+                    </button>
+                  )}
                 </td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Priority</th>
-            <th>Due date</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {myRows.map((row, index) => {
-            return (
-              <tr key={index}>
-                <td>{row.title}</td>
-                <td>{row.desc}</td>
-                <td>{row.priority}</td>
-                <td>{row.dueDate}</td>
               </tr>
             )
           })}

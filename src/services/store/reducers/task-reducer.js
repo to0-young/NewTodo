@@ -13,7 +13,16 @@ export const taskReducer = (state = defaultState, action) => {
       return { ...state, fetched: true, list: action.payload }
 
     case actionTypes.getTaskSuccess:
-      return { ...state, received: true, details: true }
+      return { ...state, received: true, details: action.payload }
+
+    case actionTypes.updateTaskSuccess:
+      const indexArray = state.list.findIndex((task) => {
+        return task.id === action.payload.id
+      })
+      const newArray = [...state.list]
+
+      newArray[indexArray] = action.payload
+      return { ...state, list: newArray }
 
     case actionTypes.deleteTaskSuccess:
       if (!state.list) return state

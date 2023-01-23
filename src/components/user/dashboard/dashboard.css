@@ -2,9 +2,23 @@
   display: flex;
 }
 
-.dashboard__delete-btn {
-  margin-right: 5px;
-  padding: 0;
+.dashboard__task-btn {
   border: none;
   background-color: transparent;
+}
+
+.dashboard__completed-task {
+  background-color: green;
+}
+
+.dashboard__uncompleted-task {
+  background-color: indianred;
+}
+
+.dashboard__task-btns > :not(:last-child) {
+  margin-right: 4px;
+}
+
+.dashboard__td_crossed {
+  background-image: linear-gradient(0deg, transparent calc(50% - 1px), black, transparent calc(50% + 1px));
 }
