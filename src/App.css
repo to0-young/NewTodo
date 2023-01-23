@@ -28,6 +28,15 @@ th {
   padding: 8px;
 }
 
-tr:nth-child(even) {
-  background-color: #dddddd;
+a {
+  color: black;
+}
+
+a:visited {
+  color: black;
+}
+
+button,
+a {
+  cursor: pointer;
 }
