@@ -9,6 +9,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import { Link } from 'react-router-dom'
 import Brightness1OutlinedIcon from '@mui/icons-material/Brightness1Outlined'
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
+import Pagination from '../../reusable/pagination'
 
 function Dashboard(props) {
   const tasks = useSelector((state) => state.task.list)
@@ -129,6 +130,9 @@ function Dashboard(props) {
           })}
         </tbody>
       </table>
+      <div className='pagination'>
+        <Pagination />
+      </div>
     </div>
   )
 }
