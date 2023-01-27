@@ -33,11 +33,3 @@ export const taskReducer = (state = defaultState, action) => {
       return state
   }
 }
-
-// case actionTypes.updateTaskSuccess:
-// const indexArray = state.list.findIndex((task) => {
-//   return task.id === action.payload.id
-// })
-// const newArray = [...state.list]
-// newArray[indexArray] = action.payload
-// return { ...state, list: newArray }

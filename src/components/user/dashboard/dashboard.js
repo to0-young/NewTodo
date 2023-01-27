@@ -1,6 +1,6 @@
 import * as React from 'react'
 import './dashboard.css'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { connect, useSelector } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 import Spinner from '../../reusable/spinner'
@@ -9,14 +9,37 @@ import EditIcon from '@mui/icons-material/Edit'
 import { Link } from 'react-router-dom'
 import Brightness1OutlinedIcon from '@mui/icons-material/Brightness1Outlined'
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
+import Pagination from '@mui/material/Pagination'
 
 function Dashboard(props) {
   const tasks = useSelector((state) => state.task.list)
   const fetched = useSelector((state) => state.task.fetched)
 
+  const [page, setPage] = useState(1)
+  const [pagesCount, setPagesCount] = useState()
+
+  const onChangePagination = (_, page) => {
+    setPage(page)
+  }
+
   useEffect(() => {
-    getTasks()
-  }, [])
+    getTasks(page)
+  }, [page])
+
+  const getTasks = async (page) => {
+    const res = await fetch(`http://localhost:3000/api/v1/tasks?per_page=10&page=${page}`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+    })
+
+    const json = await res.json()
+    if (res.ok) {
+      setPagesCount(json.pagy.pages)
+      props.fetchTasksSuccess(json.tasks)
+    }
+    return json
+  }
 
   const updateCompletedTask = (taskId) => async () => {
     const res = await fetch(`http://localhost:3000/api/v1/tasks/${taskId}`, {
@@ -68,20 +91,6 @@ function Dashboard(props) {
     }
   }
 
-  const getTasks = async () => {
-    const res = await fetch('http://localhost:3000/api/v1/tasks', {
-      method: 'GET',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-    })
-
-    const json = await res.json()
-    if (res.ok) {
-      props.fetchTasksSuccess(json)
-    }
-    return json
-  }
-
   if (fetched === false) return <Spinner />
 
   return (
@@ -129,6 +138,9 @@ function Dashboard(props) {
           })}
         </tbody>
       </table>
+      <div className='pagination'>
+        <Pagination page={page} count={pagesCount} onChange={onChangePagination} />
+      </div>
     </div>
   )
 }

@@ -3,7 +3,6 @@
   justify-content: space-between;
   padding: 15px;
   background: lightskyblue;
-  color: white;
   font-family: Ubuntu;
 }
 
@@ -33,7 +32,7 @@
 }
 
 .header__item:hover {
-  background-color: darkgray;
+  background-color: #f8f2f2;
   border-radius: 4px;
 }
 
@@ -42,25 +41,25 @@
 }
 
 .sign-up_link {
-  color: #ff00de;
+  color: #ff0000;
   text-decoration: none;
   white-space: nowrap;
 }
 
 .sign-in_link {
-  color: #ff00de;
+  color: #ff0000;
   text-decoration: none;
   white-space: nowrap;
 }
 
 .Dashboard_link {
-  color: #fffdfd;
+  color: #1e1e21;
   text-decoration: none;
   white-space: nowrap;
 }
 
 .New-Task_link {
-  color: #fffdfd;
+  color: #1e1e21;
   text-decoration: none;
   white-space: nowrap;
 }

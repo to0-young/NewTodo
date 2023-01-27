@@ -1,5 +1,7 @@
+
 .dashboard {
   display: flex;
+  flex-direction: column;
 }
 
 .dashboard__task-btn {
@@ -7,18 +9,22 @@
   background-color: transparent;
 }
 
-.dashboard__completed-task {
-  background-color: green;
-}
-
-.dashboard__uncompleted-task {
-  background-color: indianred;
-}
-
 .dashboard__task-btns > :not(:last-child) {
-  margin-right: 4px;
+  margin-right: 2px;
 }
 
 .dashboard__td_crossed {
   background-image: linear-gradient(0deg, transparent calc(50% - 1px), black, transparent calc(50% + 1px));
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 15px;
+}
+
+.dashboard__table {
+  border-collapse: collapse;
+  margin: 5px;
+  color: #010c13;
 }
