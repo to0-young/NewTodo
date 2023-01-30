@@ -1,39 +1,39 @@
 import React from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import './sign-in.css'
+import './new-password.css'
 import { Link, useHistory } from 'react-router-dom'
 import Alert from '@mui/material/Alert'
 import Stack from '@mui/material/Stack'
 import { connect } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 
-function SignIn(props) {
+function NewPassword(props) {
   const history = useHistory()
 
   const [user, changeUser] = React.useState({
-    email: 'user_0@gmail.com',
-    password: '123',
+    password: '',
+    confirmationPassword: '',
   })
 
   const [error, changeError] = React.useState({
-    email: '',
     password: '',
+    confirmationPassword: '',
   })
   const [errorMsg, setErrorMsg] = React.useState()
 
   const onValidate = () => {
     let valid = true
     const appError = {
-      email: '',
-      password: '',
+      password: '123',
+      confirmationPassword: '',
     }
 
-    if (user.email.length < 8) {
+    if (user.confirmationPassword.length < 8) {
       valid = false
-      appError.email = 'Sorry your email is too short'
+      appError.confirmationPassword = 'Sorry your  new password is too short'
     }
-    if (user.password.length < 1) {
+    if (user.password.length < 8) {
       valid = false
       appError.password = 'Sorry your password is too short'
     }
@@ -42,17 +42,11 @@ function SignIn(props) {
     }
     return valid
   }
-  const onSignIn = async (e) => {
+  const onForgot = async (e) => {
     e.preventDefault()
     if (onValidate()) {
-      await onLogIn()
+      await onForget()
     }
-  }
-  const onChangeEmail = (e) => {
-    changeUser({
-      ...user,
-      email: e.target.value,
-    })
   }
   const onChangePassword = (e) => {
     changeUser({
@@ -61,21 +55,28 @@ function SignIn(props) {
     })
   }
 
-  const onLogIn = async () => {
+  const onChangeConfirmationPassword = (e) => {
+    changeUser({
+      ...user,
+      confirmationPassword: e.target.value,
+    })
+  }
+
+  const onForget = async () => {
     const res = await fetch('http://localhost:3000/api/v1/sessions', {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        email: user.email,
-        password: user.password,
+        password: '',
+        confirmationPassword: '',
       }),
     })
 
     const json = await res.json()
     if (res.ok) {
       props.getSessionSuccess(json)
-      history.push('/dashboard')
+      history.push('/forgot')
     } else {
       setErrorMsg(json.message)
     }
@@ -83,46 +84,37 @@ function SignIn(props) {
   }
 
   return (
-    <div className='sign-in'>
-      <form onSubmit={onSignIn} className='sign-in__form'>
-        <h2>Sign in</h2>
-
-        <TextField
-          helperText={error.email}
-          error={'' !== error.email}
-          value={user.email}
-          onChange={onChangeEmail}
-          className='sign-in__email'
-          id='standard-basic'
-          type='Email'
-          label='Email'
-          variant='standard'
-          fullWidth
-        />
-
-        <br />
+    <div className='new-password'>
+      <form onSubmit={onForgot} className='new-password__form'>
+        <h2>New password</h2>
 
         <TextField
           helperText={error.password}
           error={'' !== error.password}
           value={user.password}
           onChange={onChangePassword}
-          className='sign-in__password'
+          className='new-password'
           id='standard-basic'
           type='password'
-          label='Password'
+          label='New Password'
           variant='standard'
           fullWidth
         />
 
         <br />
 
-        <p className='sign-in__advice'>
-          Don't have an account?{' '}
-          <Link className='sign-up_link' to='/sign_up'>
-            Сreate one
-          </Link>
-        </p>
+        <TextField
+          helperText={error.confirmationPassword}
+          error={'' !== error.confirmationPassword}
+          value={user.confirmationPassword}
+          onChange={onChangeConfirmationPassword}
+          className='forgot-password__confirmation'
+          id='standard-basic'
+          type='password'
+          label='Password Confirmation'
+          variant='standard'
+          fullWidth
+        />
 
         <br />
 
@@ -132,21 +124,28 @@ function SignIn(props) {
           </Stack>
         ) : null}
 
-        <br />
-
         <Button type={'submit'} variant='contained' color='info'>
-          log in
+          save
         </Button>
 
         <br />
+        <br />
 
-        <Link className='sign-in_forgot' to='/forgot_email'>
-          Forgot password ?
+        <Link className='new-password__account' to='/sign_up'>
+          Create new account ?
         </Link>
+
+        <br />
+
+        <Link className='new-password__back' to='/login'>
+          Back to login
+        </Link>
+
+        <br />
       </form>
     </div>
   )
 }
 
-const ConnectedSignIn = connect(null, actionCreator)(SignIn)
-export default ConnectedSignIn
+const ConnectedNewPassword = connect(null, actionCreator)(NewPassword)
+export default ConnectedNewPassword

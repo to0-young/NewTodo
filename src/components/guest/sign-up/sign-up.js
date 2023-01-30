@@ -4,7 +4,7 @@ import Button from '@mui/material/Button'
 import './sign-up.css'
 import { Link } from 'react-router-dom'
 
-function SignUp(props) {
+function SignUp() {
   const [user, changeUser] = React.useState({
     firstName: 'igor',
     lastName: 'franklyn',
@@ -180,11 +180,12 @@ function SignUp(props) {
         <br />
 
         <p className='sign-up__advice'>
-          Already have an account, then{' '}
+          Have an account ?{' '}
           <Link className='sign-in_link' to='/'>
-            log in
+            Log in
           </Link>
         </p>
+
         <br />
 
         <Button type={'submit'} variant='contained'>
