@@ -140,7 +140,7 @@ function SignIn(props) {
 
         <br />
 
-        <Link className='sign-in_forgot' to='/forgot_email'>
+        <Link className='sign-in_forgot' to='/passwords/recovery'>
           Forgot password ?
         </Link>
       </form>

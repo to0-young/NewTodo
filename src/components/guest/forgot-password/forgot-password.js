@@ -2,7 +2,7 @@ import React from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './forgot-password.css'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Alert from '@mui/material/Alert'
 import Stack from '@mui/material/Stack'
 import { connect } from 'react-redux'
@@ -10,8 +10,6 @@ import actionCreator from '../../../services/store/action-creator'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 
 function ForgotPassword(props) {
-  const history = useHistory()
-
   const [user, changeUser] = React.useState({
     email: '',
   })
@@ -60,8 +58,7 @@ function ForgotPassword(props) {
 
     const json = await res.json()
     if (res.ok) {
-      props.getSessionSuccess(json)
-      history.push('/forgot_email')
+      alert('We have sent you a password change request')
     } else {
       setErrorMsg(json.message)
     }

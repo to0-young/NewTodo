@@ -8,8 +8,12 @@ import Stack from '@mui/material/Stack'
 import { connect } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 
-function NewPassword(props) {
+function NewPassword() {
   const history = useHistory()
+
+  const searchParams = new URLSearchParams(history.location.search)
+  const recoveryToken = Object.fromEntries(searchParams).recovery_token
+  console.log(recoveryToken)
 
   const [user, changeUser] = React.useState({
     password: '',
@@ -20,7 +24,6 @@ function NewPassword(props) {
     password: '',
     confirmationPassword: '',
   })
-  const [errorMsg, setErrorMsg] = React.useState()
 
   const onValidate = () => {
     let valid = true
@@ -45,7 +48,7 @@ function NewPassword(props) {
   const onForgot = async (e) => {
     e.preventDefault()
     if (onValidate()) {
-      await onForget()
+      await updateForget()
     }
   }
   const onChangePassword = (e) => {
@@ -62,25 +65,24 @@ function NewPassword(props) {
     })
   }
 
-  const onForget = async () => {
-    const res = await fetch('http://localhost:3000/api/v1/sessions', {
-      method: 'POST',
+  const updateForget = async () => {
+    const searchParams = new URLSearchParams(history.location.search)
+    const recoveryToken = Object.fromEntries(searchParams).recovery_token
+    const res = await fetch(`http://localhost:3000/api/v1/users`, {
+      method: 'PATCH',
       credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', Authorization: recoveryToken },
       body: JSON.stringify({
-        password: '',
-        confirmationPassword: '',
+        password: user.password,
+        password_confirmation: user.confirmationPassword,
       }),
     })
 
     const json = await res.json()
     if (res.ok) {
-      props.getSessionSuccess(json)
-      history.push('/forgot')
-    } else {
-      setErrorMsg(json.message)
+      // history.push('/login')
+      return json
     }
-    return json
   }
 
   return (
@@ -93,7 +95,7 @@ function NewPassword(props) {
           error={'' !== error.password}
           value={user.password}
           onChange={onChangePassword}
-          className='new-password'
+          className='forgot-new__password'
           id='standard-basic'
           type='password'
           label='New Password'
@@ -118,13 +120,7 @@ function NewPassword(props) {
 
         <br />
 
-        {errorMsg ? (
-          <Stack sx={{ width: '100%' }} spacing={2}>
-            <Alert severity='error'>{errorMsg}</Alert>
-          </Stack>
-        ) : null}
-
-        <Button type={'submit'} variant='contained' color='info'>
+        <Button type={'submit'} variant='contained' onClick={updateForget} color='info'>
           save
         </Button>
 
