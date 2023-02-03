@@ -3,17 +3,11 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './new-password.css'
 import { Link, useHistory } from 'react-router-dom'
-import Alert from '@mui/material/Alert'
-import Stack from '@mui/material/Stack'
 import { connect } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 
 function NewPassword() {
   const history = useHistory()
-
-  const searchParams = new URLSearchParams(history.location.search)
-  const recoveryToken = Object.fromEntries(searchParams).recovery_token
-  console.log(recoveryToken)
 
   const [user, changeUser] = React.useState({
     password: '',
@@ -27,30 +21,30 @@ function NewPassword() {
 
   const onValidate = () => {
     let valid = true
-    const appError = {
-      password: '123',
+    const setError = {
+      password: '',
       confirmationPassword: '',
     }
 
-    if (user.confirmationPassword.length < 8) {
+    if (user.password.length < 6 || user.password !== user.confirmationPassword) {
       valid = false
-      appError.confirmationPassword = 'Sorry your  new password is too short'
+      setError.password = 'Sorry your password is too short'
+      setError.confirmationPassword = 'Sorry your password confirm is too short'
     }
-    if (user.password.length < 8) {
-      valid = false
-      appError.password = 'Sorry your password is too short'
-    }
+
     if (!valid) {
-      changeError(appError)
+      changeError(setError)
     }
     return valid
   }
+
   const onForgot = async (e) => {
     e.preventDefault()
     if (onValidate()) {
       await updateForget()
     }
   }
+
   const onChangePassword = (e) => {
     changeUser({
       ...user,
@@ -80,7 +74,8 @@ function NewPassword() {
 
     const json = await res.json()
     if (res.ok) {
-      // history.push('/login')
+      alert('Your password has been successfully changed')
+      history.push('/login')
       return json
     }
   }
@@ -120,7 +115,7 @@ function NewPassword() {
 
         <br />
 
-        <Button type={'submit'} variant='contained' onClick={updateForget} color='info'>
+        <Button type={'submit'} variant='contained' onClick={onForgot} color='info'>
           save
         </Button>
 
