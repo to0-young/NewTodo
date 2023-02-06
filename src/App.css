@@ -1,4 +1,3 @@
-
 html,
 #root,
 body {
@@ -13,7 +12,9 @@ td,
 th {
   border: 1px solid #dddddd;
   text-align: center;
-  padding: 8px;
+  padding: 5px;
+  position: relative;
+  justify-content: center;
 }
 
 a {

@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom'
 import Brightness1OutlinedIcon from '@mui/icons-material/Brightness1Outlined'
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
 import Pagination from '@mui/material/Pagination'
+import SortIcon from '@mui/icons-material/Sort'
 
 function Dashboard(props) {
   const tasks = useSelector((state) => state.task.list)
@@ -98,7 +99,10 @@ function Dashboard(props) {
       <table>
         <thead>
           <tr>
-            <th>Title</th>
+            <th className='dashboard__table-th'>
+              <span className='dashboard__table-title'>Title</span>
+              <SortIcon />
+            </th>
             <th>Description</th>
             <th>Priority</th>
             <th>Due date</th>
