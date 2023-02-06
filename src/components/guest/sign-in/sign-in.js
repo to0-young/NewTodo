@@ -33,7 +33,7 @@ function SignIn(props) {
       valid = false
       appError.email = 'Sorry your email is too short'
     }
-    if (user.password.length < 1) {
+    if (user.password.length < 6) {
       valid = false
       appError.password = 'Sorry your password is too short'
     }
@@ -140,7 +140,7 @@ function SignIn(props) {
 
         <br />
 
-        <Link className='sign-in_forgot' to='/passwords/recovery'>
+        <Link className='sign-in__forgot' to='/passwords/recovery'>
           Forgot password ?
         </Link>
       </form>

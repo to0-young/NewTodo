@@ -41,7 +41,7 @@ function NewPassword() {
   const onForgot = async (e) => {
     e.preventDefault()
     if (onValidate()) {
-      await updateForget()
+      await updateNewPassword()
     }
   }
 
@@ -59,7 +59,7 @@ function NewPassword() {
     })
   }
 
-  const updateForget = async () => {
+  const updateNewPassword = async () => {
     const searchParams = new URLSearchParams(history.location.search)
     const recoveryToken = Object.fromEntries(searchParams).recovery_token
     const res = await fetch(`http://localhost:3000/api/v1/users`, {

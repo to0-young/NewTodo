@@ -12,12 +12,7 @@
   align-items: center;
 }
 
-.sign-in_f {
-  color: blue;
-  text-decoration: none;
-}
-
-.sign-in_forgot {
+.sign-in__forgot {
   text-decoration: none;
   color: forestgreen;
 }
