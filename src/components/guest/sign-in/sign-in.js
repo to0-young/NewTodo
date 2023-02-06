@@ -33,7 +33,7 @@ function SignIn(props) {
       valid = false
       appError.email = 'Sorry your email is too short'
     }
-    if (user.password.length < 6) {
+    if (user.password.length < 1) {
       valid = false
       appError.password = 'Sorry your password is too short'
     }
