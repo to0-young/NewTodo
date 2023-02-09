@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 
-function ForgotPassword(props) {
+function ForgotPassword() {
   const [user, changeUser] = React.useState({
     email: '',
   })

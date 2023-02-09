@@ -6,13 +6,13 @@ import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import '@fontsource/roboto/700.css'
-import UserRoutes from './services/routing/user-routes'
+import UserRoutes from './services/routing/user-routes/user-routes'
 import GuestRoutes from './services/routing/guest-routes'
 import { useSelector } from 'react-redux'
 import Spinner from './components/reusable/spinner'
 import { connect } from 'react-redux'
 import actionCreator from './services/store/action-creator'
-import ConfirmEmail from './components/user/confirm-email/confirm-email'
+import NonActivRoutes from './services/routing/non-activetion-routs'
 
 function App(props) {
   const session = useSelector((state) => state.session.details)
@@ -37,24 +37,20 @@ function App(props) {
   }
 
   const isGuest = !session
-
   const isConfirmedUser = session?.user.email_confirmed
-  console.log(!isConfirmedUser)
 
   if (fetched === false) return <Spinner />
 
   if (isGuest) {
     return (
       <Router>
-        {' '}
         <GuestRoutes />
       </Router>
     )
   } else if (!isConfirmedUser) {
     return (
       <Router>
-        {' '}
-        <ConfirmEmail />
+        <NonActivRoutes />
       </Router>
     )
   } else {

@@ -1,0 +1,13 @@
+.action {
+  margin: auto;
+  box-shadow: 3px 3px 15px rgba(117, 135, 247, 80%);
+  border-radius: 30px;
+  padding: 20px 30px;
+  width: 600px;
+}
+
+.action__routes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
