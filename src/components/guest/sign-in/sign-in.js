@@ -117,6 +117,12 @@ function SignIn(props) {
 
         <br />
 
+        <Button type={'submit'} variant='contained' color='info'>
+          log in
+        </Button>
+
+        <br />
+
         <p className='sign-in__advice'>
           Don't have an account?{' '}
           <Link className='sign-up_link' to='/sign_up'>
@@ -124,21 +130,11 @@ function SignIn(props) {
           </Link>
         </p>
 
-        <br />
-
         {errorMsg ? (
           <Stack sx={{ width: '100%' }} spacing={2}>
             <Alert severity='error'>{errorMsg}</Alert>
           </Stack>
         ) : null}
-
-        <br />
-
-        <Button type={'submit'} variant='contained' color='info'>
-          log in
-        </Button>
-
-        <br />
 
         <Link className='sign-in__forgot' to='/passwords/recovery'>
           Forgot password ?

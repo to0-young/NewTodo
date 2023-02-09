@@ -2,9 +2,11 @@ import React from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './sign-up.css'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 function SignUp() {
+  const history = useHistory()
+
   const [user, changeUser] = React.useState({
     firstName: 'igor',
     lastName: 'franklyn',
@@ -27,6 +29,7 @@ function SignUp() {
       email: '',
       password: '',
     }
+
     if (user.firstName.length < 3) {
       valid = false
       newError.firstName = 'Sorry your first name is too short'
@@ -82,7 +85,7 @@ function SignUp() {
       password: e.target.value,
     })
   }
-
+  console.log(error)
   const createUser = async () => {
     const res = await fetch('http://localhost:3000/api/v1/users', {
       method: 'POST',
@@ -98,13 +101,14 @@ function SignUp() {
     const json = await res.json()
 
     if (res.ok) {
-      // TODO redirect login page
+      alert('Please confirm your email registration')
+      history.push('/login')
     } else {
       if (json.errors) {
-        const firstError = json.errors.first_name[0],
-          lastError = json.errors.last_name[0],
-          emailError = json.errors.email[0],
-          passwordError = json.errors.password[0]
+        const firstError = json.errors.first_name === undefined ? '' : json.errors.first_name[0],
+          lastError = json.errors.last_name === undefined ? '' : json.errors.last_name[0],
+          emailError = json.errors.email === undefined ? '' : json.errors.email[0],
+          passwordError = json.errors.password === undefined ? '' : json.errors.password[0]
         changeError({
           firstName: firstError,
           lastName: lastError,

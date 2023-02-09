@@ -4,7 +4,7 @@ import SignIn from '../../components/guest/sign-in/sign-in'
 import SignUp from '../../components/guest/sign-up/sign-up'
 import { Redirect } from 'react-router-dom'
 import ForgotPassword from '../../components/guest/forgot-password/forgot-password'
-import NewPassword from '../../components/guest/./new_password/new-password'
+import NewPassword from '../../components/guest/././new-password/new-password'
 
 const GuestRoutes = () => {
   return (
@@ -24,6 +24,10 @@ const GuestRoutes = () => {
       <Route path='/passwords/new'>
         <NewPassword />
       </Route>
+
+      {/*<Route path='/confirm_email'>*/}
+      {/*  <ConfirmEmail />*/}
+      {/*</Route>*/}
 
       <Redirect to='/login' />
     </Switch>
