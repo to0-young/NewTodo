@@ -36,7 +36,7 @@ function UserHeader(props) {
 
           <div className='header__item header__button'>
             <Link className='New-Task_link' to='/tasks/new'>
-              New Task
+              New task
             </Link>
           </div>
         </div>

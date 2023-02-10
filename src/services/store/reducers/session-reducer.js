@@ -4,6 +4,7 @@ const defaultState = {
   loading: false,
   fetched: false,
   details: null,
+  list: null,
 }
 
 export const sessionReducer = (state = defaultState, action) => {
@@ -14,6 +15,8 @@ export const sessionReducer = (state = defaultState, action) => {
       return { ...state, fetched: true, loading: false, details: null }
     case actionTypes.deleteSessionSuccess:
       return { ...state, fetched: true, loading: false, details: null }
+    case actionTypes.updateSessionSuccess:
+      return { ...state, details: action.payload }
     default:
       return state
   }

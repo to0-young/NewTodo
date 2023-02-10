@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux'
 import Spinner from './components/reusable/spinner'
 import { connect } from 'react-redux'
 import actionCreator from './services/store/action-creator'
-import NonActivRoutes from './services/routing/non-activetion-routs'
+import NonActivationRoutes from './services/routing/non-activetion-routs'
 
 function App(props) {
   const session = useSelector((state) => state.session.details)
@@ -50,7 +50,7 @@ function App(props) {
   } else if (!isConfirmedUser) {
     return (
       <Router>
-        <NonActivRoutes />
+        <NonActivationRoutes />
       </Router>
     )
   } else {

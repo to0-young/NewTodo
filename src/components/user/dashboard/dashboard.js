@@ -143,7 +143,7 @@ function Dashboard(props) {
         </tbody>
       </table>
       <div className='pagination'>
-        <Pagination page={page} count={pagesCount} onChange={onChangePagination} />
+        <Pagination page={page} variant='outlined' color='primary' count={pagesCount} onChange={onChangePagination} />
       </div>
     </div>
   )

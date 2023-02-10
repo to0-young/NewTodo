@@ -31,11 +31,6 @@
   margin-left: 5px;
 }
 
-.header__item:hover {
-  background-color: #f8f2f2;
-  border-radius: 4px;
-}
-
 .header__button {
   cursor: pointer;
 }
