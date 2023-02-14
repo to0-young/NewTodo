@@ -1,9 +1,9 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import ConfirmEmail from '../../components/user/confirm-email/confirm-email'
-import ActivationRoutes from './activation-routes/activation-routes'
+import ConfirmAccount from '../routing/activation-routes/activation-routes'
 
-const NonActivationRoutes = () => {
+const NonActivatedRoutes = () => {
   return (
     <Switch>
       <Route path='/confirm_email'>
@@ -11,7 +11,7 @@ const NonActivationRoutes = () => {
       </Route>
 
       <Route>
-        <ActivationRoutes path='/' />
+        <ConfirmAccount path='/' />
       </Route>
 
       <Redirect to='/' />
@@ -19,4 +19,4 @@ const NonActivationRoutes = () => {
   )
 }
 
-export default NonActivationRoutes
+export default NonActivatedRoutes

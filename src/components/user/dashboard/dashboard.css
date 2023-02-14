@@ -31,9 +31,11 @@
 .dashboard__table-th {
   display: flex;
   align-items: center;
+  position: relative;
+  justify-content: center;
 }
 
 .dashboard__table-title {
-  margin-right: 10px;
+  margin-right: 15px;
   position: relative;
 }

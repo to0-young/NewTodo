@@ -16,6 +16,9 @@ function Dashboard(props) {
   const tasks = useSelector((state) => state.task.list)
   const fetched = useSelector((state) => state.task.fetched)
 
+  const [orderType, setOrderType] = useState('asc')
+  const [fieldType, setFieldType] = useState('priority')
+
   const [page, setPage] = useState(1)
   const [pagesCount, setPagesCount] = useState()
 
@@ -28,12 +31,14 @@ function Dashboard(props) {
   }, [page])
 
   const getTasks = async (page) => {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks?per_page=10&page=${page}`, {
-      method: 'GET',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-    })
-
+    const res = await fetch(
+      `http://localhost:3000/api/v1/tasks?per_page=10&page=${page}&sort_order=${orderType}&sort_field=${fieldType}`,
+      {
+        method: 'GET',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+      }
+    )
     const json = await res.json()
     if (res.ok) {
       setPagesCount(json.pagy.pages)
@@ -51,7 +56,6 @@ function Dashboard(props) {
         completed: true,
       }),
     })
-
     const json = await res.json()
     if (res.ok) {
       props.updateTaskSuccess(json)
@@ -68,7 +72,6 @@ function Dashboard(props) {
         completed: false,
       }),
     })
-
     const json = await res.json()
     if (res.ok) {
       props.updateTaskSuccess(json)
@@ -83,7 +86,6 @@ function Dashboard(props) {
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
       })
-
       const json = await res.json()
       if (res.ok) {
         props.deleteTaskSuccess(task)
@@ -104,7 +106,7 @@ function Dashboard(props) {
               <SortIcon />
             </th>
             <th>Description</th>
-            <th>Priority</th>
+            <th> priority</th>
             <th>Due date</th>
             <th>Actions</th>
           </tr>
@@ -142,6 +144,7 @@ function Dashboard(props) {
           })}
         </tbody>
       </table>
+
       <div className='pagination'>
         <Pagination page={page} variant='outlined' color='primary' count={pagesCount} onChange={onChangePagination} />
       </div>

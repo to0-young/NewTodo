@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import actionCreator from '../../store/action-creator'
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead'
 
-function ActivationRoutes(props) {
+function ConfirmAccount(props) {
   const history = useHistory()
 
   const onExit = async () => {
@@ -24,9 +24,9 @@ function ActivationRoutes(props) {
   }
 
   return (
-    <div className='action'>
-      <form className='action__routes'>
-        <MarkEmailReadIcon></MarkEmailReadIcon>
+    <div className='confirm__account'>
+      <form className='confirm__account-form'>
+        <MarkEmailReadIcon />
         <h2>Confirm your account</h2>
 
         <br />
@@ -43,5 +43,5 @@ function ActivationRoutes(props) {
   )
 }
 
-const ConnectedActivationRoutes = connect(null, actionCreator)(ActivationRoutes)
-export default ConnectedActivationRoutes
+const ConnectedConfirmAccount = connect(null, actionCreator)(ConfirmAccount)
+export default ConnectedConfirmAccount
