@@ -1,7 +1,7 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import ConfirmEmail from '../../components/user/confirm-email/confirm-email'
-import ConfirmAccount from '../routing/activation-routes/activation-routes'
+import ConfirmAccount from './activation-routes/activation-account'
 
 const NonActivatedRoutes = () => {
   return (

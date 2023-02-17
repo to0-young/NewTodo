@@ -1,12 +1,12 @@
 import React from 'react'
 import Button from '@mui/material/Button'
-import './activation-routes.css'
+import './activation-account.css'
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import actionCreator from '../../store/action-creator'
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead'
 
-function ConfirmAccount(props) {
+function ActivatedAccount(props) {
   const history = useHistory()
 
   const onExit = async () => {
@@ -24,8 +24,8 @@ function ConfirmAccount(props) {
   }
 
   return (
-    <div className='confirm__account'>
-      <form className='confirm__account-form'>
+    <div className='activated__account'>
+      <form className='activated__account-form'>
         <MarkEmailReadIcon />
         <h2>Confirm your account</h2>
 
@@ -43,5 +43,5 @@ function ConfirmAccount(props) {
   )
 }
 
-const ConnectedConfirmAccount = connect(null, actionCreator)(ConfirmAccount)
+const ConnectedConfirmAccount = connect(null, actionCreator)(ActivatedAccount)
 export default ConnectedConfirmAccount
