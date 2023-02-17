@@ -17,7 +17,7 @@ function Dashboard(props) {
   const fetched = useSelector((state) => state.task.fetched)
 
   const [orderType, setOrderType] = useState('asc')
-  const [fieldType, setFieldType] = useState('priority')
+  const [fieldType, setFieldType] = useState('title')
 
   const [page, setPage] = useState(1)
   const [pagesCount, setPagesCount] = useState()
@@ -28,7 +28,7 @@ function Dashboard(props) {
 
   useEffect(() => {
     getTasks(page)
-  }, [page])
+  }, [page, fieldType])
 
   const getTasks = async (page) => {
     const res = await fetch(
@@ -96,18 +96,35 @@ function Dashboard(props) {
 
   if (fetched === false) return <Spinner />
 
+  console.log(fieldType)
+
   return (
     <div className='dashboard'>
       <table>
         <thead>
           <tr>
             <th className='dashboard__table-th'>
-              <span className='dashboard__table-title'>Title</span>
-              <SortIcon />
+              <span className='dashboard__table-title' onClick={() => setFieldType('title')}>
+                Title
+              </span>
+              {fieldType === 'title' && <SortIcon />}
             </th>
+
             <th>Description</th>
-            <th> priority</th>
-            <th>Due date</th>
+
+            <th className='dashboard__table-th' onClick={() => setFieldType('priority')}>
+              {fieldType === 'priority' && (
+                <div className='sort__icon'>
+                  <SortIcon />
+                </div>
+              )}
+              Priority
+            </th>
+
+            <th className='dashboard__table-th' onClick={() => setFieldType('due_date')}>
+              {fieldType === 'due_date' && <SortIcon />}Due date
+            </th>
+
             <th>Actions</th>
           </tr>
         </thead>

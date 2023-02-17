@@ -29,13 +29,14 @@
 }
 
 .dashboard__table-th {
-  display: flex;
-  align-items: center;
-  position: relative;
-  justify-content: center;
+  cursor: pointer;
 }
 
 .dashboard__table-title {
-  margin-right: 15px;
+  position: relative;
+  cursor: pointer;
+}
+
+.sort__icon {
   position: relative;
 }
