@@ -43,5 +43,5 @@ function ActivatedAccount(props) {
   )
 }
 
-const ConnectedConfirmAccount = connect(null, actionCreator)(ActivatedAccount)
-export default ConnectedConfirmAccount
+const ConnectedActivatedAccount = connect(null, actionCreator)(ActivatedAccount)
+export default ConnectedActivatedAccount

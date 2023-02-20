@@ -10,14 +10,19 @@ import { Link } from 'react-router-dom'
 import Brightness1OutlinedIcon from '@mui/icons-material/Brightness1Outlined'
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
 import Pagination from '@mui/material/Pagination'
-import SortIcon from '@mui/icons-material/Sort'
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 
 function Dashboard(props) {
   const tasks = useSelector((state) => state.task.list)
   const fetched = useSelector((state) => state.task.fetched)
 
-  const [orderType, setOrderType] = useState('asc')
+  const [orderAsc, setOrderAsc] = useState('asc')
   const [fieldType, setFieldType] = useState('title')
+
+  const handleSortClick = () => {
+    setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
+  }
 
   const [page, setPage] = useState(1)
   const [pagesCount, setPagesCount] = useState()
@@ -28,11 +33,11 @@ function Dashboard(props) {
 
   useEffect(() => {
     getTasks(page)
-  }, [page, fieldType])
+  }, [page, fieldType, orderAsc])
 
   const getTasks = async (page) => {
     const res = await fetch(
-      `http://localhost:3000/api/v1/tasks?per_page=10&page=${page}&sort_order=${orderType}&sort_field=${fieldType}`,
+      `http://localhost:3000/api/v1/tasks?per_page=10&page=${page}&sort_order=${orderAsc}&sort_field=${fieldType}`,
       {
         method: 'GET',
         credentials: 'include',
@@ -96,8 +101,6 @@ function Dashboard(props) {
 
   if (fetched === false) return <Spinner />
 
-  console.log(fieldType)
-
   return (
     <div className='dashboard'>
       <table>
@@ -107,22 +110,29 @@ function Dashboard(props) {
               <span className='dashboard__table-title' onClick={() => setFieldType('title')}>
                 Title
               </span>
-              {fieldType === 'title' && <SortIcon />}
+              <span className='SortIcon' onClick={handleSortClick}>
+                {orderAsc === 'asc' ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
+              </span>
             </th>
 
             <th>Description</th>
 
-            <th className='dashboard__table-th' onClick={() => setFieldType('priority')}>
-              {fieldType === 'priority' && (
-                <div className='sort__icon'>
-                  <SortIcon />
-                </div>
-              )}
-              Priority
+            <th className='dashboard__table-th'>
+              <span className='dashboard__table-priority' onClick={() => setFieldType('priority')}>
+                Priority
+              </span>
+              <span className='SortIcon' onClick={handleSortClick}>
+                {orderAsc === 'asc' ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
+              </span>
             </th>
 
-            <th className='dashboard__table-th' onClick={() => setFieldType('due_date')}>
-              {fieldType === 'due_date' && <SortIcon />}Due date
+            <th className='dashboard__table-th'>
+              <span className='dashboard__table-due_date' onClick={() => setFieldType('due_date')}>
+                Due data
+              </span>
+              <span className='SortIcon' onClick={handleSortClick}>
+                {orderAsc === 'asc' ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
+              </span>
             </th>
 
             <th>Actions</th>

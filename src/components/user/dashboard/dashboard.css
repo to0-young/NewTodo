@@ -29,14 +29,34 @@
 }
 
 .dashboard__table-th {
+  justify-content: center;
   cursor: pointer;
 }
 
 .dashboard__table-title {
   position: relative;
   cursor: pointer;
+  margin: 25px;
+}
+
+.dashboard__table-priority {
+  position: relative;
+  cursor: pointer;
+  margin: 25px;
+}
+
+.dashboard__table-due_date {
+  position: relative;
+  cursor: pointer;
+  margin: 25px;
 }
 
 .sort__icon {
+  display: flex;
   position: relative;
+  margin: 2px;
+}
+
+.SortIcon {
+  position: absolute;
 }
