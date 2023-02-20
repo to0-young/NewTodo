@@ -20,8 +20,24 @@ function Dashboard(props) {
   const [orderAsc, setOrderAsc] = useState('asc')
   const [fieldType, setFieldType] = useState('title')
 
-  const handleSortClick = () => {
+  const buildIcon = (field) => {
+    if (field === fieldType) return orderAsc === 'asc' ? <ArrowDownwardIcon /> : <ArrowUpwardIcon />
+    return null
+  }
+
+  const sortByTitle = () => {
     setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
+    setFieldType('title')
+  }
+
+  const sortByPriority = () => {
+    setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
+    setFieldType('priority')
+  }
+
+  const sortByDueDate = () => {
+    setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
+    setFieldType('due_date')
   }
 
   const [page, setPage] = useState(1)
@@ -106,33 +122,21 @@ function Dashboard(props) {
       <table>
         <thead>
           <tr>
-            <th className='dashboard__table-th'>
-              <span className='dashboard__table-title' onClick={() => setFieldType('title')}>
-                Title
-              </span>
-              <span className='dashboard__sort-icon' onClick={handleSortClick}>
-                {orderAsc === 'asc' ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
-              </span>
+            <th className='dashboard__table-th' onClick={sortByTitle}>
+              <span className='dashboard__table-title'>Title</span>
+              <span className='dashboard__sort-icon'>{buildIcon('title')}</span>
             </th>
 
             <th>Description</th>
 
-            <th className='dashboard__table-th'>
-              <span className='dashboard__table-priority' onClick={() => setFieldType('priority')}>
-                Priority
-              </span>
-              <span className='dashboard__sort-icon' onClick={handleSortClick}>
-                {orderAsc === 'asc' ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
-              </span>
+            <th className='dashboard__table-th' onClick={sortByPriority}>
+              <span className='dashboard__table-priority'>Priority</span>
+              <span className='dashboard__sort-icon'>{buildIcon('priority')}</span>
             </th>
 
-            <th className='dashboard__table-th'>
-              <span className='dashboard__table-due_date' onClick={() => setFieldType('due_date')}>
-                Due data
-              </span>
-              <span className='dashboard__sort-icon' onClick={handleSortClick}>
-                {orderAsc === 'asc' ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
-              </span>
+            <th className='dashboard__table-th' onClick={sortByDueDate}>
+              <span className='dashboard__table-due_date'>Due date</span>
+              <span className='dashboard__sort-icon'>{buildIcon('due_date')}</span>
             </th>
 
             <th>Actions</th>
