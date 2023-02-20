@@ -110,7 +110,7 @@ function Dashboard(props) {
               <span className='dashboard__table-title' onClick={() => setFieldType('title')}>
                 Title
               </span>
-              <span className='SortIcon' onClick={handleSortClick}>
+              <span className='dashboard__sort-icon' onClick={handleSortClick}>
                 {orderAsc === 'asc' ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
               </span>
             </th>
@@ -121,7 +121,7 @@ function Dashboard(props) {
               <span className='dashboard__table-priority' onClick={() => setFieldType('priority')}>
                 Priority
               </span>
-              <span className='SortIcon' onClick={handleSortClick}>
+              <span className='dashboard__sort-icon' onClick={handleSortClick}>
                 {orderAsc === 'asc' ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
               </span>
             </th>
@@ -130,7 +130,7 @@ function Dashboard(props) {
               <span className='dashboard__table-due_date' onClick={() => setFieldType('due_date')}>
                 Due data
               </span>
-              <span className='SortIcon' onClick={handleSortClick}>
+              <span className='dashboard__sort-icon' onClick={handleSortClick}>
                 {orderAsc === 'asc' ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
               </span>
             </th>

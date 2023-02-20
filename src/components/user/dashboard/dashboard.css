@@ -29,7 +29,6 @@
 }
 
 .dashboard__table-th {
-  justify-content: center;
   cursor: pointer;
 }
 
@@ -51,12 +50,7 @@
   margin: 25px;
 }
 
-.sort__icon {
-  display: flex;
-  position: relative;
-  margin: 2px;
-}
-
-.SortIcon {
+.dashboard__sort-icon {
   position: absolute;
+  padding: 0 0 5px;
 }

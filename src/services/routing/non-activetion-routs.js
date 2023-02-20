@@ -1,7 +1,7 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import ConfirmEmail from '../../components/user/confirm-email/confirm-email'
-import ConfirmAccount from './activation-routes/activation-account'
+import ActivationMessage from './activation-routes/activation-message'
 
 const NonActivatedRoutes = () => {
   return (
@@ -11,7 +11,7 @@ const NonActivatedRoutes = () => {
       </Route>
 
       <Route>
-        <ConfirmAccount path='/' />
+        <ActivationMessage path='/' />
       </Route>
 
       <Redirect to='/' />
