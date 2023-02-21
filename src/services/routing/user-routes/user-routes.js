@@ -1,10 +1,10 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import Dashboard from '../../components/user/dashboard/dashboard'
-import UserHeader from '../../components/user/header/user-header'
+import Dashboard from '../../../components/user/dashboard/dashboard'
+import UserHeader from '../../../components/user/header/user-header'
 import './user-routes.css'
-import NewTask from '../../components/user/new-task/new-task'
-import EditTask from '../../components/user/././edit-task/edit-task'
+import NewTask from '../../../components/user/new-task/new-task'
+import EditTask from '../../../components/user/edit-task/edit-task'
 
 const UserRoutes = () => {
   return (

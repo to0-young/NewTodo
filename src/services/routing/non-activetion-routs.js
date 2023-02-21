@@ -1,17 +1,22 @@
 import React from 'react'
-import { Redirect, Route } from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
 import ConfirmEmail from '../../components/user/confirm-email/confirm-email'
+import ActivationMessage from './activation-routes/activation-message'
 
-function setRouts() {
+const NonActivatedRoutes = () => {
   return (
-    <switch>
+    <Switch>
       <Route path='/confirm_email'>
         <ConfirmEmail />
       </Route>
 
-      <Redirect to='/login' />
-    </switch>
+      <Route>
+        <ActivationMessage path='/' />
+      </Route>
+
+      <Redirect to='/' />
+    </Switch>
   )
 }
 
-export default setRouts
+export default NonActivatedRoutes

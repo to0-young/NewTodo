@@ -29,11 +29,28 @@
 }
 
 .dashboard__table-th {
-  display: flex;
-  align-items: center;
+  cursor: pointer;
 }
 
 .dashboard__table-title {
-  margin-right: 10px;
   position: relative;
+  cursor: pointer;
+  margin: 25px;
+}
+
+.dashboard__table-priority {
+  position: relative;
+  cursor: pointer;
+  margin: 25px;
+}
+
+.dashboard__table-due_date {
+  position: relative;
+  cursor: pointer;
+  margin: 25px;
+}
+
+.dashboard__sort-icon {
+  position: absolute;
+  padding: 0 0 5px;
 }
