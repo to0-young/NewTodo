@@ -87,7 +87,7 @@ function SignUp() {
   }
   console.log(error)
   const createUser = async () => {
-    const res = await fetch('http://localhost:3000/api/v1/users', {
+    const res = await fetch('${process.env.REACT_APP_API_URL}/api/v1/users', {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },

@@ -47,7 +47,7 @@ function ForgotPassword() {
   }
 
   const onForget = async () => {
-    const res = await fetch('http://localhost:3000/api/v1/forget_passwords', {
+    const res = await fetch('${process.env.REACT_APP_API_URL}/api/v1/forget_passwords', {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },

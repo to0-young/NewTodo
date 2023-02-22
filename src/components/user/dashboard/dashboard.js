@@ -53,7 +53,7 @@ function Dashboard(props) {
 
   const getTasks = async (page) => {
     const res = await fetch(
-      `http://localhost:3000/api/v1/tasks?per_page=10&page=${page}&sort_order=${orderAsc}&sort_field=${fieldType}`,
+      '${process.env.REACT_APP_API_URL}/api/v1/tasks?per_page=10&page=${page}&sort_order=${orderAsc}&sort_field=${fieldType}',
       {
         method: 'GET',
         credentials: 'include',
@@ -69,7 +69,7 @@ function Dashboard(props) {
   }
 
   const updateCompletedTask = (taskId) => async () => {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks/${taskId}`, {
+    const res = await fetch('${process.env.REACT_APP_API_URL}/api/v1/tasks/${taskId}', {
       method: 'PATCH',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
@@ -85,7 +85,7 @@ function Dashboard(props) {
   }
 
   const donCompletedTask = (taskId) => async () => {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks/${taskId}`, {
+    const res = await fetch('${process.env.REACT_APP_API_URL}/api/v1/tasks/${taskId}', {
       method: 'PATCH',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
@@ -102,7 +102,7 @@ function Dashboard(props) {
 
   const deleteTask = (task) => async () => {
     if (window.confirm(`Are you sure you want to delete task with ID ${task.id}`)) {
-      const res = await fetch(`http://localhost:3000/api/v1/tasks/${task.id}`, {
+      const res = await fetch('${process.env.REACT_APP_API_URL}/api/v1/tasks/${task.id}', {
         method: 'DELETE',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
