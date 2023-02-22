@@ -62,7 +62,7 @@ function NewPassword() {
   const updateNewPassword = async () => {
     const searchParams = new URLSearchParams(history.location.search)
     const recoveryToken = Object.fromEntries(searchParams).recovery_token
-    const res = await fetch(`http://localhost:3000/api/v1/users`, {
+    const res = await fetch('${process.env.REACT_APP_API_URL}/api/v1/users', {
       method: 'PATCH',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json', Authorization: recoveryToken },

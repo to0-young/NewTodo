@@ -18,12 +18,14 @@ function App(props) {
   const session = useSelector((state) => state.session.details)
   const fetched = props.fetched
 
+  const apiUrl = process.env.REACT_APP_API_URL
+
   useEffect(() => {
     fetchSession()
   }, [])
 
   const fetchSession = async () => {
-    const getSessions = await fetch('http://localhost:3000/api/v1/sessions', {
+    const getSessions = await fetch(`${apiUrl}/api/v1/sessions`, {
       method: 'GET',
       credentials: 'include',
       headers: {

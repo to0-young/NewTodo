@@ -92,7 +92,7 @@ function EditTask(props) {
   }
 
   const updateTask = async () => {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks/${task.id}`, {
+    const res = await fetch('${process.env.REACT_APP_API_URL}/api/v1/tasks/${task.id}', {
       method: 'PATCH',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
@@ -113,7 +113,7 @@ function EditTask(props) {
   }
 
   const getTask = async () => {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks/${params.id}`, {
+    const res = await fetch('${process.env.REACT_APP_API_URL}/api/v1/tasks/${params.id}', {
       method: 'GET',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },

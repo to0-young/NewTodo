@@ -12,7 +12,7 @@ function ConfirmEmail(props) {
   }, [])
 
   const fetchSession = async () => {
-    const getSessions = await fetch('http://localhost:3000/api/v1/sessions', {
+    const getSessions = await fetch('${process.env.REACT_APP_API_URL}/api/v1/sessions', {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -28,7 +28,7 @@ function ConfirmEmail(props) {
   const confirmEmail = async () => {
     const searchParams = new URLSearchParams(history.location.search)
     const confirmToken = Object.fromEntries(searchParams).confirm_token
-    const res = await fetch(`http://localhost:3000/api/v1/users`, {
+    const res = await fetch('${process.env.REACT_APP_API_URL}/api/v1/users', {
       method: 'PATCH',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json', Authorization: confirmToken },
