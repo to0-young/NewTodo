@@ -10,35 +10,11 @@ import { Link } from 'react-router-dom'
 import Brightness1OutlinedIcon from '@mui/icons-material/Brightness1Outlined'
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
 import Pagination from '@mui/material/Pagination'
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
+import SortIcon from '@mui/icons-material/Sort'
 
 function Dashboard(props) {
   const tasks = useSelector((state) => state.task.list)
   const fetched = useSelector((state) => state.task.fetched)
-
-  const [orderAsc, setOrderAsc] = useState('asc')
-  const [fieldType, setFieldType] = useState('title')
-
-  const buildIcon = (field) => {
-    if (field === fieldType) return orderAsc === 'asc' ? <ArrowDownwardIcon /> : <ArrowUpwardIcon />
-    return null
-  }
-
-  const sortByTitle = () => {
-    setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
-    setFieldType('title')
-  }
-
-  const sortByPriority = () => {
-    setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
-    setFieldType('priority')
-  }
-
-  const sortByDueDate = () => {
-    setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
-    setFieldType('due_date')
-  }
 
   const [page, setPage] = useState(1)
   const [pagesCount, setPagesCount] = useState()
@@ -49,17 +25,15 @@ function Dashboard(props) {
 
   useEffect(() => {
     getTasks(page)
-  }, [page, fieldType, orderAsc])
+  }, [page])
 
   const getTasks = async (page) => {
-    const res = await fetch(
-      `http://localhost:3000/api/v1/tasks?per_page=10&page=${page}&sort_order=${orderAsc}&sort_field=${fieldType}`,
-      {
-        method: 'GET',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-      }
-    )
+    const res = await fetch(`http://localhost:3000/api/v1/tasks?per_page=10&page=${page}`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+    })
+
     const json = await res.json()
     if (res.ok) {
       setPagesCount(json.pagy.pages)
@@ -77,6 +51,7 @@ function Dashboard(props) {
         completed: true,
       }),
     })
+
     const json = await res.json()
     if (res.ok) {
       props.updateTaskSuccess(json)
@@ -93,6 +68,7 @@ function Dashboard(props) {
         completed: false,
       }),
     })
+
     const json = await res.json()
     if (res.ok) {
       props.updateTaskSuccess(json)
@@ -107,6 +83,7 @@ function Dashboard(props) {
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
       })
+
       const json = await res.json()
       if (res.ok) {
         props.deleteTaskSuccess(task)
@@ -122,23 +99,13 @@ function Dashboard(props) {
       <table>
         <thead>
           <tr>
-            <th className='dashboard__table-th' onClick={sortByTitle}>
+            <th className='dashboard__table-th'>
               <span className='dashboard__table-title'>Title</span>
-              <span className='dashboard__sort-icon'>{buildIcon('title')}</span>
+              <SortIcon />
             </th>
-
             <th>Description</th>
-
-            <th className='dashboard__table-th' onClick={sortByPriority}>
-              <span className='dashboard__table-priority'>Priority</span>
-              <span className='dashboard__sort-icon'>{buildIcon('priority')}</span>
-            </th>
-
-            <th className='dashboard__table-th' onClick={sortByDueDate}>
-              <span className='dashboard__table-due_date'>Due date</span>
-              <span className='dashboard__sort-icon'>{buildIcon('due_date')}</span>
-            </th>
-
+            <th>Priority</th>
+            <th>Due date</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -175,9 +142,8 @@ function Dashboard(props) {
           })}
         </tbody>
       </table>
-
       <div className='pagination'>
-        <Pagination page={page} variant='outlined' color='primary' count={pagesCount} onChange={onChangePagination} />
+        <Pagination page={page} count={pagesCount} onChange={onChangePagination} />
       </div>
     </div>
   )

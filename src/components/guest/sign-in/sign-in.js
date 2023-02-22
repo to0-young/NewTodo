@@ -116,13 +116,6 @@ function SignIn(props) {
         />
 
         <br />
-        {errorMsg ? (
-          <Stack sx={{ width: '100%' }} spacing={2}>
-            <Alert severity='error'>{errorMsg}</Alert>
-          </Stack>
-        ) : null}
-
-        <br />
 
         <Button type={'submit'} variant='contained' color='info'>
           log in
@@ -136,6 +129,12 @@ function SignIn(props) {
             Сreate one
           </Link>
         </p>
+
+        {errorMsg ? (
+          <Stack sx={{ width: '100%' }} spacing={2}>
+            <Alert severity='error'>{errorMsg}</Alert>
+          </Stack>
+        ) : null}
 
         <Link className='sign-in__forgot' to='/passwords/recovery'>
           Forgot password ?
