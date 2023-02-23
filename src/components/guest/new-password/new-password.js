@@ -5,6 +5,7 @@ import './new-password.css'
 import { Link, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
+import { apiUrl } from '../../../exp-const/constants'
 
 function NewPassword() {
   const history = useHistory()
@@ -62,7 +63,7 @@ function NewPassword() {
   const updateNewPassword = async () => {
     const searchParams = new URLSearchParams(history.location.search)
     const recoveryToken = Object.fromEntries(searchParams).recovery_token
-    const res = await fetch('${process.env.REACT_APP_API_URL}/api/v1/users', {
+    const res = await fetch(`${apiUrl}/api/v1/users`, {
       method: 'PATCH',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json', Authorization: recoveryToken },
