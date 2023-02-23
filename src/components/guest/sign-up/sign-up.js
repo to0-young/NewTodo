@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './sign-up.css'
 import { Link, useHistory } from 'react-router-dom'
+import { apiUrl } from '../../../exp-const/constants'
 
 function SignUp() {
   const history = useHistory()
@@ -87,7 +88,7 @@ function SignUp() {
   }
   console.log(error)
   const createUser = async () => {
-    const res = await fetch('${process.env.REACT_APP_API_URL}/api/v1/users', {
+    const res = await fetch(`${apiUrl}/api/v1/users`, {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },

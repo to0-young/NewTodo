@@ -7,6 +7,7 @@ import Alert from '@mui/material/Alert'
 import Stack from '@mui/material/Stack'
 import { connect } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
+import { apiUrl } from '../../../exp-const/constants'
 
 function SignIn(props) {
   const history = useHistory()
@@ -62,7 +63,7 @@ function SignIn(props) {
   }
 
   const onLogIn = async () => {
-    const res = await fetch('${process.env.REACT_APP_API_URL}/api/v1/sessions', {
+    const res = await fetch(`${apiUrl}/api/v1/sessions`, {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
