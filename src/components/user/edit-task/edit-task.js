@@ -10,6 +10,7 @@ import actionCreator from '../../../services/store/action-creator'
 import { useHistory, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import Spinner from '../../reusable/spinner'
+import { apiUrl } from '../../../exp-const/constants'
 
 function EditTask(props) {
   const params = useParams()
@@ -92,7 +93,7 @@ function EditTask(props) {
   }
 
   const updateTask = async () => {
-    const res = await fetch('${process.env.REACT_APP_API_URL}/api/v1/tasks/${task.id}', {
+    const res = await fetch(`${apiUrl}/api/v1/tasks/${task.id}`, {
       method: 'PATCH',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
@@ -113,7 +114,7 @@ function EditTask(props) {
   }
 
   const getTask = async () => {
-    const res = await fetch('${process.env.REACT_APP_API_URL}/api/v1/tasks/${params.id}', {
+    const res = await fetch(`${apiUrl}/api/v1/tasks/${params.id}`, {
       method: 'GET',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },

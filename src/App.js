@@ -13,12 +13,11 @@ import Spinner from './components/reusable/spinner'
 import { connect } from 'react-redux'
 import actionCreator from './services/store/action-creator'
 import NonActivatedRoutes from './services/routing/non-activetion-routs'
+import { apiUrl } from './exp-const/constants'
 
 function App(props) {
   const session = useSelector((state) => state.session.details)
   const fetched = props.fetched
-
-  const apiUrl = process.env.REACT_APP_API_URL
 
   useEffect(() => {
     fetchSession()

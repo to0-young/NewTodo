@@ -4,12 +4,13 @@ import './user-header.css'
 import Button from '@mui/material/Button'
 import { connect } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
+import { apiUrl } from '../../../exp-const/constants'
 
 function UserHeader(props) {
   const history = useHistory()
 
   const onLogOut = async () => {
-    const res = await fetch('${process.env.REACT_APP_API_URL}/api/v1/sessions', {
+    const res = await fetch(`${apiUrl}/api/v1/sessions`, {
       method: 'DELETE',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
