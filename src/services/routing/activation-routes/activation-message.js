@@ -18,6 +18,7 @@ function ActivationMessage(props) {
     })
     const json = await res.json()
     if (res.ok) {
+      console.log(onExit)
       props.deleteSessionSuccess()
       history.push('/login')
     }

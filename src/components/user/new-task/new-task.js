@@ -8,6 +8,7 @@ import Button from '@mui/material/Button'
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
+import { apiUrl } from '../../../exp-const/constants'
 
 function NewTask() {
   const history = useHistory()
@@ -85,7 +86,7 @@ function NewTask() {
   }
 
   const postTask = async () => {
-    const res = await fetch('${process.env.REACT_APP_API_URL}/api/v1/tasks', {
+    const res = await fetch(`${apiUrl}/api/v1/tasks`, {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
