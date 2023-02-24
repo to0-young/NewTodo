@@ -7,17 +7,18 @@ import actionCreator from '../../store/action-creator'
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead'
 import { apiUrl } from '../../../exp-const/constants'
 
-function ActivationMessage() {
+function ActivationMessage(props) {
   const history = useHistory()
 
   const onExit = async () => {
     const res = await fetch(`${apiUrl}/api/v1/session`, {
-      method: 'GET',
+      method: 'DELETE',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
     })
     const json = await res.json()
     if (res.ok) {
+      props.updateSessionSuccess()
       history.push('/login')
     }
     return json
