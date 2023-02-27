@@ -1,0 +1,67 @@
+alerts:
+  - rule: DEPLOYMENT_FAILED
+  - rule: DOMAIN_FAILED
+databases:
+  - engine: PG
+    name: db
+    num_nodes: 1
+    version: "12"
+ingress: {}
+name: monkfish-app
+region: fra
+services:
+  - environment_slug: ruby-on-rails
+    envs:
+      - key: DATABASE_URL
+        scope: RUN_AND_BUILD_TIME
+        value: postgresql://db:AVNS_J-wskwUtJ-WQknAgA_i@app-bfb432f7-c2db-4ac8-8b0a-c4bfb47ee45b-do-user-13614434-0.b.db.ondigitalocean.com:25060/db?sslmode=require
+      - key: RAILS_MASTER_KEY
+        scope: RUN_AND_BUILD_TIME
+        value: 0b8b23f9ea8e90d855ef6b7c26329e88
+      - key: RACK_ENV
+        scope: RUN_AND_BUILD_TIME
+        value: production
+      - key: RAILS_ENV
+        scope: RUN_AND_BUILD_TIME
+        value: production
+      - key: RAILS_LOG_TO_STDOUT
+        scope: RUN_AND_BUILD_TIME
+        value: enabled
+      - key: RAILS_SERVE_STATIC_FILES
+        scope: RUN_AND_BUILD_TIME
+        value: enabled
+      - key: FRONT_URL
+        scope: RUN_AND_BUILD_TIME
+        value: https://monkfish-app-tnh5h.ondigitalocean.app
+    github:
+      branch: main
+      deploy_on_push: true
+      repo: to0-young/TodoBackend
+    http_port: 8080
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    name: todobackend
+    routes:
+      - path: /todobackend
+    run_command: |+
+      rails db:migrate
+      bundle exec rails s
+
+    source_dir: /
+static_sites:
+  - build_command: npm run build
+    environment_slug: node-js
+    envs:
+      - key: REACT_APP_API_URL
+        scope: BUILD_TIME
+        value: https://monkfish-app-tnh5h.ondigitalocean.app/todobackend
+    github:
+      branch: main
+      deploy_on_push: true
+      repo: to0-young/NewTodo
+    name: newtodo
+    output_dir: build
+    catchall_document: index.html
+    routes:
+      - path: /
+    source_dir: /
