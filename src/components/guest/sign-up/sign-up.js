@@ -86,7 +86,6 @@ function SignUp() {
       password: e.target.value,
     })
   }
-  console.log(error)
   const createUser = async () => {
     const res = await fetch(`${apiUrl}/api/v1/users`, {
       method: 'POST',
