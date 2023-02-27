@@ -13,8 +13,8 @@ function SignIn(props) {
   const history = useHistory()
 
   const [user, changeUser] = React.useState({
-    email: 'user_0@gmail.com',
-    password: '123',
+    email: '',
+    password: '',
   })
 
   const [error, changeError] = React.useState({

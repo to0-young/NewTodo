@@ -9,10 +9,10 @@ function SignUp() {
   const history = useHistory()
 
   const [user, changeUser] = React.useState({
-    firstName: 'igor',
-    lastName: 'franklyn',
-    email: 'user1@example.com',
-    password: '12345',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
   })
 
   const [error, changeError] = React.useState({
