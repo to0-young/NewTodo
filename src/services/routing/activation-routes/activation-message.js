@@ -11,7 +11,7 @@ function ActivationMessage(props) {
   const history = useHistory()
 
   const onExit = async () => {
-    const res = await fetch(`${apiUrl}/api/v1/session`, {
+    const res = await fetch(`${apiUrl}/api/v1/sessions`, {
       method: 'DELETE',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
