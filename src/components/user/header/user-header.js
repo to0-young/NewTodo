@@ -5,10 +5,24 @@ import Button from '@mui/material/Button'
 import { connect } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 import { apiUrl } from '../../../exp-const/constants'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 
 function UserHeader(props) {
   const history = useHistory()
 
+  const [anchorEl, setAnchorEl] = React.useState()
+  const open = Boolean(anchorEl)
+
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
+  console.log()
   const onLogOut = async () => {
     const res = await fetch(`${apiUrl}/api/v1/sessions`, {
       method: 'DELETE',
@@ -42,11 +56,31 @@ function UserHeader(props) {
           </div>
         </div>
 
-        <div className='header__section_right'>
-          <Button onClick={onLogOut} variant='contained' color='info'>
-            logOut
-          </Button>
-        </div>
+        <Button
+          id='basic-button'
+          aria-controls={open ? 'basic-menu' : undefined}
+          aria-haspopup='true'
+          aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}
+        >
+          <img
+            className='header__section_right'
+            src='https://todo-backet.fra1.digitaloceanspaces.com/uploads/user/avatar/145/img-5322-2-jpg-1-1600x1600.jpg?X-Amz-Expires=600&X-Amz-Date=20230315T183233Z&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00HA36CVQL3Z32M8XT%2F20230315%2Ffra1%2Fs3%2Faws4_request&X-Amz-SignedHeaders=host&X-Amz-Signature=5ea4fedb6d3e8b58c80b21175f727a9dbccfe4949257557f62ecd285c2e543b2'
+          />
+        </Button>
+        <Menu
+          id='basic-menu'
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+        >
+          <MenuItem onClick={onLogOut}>Profile</MenuItem>
+          <MenuItem onClick={onLogOut}>Notification</MenuItem>
+          <MenuItem onClick={onLogOut}>Logout</MenuItem>
+        </Menu>
       </div>
     </div>
   )
