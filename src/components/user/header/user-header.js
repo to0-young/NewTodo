@@ -2,14 +2,16 @@ import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import './user-header.css'
 import Button from '@mui/material/Button'
-import { connect } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 import { apiUrl } from '../../../exp-const/constants'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+import Spinner from '../../reusable/spinner'
 
 function UserHeader(props) {
   const history = useHistory()
+  const fetched = useSelector((state) => state.task.fetched)
 
   const [anchorEl, setAnchorEl] = React.useState()
   const open = Boolean(anchorEl)
@@ -36,6 +38,8 @@ function UserHeader(props) {
     }
     return json
   }
+
+  if (fetched === false) return <Spinner />
 
   return (
     <div className='header'>
@@ -78,7 +82,7 @@ function UserHeader(props) {
           }}
         >
           <MenuItem onClick={onLogOut}>Profile</MenuItem>
-          <MenuItem onClick={onLogOut}>Notification</MenuItem>
+          <MenuItem onClick={onLogOut}>Notifications</MenuItem>
           <MenuItem onClick={onLogOut}>Logout</MenuItem>
         </Menu>
       </div>
