@@ -12,6 +12,7 @@ import Spinner from '../../reusable/spinner'
 function UserHeader(props) {
   const history = useHistory()
   const fetched = useSelector((state) => state.task.fetched)
+  const session = useSelector((state) => state.session.details)
 
   const [anchorEl, setAnchorEl] = React.useState()
   const open = Boolean(anchorEl)
@@ -35,6 +36,7 @@ function UserHeader(props) {
     if (res.ok) {
       props.deleteSessionSuccess()
       history.push('/login')
+      console.log(session.user.avatar.url)
     }
     return json
   }
@@ -67,10 +69,7 @@ function UserHeader(props) {
           aria-expanded={open ? 'true' : undefined}
           onClick={handleClick}
         >
-          <img
-            className='header__section_right'
-            src='https://todo-backet.fra1.digitaloceanspaces.com/uploads/user/avatar/145/img-5322-2-jpg-1-1600x1600.jpg?X-Amz-Expires=600&X-Amz-Date=20230315T183233Z&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00HA36CVQL3Z32M8XT%2F20230315%2Ffra1%2Fs3%2Faws4_request&X-Amz-SignedHeaders=host&X-Amz-Signature=5ea4fedb6d3e8b58c80b21175f727a9dbccfe4949257557f62ecd285c2e543b2'
-          />
+          <img className='header__section_right' src={session.user.avatar.url} />
         </Button>
         <Menu
           id='basic-menu'
@@ -81,8 +80,7 @@ function UserHeader(props) {
             'aria-labelledby': 'basic-button',
           }}
         >
-          <MenuItem onClick={onLogOut}>Profile</MenuItem>
-          <MenuItem onClick={onLogOut}>Notifications</MenuItem>
+          {/*<MenuItem onClick={""}>Notifications</MenuItem>*/}
           <MenuItem onClick={onLogOut}>Logout</MenuItem>
         </Menu>
       </div>

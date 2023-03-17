@@ -134,7 +134,13 @@ function SignUp() {
       <form onSubmit={onSignUp} className='sign-up__form'>
         <h2>Sign up</h2>
 
-        <input type='file' name='file' onChange={handleFile} accept='imege/*,.png,.jpg,.gif,.web' />
+        <input
+          className='chooseFile'
+          type='file'
+          name='file'
+          onChange={handleFile}
+          accept='imege/*,.png,.jpg,.gif,.web'
+        />
 
         <TextField
           helperText={error.firstName}
