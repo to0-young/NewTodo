@@ -8,6 +8,8 @@ import { apiUrl } from '../../../exp-const/constants'
 function SignUp() {
   const history = useHistory()
 
+  const [file, setFile] = React.useState()
+
   const [user, changeUser] = React.useState({
     firstName: '',
     lastName: '',
@@ -64,6 +66,10 @@ function SignUp() {
     }
   }
 
+  const handleFile = (e) => {
+    setFile(e.target.files[0])
+  }
+
   const onChangeFirstName = (e) => {
     const newFirst = Object.assign({}, user, { firstName: e.target.value })
     changeUser(newFirst)
@@ -86,17 +92,20 @@ function SignUp() {
       password: e.target.value,
     })
   }
+
   const createUser = async () => {
+    const formData = new FormData()
+    formData.append('avatar', file)
+    formData.append('first_name', user.firstName)
+    formData.append('last_name', user.lastName)
+    formData.append('password', user.password)
+    formData.append('email', user.email)
+
     const res = await fetch(`${apiUrl}/api/v1/users`, {
       method: 'POST',
       credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        first_name: user.firstName,
-        last_name: user.lastName,
-        email: user.email,
-        password: user.password,
-      }),
+      // headers: {'Content-Type': 'application/json'},
+      body: formData,
     })
     const json = await res.json()
 
@@ -124,6 +133,14 @@ function SignUp() {
     <div className='sign-up'>
       <form onSubmit={onSignUp} className='sign-up__form'>
         <h2>Sign up</h2>
+
+        <input
+          className='chooseFile'
+          type='file'
+          name='file'
+          onChange={handleFile}
+          accept='imege/*,.png,.jpg,.gif,.web'
+        />
 
         <TextField
           helperText={error.firstName}

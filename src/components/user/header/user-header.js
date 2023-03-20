@@ -2,13 +2,30 @@ import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import './user-header.css'
 import Button from '@mui/material/Button'
-import { connect } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 import { apiUrl } from '../../../exp-const/constants'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import Spinner from '../../reusable/spinner'
 
 function UserHeader(props) {
   const history = useHistory()
+  const fetched = useSelector((state) => state.task.fetched)
+  const session = useSelector((state) => state.session.details)
 
+  const [anchorEl, setAnchorEl] = React.useState()
+  const open = Boolean(anchorEl)
+
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
+  console.log()
   const onLogOut = async () => {
     const res = await fetch(`${apiUrl}/api/v1/sessions`, {
       method: 'DELETE',
@@ -19,9 +36,12 @@ function UserHeader(props) {
     if (res.ok) {
       props.deleteSessionSuccess()
       history.push('/login')
+      console.log(session.user.avatar.url)
     }
     return json
   }
+
+  if (fetched === false) return <Spinner />
 
   return (
     <div className='header'>
@@ -42,11 +62,27 @@ function UserHeader(props) {
           </div>
         </div>
 
-        <div className='header__section_right'>
-          <Button onClick={onLogOut} variant='contained' color='info'>
-            logOut
-          </Button>
-        </div>
+        <Button
+          id='basic-button'
+          aria-controls={open ? 'basic-menu' : undefined}
+          aria-haspopup='true'
+          aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}
+        >
+          <img className='header__section_right' src={session.user.avatar.url} />
+        </Button>
+        <Menu
+          id='basic-menu'
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+        >
+          {/*<MenuItem onClick={""}>Notifications</MenuItem>*/}
+          <MenuItem onClick={onLogOut}>Logout</MenuItem>
+        </Menu>
       </div>
     </div>
   )
