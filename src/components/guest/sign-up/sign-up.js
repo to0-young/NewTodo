@@ -11,7 +11,7 @@ function SignUp() {
   const history = useHistory()
 
   const [file, setFile] = React.useState()
-  // const fetched = useSelector((state) => state.task.fetched)
+  const fetched = useSelector((state) => state.session.fetched)
 
   const [user, changeUser] = React.useState({
     firstName: '',
@@ -132,7 +132,7 @@ function SignUp() {
     return json
   }
 
-  // if (fetched === false) return <Spinner/>
+  if (fetched === false) return <Spinner />
 
   return (
     <div className='sign-up'>

@@ -67,6 +67,7 @@ function UserHeader(props) {
         >
           <img className='header__section_right' src={session.user.avatar.url} />
         </Button>
+
         <Menu
           id='basic-menu'
           anchorEl={anchorEl}
