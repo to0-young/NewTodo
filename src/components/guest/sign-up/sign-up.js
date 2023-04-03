@@ -11,6 +11,7 @@ function SignUp() {
   const history = useHistory()
 
   const [file, setFile] = React.useState()
+  // const [disabled, stDisabled] = React.useState(false)
   const fetched = useSelector((state) => state.session.fetched)
 
   const [user, changeUser] = React.useState({
@@ -72,6 +73,12 @@ function SignUp() {
   const handleFile = (e) => {
     setFile(e.target.files[0])
   }
+
+  // const  handleClick = () => {
+  //     setDisabled(true)
+  // }
+
+  console.log()
 
   const onChangeFirstName = (e) => {
     const newFirst = Object.assign({}, user, { firstName: e.target.value })
@@ -215,6 +222,8 @@ function SignUp() {
         <br />
 
         <Button type={'submit'} variant='contained'>
+          {/*disabled={disabled}*/}
+          {/*onClick={handleClick}*/}
           create
         </Button>
 
