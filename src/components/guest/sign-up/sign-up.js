@@ -4,12 +4,15 @@ import Button from '@mui/material/Button'
 import './sign-up.css'
 import { Link, useHistory } from 'react-router-dom'
 import { apiUrl } from '../../../exp-const/constants'
+import { useSelector } from 'react-redux'
+import Spinner from '../../reusable/spinner'
 
 function SignUp() {
   const history = useHistory()
 
   const [file, setFile] = React.useState()
   // const [disabled, stDisabled] = React.useState(false)
+  const fetched = useSelector((state) => state.session.fetched)
 
   const [user, changeUser] = React.useState({
     firstName: '',
@@ -135,6 +138,8 @@ function SignUp() {
     }
     return json
   }
+
+  if (fetched === false) return <Spinner />
 
   return (
     <div className='sign-up'>
