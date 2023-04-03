@@ -7,11 +7,9 @@ import actionCreator from '../../../services/store/action-creator'
 import { apiUrl } from '../../../exp-const/constants'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import Spinner from '../../reusable/spinner'
 
 function UserHeader(props) {
   const history = useHistory()
-  const fetched = useSelector((state) => state.task.fetched)
   const session = useSelector((state) => state.session.details)
 
   const [anchorEl, setAnchorEl] = React.useState()
@@ -41,8 +39,6 @@ function UserHeader(props) {
     return json
   }
 
-  if (fetched === false) return <Spinner />
-
   return (
     <div className='header'>
       <div className='header__section'>
@@ -71,6 +67,7 @@ function UserHeader(props) {
         >
           <img className='header__section_right' src={session.user.avatar.url} />
         </Button>
+
         <Menu
           id='basic-menu'
           anchorEl={anchorEl}
