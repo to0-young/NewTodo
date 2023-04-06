@@ -84,6 +84,7 @@ function SignUp() {
     const newFirst = Object.assign({}, user, { firstName: e.target.value })
     changeUser(newFirst)
   }
+
   const onChangeLastName = (e) => {
     changeUser({
       ...user,
@@ -140,7 +141,6 @@ function SignUp() {
   }
 
   if (fetched === false) return <Spinner />
-
   return (
     <div className='sign-up'>
       <form onSubmit={onSignUp} className='sign-up__form'>
