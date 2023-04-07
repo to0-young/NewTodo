@@ -4,15 +4,14 @@ import Button from '@mui/material/Button'
 import './sign-up.css'
 import { Link, useHistory } from 'react-router-dom'
 import { apiUrl } from '../../../exp-const/constants'
-import { useSelector } from 'react-redux'
 import Spinner from '../../reusable/spinner'
 
 function SignUp() {
   const history = useHistory()
 
   const [file, setFile] = React.useState()
-  // const [disabled, stDisabled] = React.useState(false)
-  const fetched = useSelector((state) => state.session.fetched)
+  const [disabled, setDisabled] = React.useState(false)
+  const [fetched, setFetched] = React.useState(false)
 
   const [user, changeUser] = React.useState({
     firstName: '',
@@ -74,12 +73,6 @@ function SignUp() {
     setFile(e.target.files[0])
   }
 
-  // const  handleClick = () => {
-  //     setDisabled(true)
-  // }
-
-  console.log()
-
   const onChangeFirstName = (e) => {
     const newFirst = Object.assign({}, user, { firstName: e.target.value })
     changeUser(newFirst)
@@ -105,6 +98,9 @@ function SignUp() {
   }
 
   const createUser = async () => {
+    setDisabled(true)
+    setFetched(true)
+
     const formData = new FormData()
     formData.append('avatar', file)
     formData.append('first_name', user.firstName)
@@ -136,11 +132,12 @@ function SignUp() {
           email: emailError,
         })
       }
+      setDisabled(false)
+      setFetched(false)
     }
     return json
   }
 
-  if (fetched === false) return <Spinner />
   return (
     <div className='sign-up'>
       <form onSubmit={onSignUp} className='sign-up__form'>
@@ -221,10 +218,8 @@ function SignUp() {
 
         <br />
 
-        <Button type={'submit'} variant='contained'>
-          {/*disabled={disabled}*/}
-          {/*onClick={handleClick}*/}
-          create
+        <Button type={'submit'} variant='contained' disabled={disabled} endIcon={fetched ? <Spinner /> : null}>
+          {!fetched ? 'create' : null}
         </Button>
 
         <br />

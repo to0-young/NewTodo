@@ -132,7 +132,7 @@ function SignIn(props) {
         <br />
 
         <p className='sign-in__advice'>
-          Don't have an account?{' '}
+          Don't have an account ?{' '}
           <Link className='sign-up_link' to='/sign_up'>
             Сreate one
           </Link>
