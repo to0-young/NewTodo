@@ -5,6 +5,9 @@ import './sign-up.css'
 import { Link, useHistory } from 'react-router-dom'
 import { apiUrl } from '../../../exp-const/constants'
 import Spinner from '../../reusable/spinner'
+import IconButton from '@mui/material/IconButton'
+import PhotoCamera from '@mui/icons-material/PhotoCamera'
+import Stack from '@mui/material/Stack'
 
 function SignUp() {
   const history = useHistory()
@@ -69,9 +72,9 @@ function SignUp() {
     }
   }
 
-  const handleFile = (e) => {
-    setFile(e.target.files[0])
-  }
+  // const handleFile = (e) => {
+  //   setFile(e.target.files[0])
+  // }
 
   const onChangeFirstName = (e) => {
     const newFirst = Object.assign({}, user, { firstName: e.target.value })
@@ -143,13 +146,25 @@ function SignUp() {
       <form onSubmit={onSignUp} className='sign-up__form'>
         <h2>Sign up</h2>
 
-        <input
-          className='chooseFile'
-          type='file'
-          name='file'
-          onChange={handleFile}
-          accept='imege/*,.png,.jpg,.gif,.web'
-        />
+        <Stack direction='row' alignItems='center' spacing={2}>
+          <Button variant='contained' component='label'>
+            Upload
+            <input hidden accept='imege/*,.png,.jpg,.gif,.web' multiple type='file' />
+          </Button>
+
+          <IconButton color='primary' aria-label='upload picture' component='label'>
+            <input hidden accept='imege/*,.png,.jpg,.gif,.web' type='file' />
+            <PhotoCamera />
+          </IconButton>
+        </Stack>
+
+        {/*<input*/}
+        {/*  className='chooseFile'*/}
+        {/*  type='file'*/}
+        {/*  name='file'*/}
+        {/*  onChange={handleFile}*/}
+        {/*  accept='imege/*,.png,.jpg,.gif,.web'*/}
+        {/*/>*/}
 
         <TextField
           helperText={error.firstName}
@@ -218,8 +233,13 @@ function SignUp() {
 
         <br />
 
-        <Button type={'submit'} variant='contained' disabled={disabled} endIcon={fetched ? <Spinner /> : null}>
-          {!fetched ? 'create' : null}
+        <Button
+          type={'submit'}
+          variant='contained'
+          disabled={disabled}
+          endIcon={fetched ? <Spinner color='success' size='30px' /> : null}
+        >
+          create
         </Button>
 
         <br />
