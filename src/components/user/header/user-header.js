@@ -7,6 +7,7 @@ import actionCreator from '../../../services/store/action-creator'
 import { apiUrl } from '../../../exp-const/constants'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+import { Chat } from '../chat/chat'
 
 function UserHeader(props) {
   const history = useHistory()
@@ -56,6 +57,11 @@ function UserHeader(props) {
               New task
             </Link>
           </div>
+          <div className='header__item header__button'>
+            <Link className='Chat_link' to='/chat'>
+              Chat
+            </Link>
+          </div>
         </div>
 
         <Button
@@ -77,12 +83,12 @@ function UserHeader(props) {
             'aria-labelledby': 'basic-button',
           }}
         >
-          {/*<MenuItem onClick={""}>Notifications</MenuItem>*/}
           <MenuItem onClick={onLogOut}>Logout</MenuItem>
         </Menu>
       </div>
     </div>
   )
 }
+
 const ConnectedUserHeader = connect(null, actionCreator)(UserHeader)
 export default ConnectedUserHeader
