@@ -13,18 +13,41 @@
   align-items: center;
 }
 
+.messages {
+  height: 100%;
+  overflow: scroll;
+  padding: 0 20px;
+  margin: 10% auto 0 auto;
+  width: 80%;
+}
+
+.messageForm {
+  height: 10%;
+  width: 100%;
+}
+
 .messageInput {
-  margin: -3px 8px 6px 50px;
-  padding: 5px 50px 10px 0px;
+  height: 30%;
+  width: 100%;
+}
+
+.messageHeader {
+  height: 10%;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
 }
 
 .messageButton {
-  position: absolute;
+  height: 46px;
   background: lightskyblue;
+  width: 10%;
   color: #000000;
-  border: none;
+  border: 2px solid fuchsia;
+  padding: 1px 2px;
+  font-size: 14px;
   border-radius: 10px;
-  padding: 5px;
   min-height: 25px;
   min-width: 100px;
+  margin: 10px 0px 0px 250px;
 }

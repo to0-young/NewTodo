@@ -58,6 +58,7 @@ function Chat() {
 
   const fetchMessages = async () => {
     const res = await fetch('http://localhost:3000/messages')
+
     const data = await res.json()
     setMessagesAndScrollDown(data)
   }
@@ -76,7 +77,7 @@ function Chat() {
     <div className='chat'>
       <div className='chat_apt'>
         <div className='messageHeader'>
-          <h1>Messages</h1>
+          <h2>Messages</h2>
           <span> Guid: {guid}</span>
         </div>
 
@@ -88,6 +89,7 @@ function Chat() {
           ))}
         </div>
       </div>
+
       <div className='messageForm'>
         <form onSubmit={handleSubmit}>
           <input className='messageInput' type='text' name='message' />
