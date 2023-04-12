@@ -4,7 +4,7 @@
   box-shadow: 0px 2px 15px 0px rgb(36 255 6 / 30%);
   border-radius: 30px;
   padding: 20px 30px;
-  width: 400px;
+  width: 500px;
 }
 
 .chat__form {
@@ -13,12 +13,19 @@
   align-items: center;
 }
 
+.messageHeader {
+  height: 10%;
+  width: 100%;
+  text-align: center;
+  padding: 5px;
+}
+
 .messages {
   height: 100%;
-  overflow: scroll;
+  scroll-behavior: auto;
   padding: 0 20px;
-  margin: 10% auto 0 auto;
-  width: 80%;
+  margin: 3px auto 10px auto;
+  width: 450px;
 }
 
 .messageForm {
@@ -27,15 +34,9 @@
 }
 
 .messageInput {
-  height: 30%;
+  font-size: 16px;
+  height: 30px;
   width: 100%;
-}
-
-.messageHeader {
-  height: 10%;
-  width: 100%;
-  text-align: center;
-  padding: 10px;
 }
 
 .messageButton {
@@ -43,11 +44,11 @@
   background: lightskyblue;
   width: 10%;
   color: #000000;
-  border: 2px solid fuchsia;
+  border: 2px solid #000000;
   padding: 1px 2px;
-  font-size: 14px;
+  font-size: 16px;
   border-radius: 10px;
   min-height: 25px;
   min-width: 100px;
-  margin: 10px 0px 0px 250px;
+  margin: 10px 0px 0px 407px;
 }

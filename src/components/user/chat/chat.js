@@ -2,14 +2,12 @@ import React from 'react'
 import { useEffect } from 'react'
 import './chat.css'
 
-// const ws = new WebSocket("ws://localhost:3000/cable")
-
 function Chat() {
   const ws = new WebSocket('ws://localhost:3000/cable')
 
   const [messages, setMessages] = React.useState([])
   const [guid, setGuid] = React.useState('')
-  const messagesContainer = document.getElementById('messages')
+  // const messagesContainer = document.getElementById('messages')
 
   ws.onopen = () => {
     console.log('Connected to websocket server')
@@ -41,7 +39,7 @@ function Chat() {
   }, [])
 
   useEffect(() => {
-    resetScroll()
+    // resetScroll()
   }, [messages])
 
   const handleSubmit = async (e) => {
@@ -65,20 +63,20 @@ function Chat() {
 
   const setMessagesAndScrollDown = (data) => {
     setMessages(data)
-    resetScroll()
+    // resetScroll()
   }
 
-  const resetScroll = () => {
-    if (!messagesContainer) return
-    messagesContainer.srcrollTop = messagesContainer.scrollHeight
-  }
+  // const resetScroll = () => {
+  //   if (!messagesContainer) return
+  //   messagesContainer.srcrollTop = messagesContainer.scrollHeight
+  // }
 
   return (
     <div className='chat'>
       <div className='chat_apt'>
         <div className='messageHeader'>
-          <h2>Messages</h2>
-          <span> Guid: {guid}</span>
+          <h1>Messages</h1>
+          {/*<span>  {guid}</span>*/}
         </div>
 
         <div className='messages' id='messages'>
@@ -102,4 +100,5 @@ function Chat() {
     </div>
   )
 }
+
 export default Chat
