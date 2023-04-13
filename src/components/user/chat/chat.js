@@ -1,16 +1,14 @@
 import React from 'react'
-import { useEffect } from 'react'
 import './chat.css'
+import Button from '@mui/material/Button'
 
 function Chat() {
-  const ws = new WebSocket('ws://localhost:3000/cable')
-
   const [messages, setMessages] = React.useState([])
   const [guid, setGuid] = React.useState('')
-  // const messagesContainer = document.getElementById('messages')
+
+  const ws = new WebSocket('ws://localhost:3000/cable')
 
   ws.onopen = () => {
-    console.log('Connected to websocket server')
     const guid = Math.random().toString(36).substring(2, 15)
 
     ws.onmessage = (e) => {
@@ -34,14 +32,6 @@ function Chat() {
     )
   }
 
-  useEffect(() => {
-    fetchMessages()
-  }, [])
-
-  useEffect(() => {
-    // resetScroll()
-  }, [messages])
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     const body = e.target.message.value
@@ -54,29 +44,16 @@ function Chat() {
     })
   }
 
-  const fetchMessages = async () => {
-    const res = await fetch('http://localhost:3000/messages')
-
-    const data = await res.json()
-    setMessagesAndScrollDown(data)
-  }
-
   const setMessagesAndScrollDown = (data) => {
     setMessages(data)
-    // resetScroll()
   }
-
-  // const resetScroll = () => {
-  //   if (!messagesContainer) return
-  //   messagesContainer.srcrollTop = messagesContainer.scrollHeight
-  // }
 
   return (
     <div className='chat'>
       <div className='chat_apt'>
         <div className='messageHeader'>
           <h1>Messages</h1>
-          {/*<span>  {guid}</span>*/}
+          <span> {guid}</span>
         </div>
 
         <div className='messages' id='messages'>
@@ -92,9 +69,9 @@ function Chat() {
         <form onSubmit={handleSubmit}>
           <input className='messageInput' type='text' name='message' />
 
-          <button className='messageButton' type='submit'>
+          <Button className='messageButton' type='submit' variant='contained'>
             Send
-          </button>
+          </Button>
         </form>
       </div>
     </div>
