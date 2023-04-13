@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './chat.css'
 import Button from '@mui/material/Button'
 
@@ -8,18 +8,15 @@ function Chat() {
 
   const ws = new WebSocket('ws://localhost:3000/cable')
 
+  useEffect(() => {
+    const storedMessages = JSON.parse(localStorage.getItem('messages'))
+    if (storedMessages) {
+      setMessages(storedMessages)
+    }
+  }, [])
+
   ws.onopen = () => {
     const guid = Math.random().toString(36).substring(2, 15)
-
-    ws.onmessage = (e) => {
-      const data = JSON.parse(e.data)
-      if (data.type === 'ping') return
-      if (data.type === 'welcome') return
-      if (data.type === 'confirm_subscription') return
-
-      const message = data.message
-      setMessagesAndScrollDown([...messages, message])
-    }
 
     ws.send(
       JSON.stringify({
@@ -30,22 +27,37 @@ function Chat() {
         }),
       })
     )
+
+    ws.onmessage = (e) => {
+      const data = JSON.parse(e.data)
+      if (data.type === 'ping') return
+      if (data.type === 'welcome') return
+      if (data.type === 'confirm_subscription') return
+
+      const message = data.message
+      setMessages((prevMessages) => [...prevMessages, message])
+    }
   }
+
+  useEffect(() => {
+    localStorage.setItem('messages', JSON.stringify(messages))
+  }, [messages])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     const body = e.target.message.value
     e.target.message.value = ''
 
-    await fetch('http://localhost:3000/messages', {
+    const res = await fetch('http://localhost:3000/messages', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ body }),
     })
-  }
 
-  const setMessagesAndScrollDown = (data) => {
-    setMessages(data)
+    if (res.ok) {
+      const newMessage = await res.json()
+      setMessages((prevMessages) => [...prevMessages, newMessage])
+    }
   }
 
   return (

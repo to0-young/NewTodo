@@ -39,16 +39,16 @@
   width: 100%;
 }
 
-.messageButton {
-  height: 46px;
-  background: lightskyblue;
-  width: 10%;
-  color: #000000;
-  border: 2px solid #000000;
-  padding: 1px 2px;
-  font-size: 16px;
-  border-radius: 10px;
-  min-height: 25px;
-  min-width: 100px;
-  margin: 10px 0px 0px 407px;
-}
+/*.messageButton {*/
+/*  height: 46px;*/
+/*  background: lightskyblue;*/
+/*  width: 10%;*/
+/*  color: #000000;*/
+/*  border: 2px solid #000000;*/
+/*  padding: 1px 2px;*/
+/*  font-size: 16px;*/
+/*  border-radius: 10px;*/
+/*  min-height: 25px;*/
+/*  min-width: 100px;*/
+/*  margin: 10px 0px 0px 407px;*/
+/*}*/
