@@ -1,62 +1,84 @@
 import React, { useEffect } from 'react'
-import './chat.css'
+import '../chat/chat.css'
 import Button from '@mui/material/Button'
 
-function Chat() {
+const Messages = () => {
   const [messages, setMessages] = React.useState([])
   const [guid, setGuid] = React.useState('')
-
-  const ws = new WebSocket('ws://localhost:3000/cable')
+  const ws = React.useRef(null)
 
   useEffect(() => {
-    const storedMessages = JSON.parse(localStorage.getItem('messages'))
-    if (storedMessages) {
-      setMessages(storedMessages)
+    const fetchMessages = async () => {
+      const res = await fetch('http://localhost:3000/messages', {
+        method: 'GET',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+      })
+
+      if (res.ok) {
+        const data = await res.json()
+        setMessages(data)
+      }
+    }
+
+    fetchMessages()
+
+    ws.current = new WebSocket('ws://localhost:3000/cable')
+    ws.current.onopen = () => {
+      const guid = Math.random().toString(36).substring(2, 15)
+      // setGuid(guid)
+
+      ws.current.send(
+        JSON.stringify({
+          command: 'subscribe',
+          identifier: JSON.stringify({
+            id: guid,
+            channel: 'MessagesChannel',
+          }),
+        })
+      )
+    }
+
+    ws.current.onmessage = (e) => {
+      const data = JSON.parse(e.data)
+
+      if (data.type === 'ping' || data.type === 'welcome' || data.type === 'confirm_subscription') {
+        return
+      }
+
+      if (data.message && data.message.guid === guid) {
+        setMessages((messages) => [...messages, data.message])
+      }
+    }
+
+    return () => {
+      ws.current.send(
+        JSON.stringify({
+          command: 'unsubscribe',
+          identifier: JSON.stringify({
+            id: guid,
+            channel: 'MessagesChannel',
+          }),
+        })
+      )
     }
   }, [])
 
-  ws.onopen = () => {
-    const guid = Math.random().toString(36).substring(2, 15)
-
-    ws.send(
-      JSON.stringify({
-        command: 'subscribe',
-        identifier: JSON.stringify({
-          id: guid,
-          channel: 'MessagesChannel',
-        }),
-      })
-    )
-
-    ws.onmessage = (e) => {
-      const data = JSON.parse(e.data)
-      if (data.type === 'ping') return
-      if (data.type === 'welcome') return
-      if (data.type === 'confirm_subscription') return
-
-      const message = data.message
-      setMessages((prevMessages) => [...prevMessages, message])
-    }
-  }
-
-  useEffect(() => {
-    localStorage.setItem('messages', JSON.stringify(messages))
-  }, [messages])
-
   const handleSubmit = async (e) => {
     e.preventDefault()
+
     const body = e.target.message.value
     e.target.message.value = ''
 
     const res = await fetch('http://localhost:3000/messages', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ body }),
+      body: JSON.stringify({ body, guid }),
     })
 
     if (res.ok) {
       const newMessage = await res.json()
-      setMessages((prevMessages) => [...prevMessages, newMessage])
+      setMessages((messages) => [...messages, newMessage])
     }
   }
 
@@ -69,8 +91,8 @@ function Chat() {
         </div>
 
         <div className='messages' id='messages'>
-          {messages.map((message) => (
-            <div className='message' key={message.id}>
+          {messages.map((message, index) => (
+            <div className='message' key={`message-${index}`}>
               <p>{message.body}</p>
             </div>
           ))}
@@ -81,7 +103,7 @@ function Chat() {
         <form onSubmit={handleSubmit}>
           <input className='messageInput' type='text' name='message' />
 
-          <Button className='messageButton' type='submit' variant='contained'>
+          <Button className='messageButton' type='submit'>
             Send
           </Button>
         </form>
@@ -90,4 +112,4 @@ function Chat() {
   )
 }
 
-export default Chat
+export default Messages
