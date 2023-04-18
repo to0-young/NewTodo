@@ -4,6 +4,7 @@ import Button from '@mui/material/Button'
 
 const Messages = () => {
   const [messages, setMessages] = React.useState([])
+  const [msg, setMsg] = React.useState('')
   const ws = React.useRef(null)
 
   useEffect(() => {
@@ -58,6 +59,10 @@ const Messages = () => {
     }
   }, [])
 
+  const handleMessageChange = (event) => {
+    setMsg(event.target.value)
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -67,8 +72,9 @@ const Messages = () => {
     const res = await fetch('http://localhost:3000/messages', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ body }),
+      body: JSON.stringify({ body: msg }),
     })
+    setMsg('')
   }
 
   return (
@@ -89,9 +95,9 @@ const Messages = () => {
 
       <div className='messageForm'>
         <form onSubmit={handleSubmit} style={{ display: 'flex', width: '100%' }}>
-          <input className='messageInput' type='text' name='message' />
+          <input className='messageInput' type='text' name='message' onChange={handleMessageChange} />
 
-          <Button className='messageButton' type='submit' variant='contained' color='info'>
+          <Button className='messageButton' type='submit' variant='contained' disabled={msg === ''} color='info'>
             Send
           </Button>
         </form>
