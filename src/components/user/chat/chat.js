@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import '../chat/chat.css'
 import Button from '@mui/material/Button'
 
@@ -11,7 +11,7 @@ const Messages = () => {
       const res = await fetch('http://localhost:3000/messages', {
         method: 'GET',
         credentials: 'include',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
       })
 
       if (res.ok) {
@@ -66,8 +66,8 @@ const Messages = () => {
 
     const res = await fetch('http://localhost:3000/messages', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({body}),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ body }),
     })
   }
 
@@ -88,10 +88,10 @@ const Messages = () => {
       </div>
 
       <div className='messageForm'>
-        <form onSubmit={handleSubmit}>
-          <input className='messageInput' type='text' name='message'/>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', width: '100%' }}>
+          <input className='messageInput' type='text' name='message' />
 
-          <Button className='messageButton' type='submit'>
+          <Button className='messageButton' type='submit' variant='contained' color='info'>
             Send
           </Button>
         </form>
