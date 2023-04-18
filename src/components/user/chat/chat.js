@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react'
+import React, {useEffect} from 'react'
 import '../chat/chat.css'
 import Button from '@mui/material/Button'
 
 const Messages = () => {
   const [messages, setMessages] = React.useState([])
-  const [guid, setGuid] = React.useState('')
   const ws = React.useRef(null)
 
   useEffect(() => {
@@ -12,7 +11,7 @@ const Messages = () => {
       const res = await fetch('http://localhost:3000/messages', {
         method: 'GET',
         credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {'Content-Type': 'application/json'},
       })
 
       if (res.ok) {
@@ -25,14 +24,10 @@ const Messages = () => {
 
     ws.current = new WebSocket('ws://localhost:3000/cable')
     ws.current.onopen = () => {
-      const guid = Math.random().toString(36).substring(2, 15)
-      // setGuid(guid)
-
       ws.current.send(
         JSON.stringify({
           command: 'subscribe',
           identifier: JSON.stringify({
-            id: guid,
             channel: 'MessagesChannel',
           }),
         })
@@ -46,7 +41,7 @@ const Messages = () => {
         return
       }
 
-      if (data.message && data.message.guid === guid) {
+      if (data.message) {
         setMessages((messages) => [...messages, data.message])
       }
     }
@@ -56,7 +51,6 @@ const Messages = () => {
         JSON.stringify({
           command: 'unsubscribe',
           identifier: JSON.stringify({
-            id: guid,
             channel: 'MessagesChannel',
           }),
         })
@@ -72,14 +66,9 @@ const Messages = () => {
 
     const res = await fetch('http://localhost:3000/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ body, guid }),
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({body}),
     })
-
-    if (res.ok) {
-      const newMessage = await res.json()
-      setMessages((messages) => [...messages, newMessage])
-    }
   }
 
   return (
@@ -87,7 +76,6 @@ const Messages = () => {
       <div className='chat_apt'>
         <div className='messageHeader'>
           <h1>Messages</h1>
-          <span> {guid}</span>
         </div>
 
         <div className='messages' id='messages'>
@@ -101,7 +89,7 @@ const Messages = () => {
 
       <div className='messageForm'>
         <form onSubmit={handleSubmit}>
-          <input className='messageInput' type='text' name='message' />
+          <input className='messageInput' type='text' name='message'/>
 
           <Button className='messageButton' type='submit'>
             Send
