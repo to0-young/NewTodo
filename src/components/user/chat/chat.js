@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react'
 import '../chat/chat.css'
 import Button from '@mui/material/Button'
+import { useSelector } from 'react-redux'
 
 const Messages = () => {
   const [messages, setMessages] = React.useState([])
   const [msg, setMsg] = React.useState('')
+  const bottomRef = React.useRef(null)
+  const session = useSelector((state) => state.session.details)
+
   const ws = React.useRef(null)
 
   useEffect(() => {
@@ -63,6 +67,10 @@ const Messages = () => {
     setMsg(event.target.value)
   }
 
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -71,23 +79,31 @@ const Messages = () => {
 
     const res = await fetch('http://localhost:3000/messages', {
       method: 'POST',
+      credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ body: msg }),
+      body: JSON.stringify({
+        body: msg,
+      }),
     })
     setMsg('')
   }
 
   return (
     <div className='chat'>
-      <div className='chat_apt'>
+      <div className='chat__apt'>
         <div className='messageHeader'>
           <h1>Messages</h1>
         </div>
 
         <div className='messages' id='messages'>
           {messages.map((message, index) => (
-            <div className='message' key={`message-${index}`}>
+            <div className={message.user_id === session.user.id ? 'myMessage' : 'message'} key={`message-${index}`}>
               <p>{message.body}</p>
+
+              <div className='avatar'>
+                <img src={message.user.avatar} alt='Ava' />
+              </div>
+              <div ref={bottomRef}></div>
             </div>
           ))}
         </div>
@@ -95,7 +111,13 @@ const Messages = () => {
 
       <div className='messageForm'>
         <form onSubmit={handleSubmit} style={{ display: 'flex', width: '100%' }}>
-          <input className='messageInput' type='text' name='message' onChange={handleMessageChange} />
+          <input
+            className='messageInput'
+            type='text'
+            name='message'
+            onChange={handleMessageChange}
+            placeholder='Write a message...'
+          />
 
           <Button className='messageButton' type='submit' variant='contained' disabled={msg === ''} color='info'>
             Send
