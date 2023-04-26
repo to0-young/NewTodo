@@ -56,12 +56,12 @@
 }
 
 .message p {
-  background-color: #f1f0f0;
-  border-radius: 20px;
+  background-color: #c2bebe;
   padding: 10px;
   margin: 0;
   max-width: 100%;
   word-wrap: break-word;
+  border-radius: 20px 20px 20px 0;
 }
 
 .myMessage {
@@ -75,11 +75,11 @@
 
 .myMessage p {
   background: lightskyblue;
-  border-radius: 20px;
   padding: 10px;
   margin: 0;
   max-width: 86%;
   word-wrap: break-word;
+  border-radius: 20px 20px 0 20px;
 }
 
 .Ava {
