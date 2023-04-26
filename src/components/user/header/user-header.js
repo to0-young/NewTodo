@@ -23,7 +23,6 @@ function UserHeader(props) {
     setAnchorEl(null)
   }
 
-  console.log()
   const onLogOut = async () => {
     const res = await fetch(`${apiUrl}/api/v1/sessions`, {
       method: 'DELETE',
@@ -56,6 +55,11 @@ function UserHeader(props) {
               New task
             </Link>
           </div>
+          <div className='header__item header__button'>
+            <Link className='Chat_link' to='/chat'>
+              Chat
+            </Link>
+          </div>
         </div>
 
         <Button
@@ -77,12 +81,12 @@ function UserHeader(props) {
             'aria-labelledby': 'basic-button',
           }}
         >
-          {/*<MenuItem onClick={""}>Notifications</MenuItem>*/}
           <MenuItem onClick={onLogOut}>Logout</MenuItem>
         </Menu>
       </div>
     </div>
   )
 }
+
 const ConnectedUserHeader = connect(null, actionCreator)(UserHeader)
 export default ConnectedUserHeader

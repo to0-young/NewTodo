@@ -5,6 +5,7 @@ import UserHeader from '../../../components/user/header/user-header'
 import './user-routes.css'
 import NewTask from '../../../components/user/new-task/new-task'
 import EditTask from '../../../components/user/edit-task/edit-task'
+import Chat from '../../../components/user/chat/chat'
 
 const UserRoutes = () => {
   return (
@@ -22,6 +23,10 @@ const UserRoutes = () => {
 
         <Route path='/tasks/:id'>
           <EditTask />
+        </Route>
+
+        <Route path='/chat'>
+          <Chat />
         </Route>
 
         <Redirect to='/dashboard' />
