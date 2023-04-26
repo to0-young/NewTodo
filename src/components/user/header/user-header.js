@@ -7,7 +7,6 @@ import actionCreator from '../../../services/store/action-creator'
 import { apiUrl } from '../../../exp-const/constants'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import { Chat } from '../chat/chat'
 
 function UserHeader(props) {
   const history = useHistory()
@@ -24,7 +23,6 @@ function UserHeader(props) {
     setAnchorEl(null)
   }
 
-  console.log()
   const onLogOut = async () => {
     const res = await fetch(`${apiUrl}/api/v1/sessions`, {
       method: 'DELETE',

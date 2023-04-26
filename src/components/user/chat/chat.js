@@ -68,6 +68,7 @@ const Messages = () => {
   }
 
   useEffect(() => {
+
     const timer = setTimeout(() => {
       const endElement = bottomRef.current
       if (!endElement) return
@@ -107,8 +108,11 @@ const Messages = () => {
               <p>{message.body}</p>
 
               <div className='avatar'>
+
                 <img className='Ava' src={message.user.avatar.url} alt='avatar' />
               </div>
+
+
 
               <div ref={bottomRef}></div>
             </div>
