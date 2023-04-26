@@ -68,7 +68,14 @@ const Messages = () => {
   }
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+
+    const timer = setTimeout(() => {
+      const endElement = bottomRef.current
+      if (!endElement) return
+      endElement.scrollIntoView({ block: 'center', behavior: 'smooth' })
+    }, 100)
+
+    return () => clearTimeout(timer)
   }, [messages])
 
   const handleSubmit = async (e) => {
@@ -101,8 +108,12 @@ const Messages = () => {
               <p>{message.body}</p>
 
               <div className='avatar'>
-                <img src={message.user.avatar} alt='Ava' />
+
+                <img className='Ava' src={message.user.avatar.url} alt='avatar' />
               </div>
+
+
+
               <div ref={bottomRef}></div>
             </div>
           ))}
