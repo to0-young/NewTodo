@@ -7,7 +7,7 @@ export default function Spinner(props) {
   return (
     <div className='spinner'>
       <Stack sx={{ color: 'grey.500', width: '100%' }} spacing={2}>
-        <CircularProgress style={{ margin: 'auto', width: size, height: size }} color={color} />
+        {<CircularProgress style={{ margin: 'auto', width: size, height: size }} color={color} />}
       </Stack>
     </div>
   )
