@@ -94,6 +94,9 @@ const Messages = () => {
     setMsg('')
   }
 
+  const now = new Date()
+  const formattedTime = `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`
+
   return (
     <div className='chat'>
       <div className='chat__apt'>
@@ -111,7 +114,7 @@ const Messages = () => {
               <p>
                 {message.body}
                 <span className='time'>
-                  {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  {new Date(message.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </span>
               </p>
 
