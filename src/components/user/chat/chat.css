@@ -21,6 +21,14 @@
   padding: 5px;
 }
 
+.messages {
+  overflow-y: scroll;
+  padding: 0 5px;
+  margin: 1px 1px 10px 1px;
+  width: 500px;
+  max-height: 390px;
+}
+
 .messageForm {
   display: flex;
   flex-direction: row;
@@ -46,6 +54,7 @@
   max-height: 390px;
 }
 
+
 .message {
   display: flex;
   margin-bottom: 5px;
@@ -56,11 +65,12 @@
 }
 
 .message p {
-  background-color: #f1f0f0;
-  border-radius: 20px;
+  background-color: #c2bebe;
   padding: 10px;
   margin: 0;
   max-width: 100%;
+  word-wrap: break-word;
+  border-radius: 20px 20px 20px 0;
 }
 
 .myMessage {
@@ -74,10 +84,12 @@
 
 .myMessage p {
   background: lightskyblue;
-  border-radius: 20px;
+
   padding: 10px;
   margin: 0;
-  max-width: 100%;
+  max-width: 86%;
+  word-wrap: break-word;
+  border-radius: 20px 20px 0 20px;
 }
 
 .Ava {

@@ -76,6 +76,7 @@ const Messages = () => {
 
     return () => clearTimeout(timer)
   }, [messages])
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -106,8 +107,11 @@ const Messages = () => {
               <p>{message.body}</p>
 
               <div className='avatar'>
+
                 <img className='Ava' src={message.user.avatar.url} alt='avatar' />
               </div>
+
+
 
               <div ref={bottomRef}></div>
             </div>
