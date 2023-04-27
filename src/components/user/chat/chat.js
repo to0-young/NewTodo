@@ -68,7 +68,6 @@ const Messages = () => {
   }
 
   useEffect(() => {
-
     const timer = setTimeout(() => {
       const endElement = bottomRef.current
       if (!endElement) return
@@ -95,6 +94,9 @@ const Messages = () => {
     setMsg('')
   }
 
+  const now = new Date()
+  const formattedTime = `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`
+
   return (
     <div className='chat'>
       <div className='chat__apt'>
@@ -105,14 +107,16 @@ const Messages = () => {
         <div className='messages' id='messages'>
           {messages.map((message, index) => (
             <div className={message.user_id === session.user.id ? 'myMessage' : 'message'} key={`message-${index}`}>
-              <p>{message.body}</p>
-
               <div className='avatar'>
-
                 <img className='Ava' src={message.user.avatar.url} alt='avatar' />
               </div>
 
-
+              <p>
+                {message.body}
+                <span className='time'>
+                  {new Date(message.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </span>
+              </p>
 
               <div ref={bottomRef}></div>
             </div>
