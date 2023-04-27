@@ -104,14 +104,16 @@ const Messages = () => {
         <div className='messages' id='messages'>
           {messages.map((message, index) => (
             <div className={message.user_id === session.user.id ? 'myMessage' : 'message'} key={`message-${index}`}>
-              <p>{message.body}</p>
-
               <div className='avatar'>
-
                 <img className='Ava' src={message.user.avatar.url} alt='avatar' />
               </div>
 
-
+              <p>
+                {message.body}
+                <span className='time'>
+                  {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </span>
+              </p>
 
               <div ref={bottomRef}></div>
             </div>
