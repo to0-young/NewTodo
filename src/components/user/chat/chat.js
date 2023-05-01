@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import '../chat/chat.css'
 import Button from '@mui/material/Button'
 import { useSelector } from 'react-redux'
-import { apiUrl, apiUrlBack } from '../../../exp-const/constants'
+import { apiUrl, apiUrlCable } from '../../../exp-const/constants'
 
 const Messages = () => {
   const [messages, setMessages] = React.useState([])
@@ -28,7 +28,7 @@ const Messages = () => {
 
     fetchMessages()
 
-    ws.current = new WebSocket(`ws:${apiUrlBack}/cable`)
+    ws.current = new WebSocket(`${apiUrlCable}/cable`)
     ws.current.onopen = () => {
       ws.current.send(
         JSON.stringify({
