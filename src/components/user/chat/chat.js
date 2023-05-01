@@ -84,7 +84,7 @@ const Messages = () => {
     const body = e.target.message.value
     e.target.message.value = ''
 
-    const res = await fetch('http://localhost:3000/messages', {
+    const res = await fetch(`${apiUrl}/messages`, {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
