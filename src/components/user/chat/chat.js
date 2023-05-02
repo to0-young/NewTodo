@@ -95,6 +95,8 @@ const Messages = () => {
     setMsg('')
   }
 
+  console.log(apiUrlCable)
+
   const now = new Date()
   const formattedTime = `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`
 
