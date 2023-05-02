@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import '../chat/chat.css'
 import Button from '@mui/material/Button'
 import { useSelector } from 'react-redux'
-import { apiUrl } from '../../../exp-const/constants'
+import { apiUrl, apiUrlCable } from '../../../exp-const/constants'
 
 const Messages = () => {
   const [messages, setMessages] = React.useState([])
@@ -28,7 +28,7 @@ const Messages = () => {
 
     fetchMessages()
 
-    ws.current = new WebSocket(`ws:${apiUrl}/cable`)
+    ws.current = new WebSocket(`${apiUrlCable}/cable`)
     ws.current.onopen = () => {
       ws.current.send(
         JSON.stringify({
@@ -84,7 +84,7 @@ const Messages = () => {
     const body = e.target.message.value
     e.target.message.value = ''
 
-    const res = await fetch('http://localhost:3000/messages', {
+    const res = await fetch(`${apiUrl}/messages`, {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
