@@ -95,6 +95,23 @@ const Messages = () => {
     setMsg('')
   }
 
+  //
+  // REACT_APP_API_URL=http://localhost:3000
+  //
+  // REACT_APP_API_URL_CABLE=ws://localhost:3000
+  // PORT=3001
+  //
+  //
+  // ws.current = new WebSocket(`${apiUrlCable}/cable`)
+  //
+  // const res = await fetch(`${apiUrl}/messages`
+  //
+  //
+  //
+  // ENV["AWS_ACCESS_KEY_ID"]
+  //
+  // ENV["AWS_SECRET_KEY"]
+
   console.log(apiUrlCable)
 
   const now = new Date()
