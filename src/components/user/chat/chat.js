@@ -3,6 +3,8 @@ import '../chat/chat.css'
 import Button from '@mui/material/Button'
 import { useSelector } from 'react-redux'
 import { apiUrl, apiUrlCable } from '../../../exp-const/constants'
+import DeleteIcon from '@mui/icons-material/Delete'
+import SendIcon from '@mui/icons-material/Send'
 
 const Messages = () => {
   const [messages, setMessages] = React.useState([])
@@ -119,7 +121,11 @@ const Messages = () => {
         <div className='messages' id='messages'>
           {messages.map((message, index) => (
             <div className={message.user_id === session.user.id ? 'myMessage' : 'message'} key={`message-${index}`}>
-              <button onClick={() => handleDelete(message.id)}>Delete</button>
+              {message.user_id === session.user.id && (
+                <DeleteIcon className='chat__btn' onClick={() => handleDelete(message.id)}>
+                  Delete
+                </DeleteIcon>
+              )}
 
               <div className='avatar'>
                 <img className='Ava' src={message.user.avatar.url} alt='avatar' />
@@ -148,7 +154,14 @@ const Messages = () => {
             placeholder='Write a message...'
           />
 
-          <Button className='messageButton' type='submit' variant='contained' disabled={msg === ''} color='info'>
+          <Button
+            className='messageButton'
+            type='submit'
+            variant='contained'
+            endIcon={<SendIcon />}
+            disabled={msg === ''}
+            color='info'
+          >
             Send
           </Button>
         </form>
