@@ -3,6 +3,8 @@ import '../chat/chat.css'
 import Button from '@mui/material/Button'
 import { useSelector } from 'react-redux'
 import { apiUrl, apiUrlCable } from '../../../exp-const/constants'
+import DeleteIcon from '@mui/icons-material/Delete'
+import SendIcon from '@mui/icons-material/Send'
 
 const Messages = () => {
   const [messages, setMessages] = React.useState([])
@@ -47,7 +49,9 @@ const Messages = () => {
         return
       }
 
-      if (data.message) {
+      if (data.message.type === 'message_deleted') {
+        setMessages((messages) => messages.filter((message) => message.id !== data.message.id))
+      } else if (data.message) {
         setMessages((messages) => [...messages, data.message])
       }
     }
@@ -68,16 +72,6 @@ const Messages = () => {
     setMsg(event.target.value)
   }
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const endElement = bottomRef.current
-      if (!endElement) return
-      endElement.scrollIntoView({ block: 'center', behavior: 'smooth' })
-    }, 100)
-
-    return () => clearTimeout(timer)
-  }, [messages])
-
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -95,10 +89,27 @@ const Messages = () => {
     setMsg('')
   }
 
-  console.log(apiUrlCable)
+  console.log()
+
+  const handleDelete = async (message) => {
+    const res = await fetch(`${apiUrl}/messages/${message}`, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
 
   const now = new Date()
   const formattedTime = `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const endElement = bottomRef.current
+      if (!endElement) return
+      endElement.scrollIntoView({ block: 'center', behavior: 'smooth' })
+    }, 100)
+    return () => clearTimeout(timer)
+  }, [messages])
 
   return (
     <div className='chat'>
@@ -110,6 +121,12 @@ const Messages = () => {
         <div className='messages' id='messages'>
           {messages.map((message, index) => (
             <div className={message.user_id === session.user.id ? 'myMessage' : 'message'} key={`message-${index}`}>
+              {message.user_id === session.user.id && (
+                <DeleteIcon className='chat__btn' onClick={() => handleDelete(message.id)}>
+                  Delete
+                </DeleteIcon>
+              )}
+
               <div className='avatar'>
                 <img className='Ava' src={message.user.avatar.url} alt='avatar' />
               </div>
@@ -137,7 +154,14 @@ const Messages = () => {
             placeholder='Write a message...'
           />
 
-          <Button className='messageButton' type='submit' variant='contained' disabled={msg === ''} color='info'>
+          <Button
+            className='messageButton'
+            type='submit'
+            variant='contained'
+            endIcon={<SendIcon />}
+            disabled={msg === ''}
+            color='info'
+          >
             Send
           </Button>
         </form>
