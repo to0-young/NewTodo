@@ -47,7 +47,9 @@ const Messages = () => {
         return
       }
 
-      if (data.message) {
+      if (data.message.type === 'message_deleted') {
+        setMessages((messages) => messages.filter((message) => message.id !== data.message.id))
+      } else if (data.message) {
         setMessages((messages) => [...messages, data.message])
       }
     }
@@ -68,16 +70,6 @@ const Messages = () => {
     setMsg(event.target.value)
   }
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const endElement = bottomRef.current
-      if (!endElement) return
-      endElement.scrollIntoView({ block: 'center', behavior: 'smooth' })
-    }, 100)
-
-    return () => clearTimeout(timer)
-  }, [messages])
-
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -95,10 +87,27 @@ const Messages = () => {
     setMsg('')
   }
 
-  console.log(apiUrlCable)
+  console.log()
+
+  const handleDelete = async (message) => {
+    const res = await fetch(`${apiUrl}/messages/${message}`, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
 
   const now = new Date()
   const formattedTime = `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const endElement = bottomRef.current
+      if (!endElement) return
+      endElement.scrollIntoView({ block: 'center', behavior: 'smooth' })
+    }, 100)
+    return () => clearTimeout(timer)
+  }, [messages])
 
   return (
     <div className='chat'>
@@ -110,6 +119,8 @@ const Messages = () => {
         <div className='messages' id='messages'>
           {messages.map((message, index) => (
             <div className={message.user_id === session.user.id ? 'myMessage' : 'message'} key={`message-${index}`}>
+              <button onClick={() => handleDelete(message.id)}>Delete</button>
+
               <div className='avatar'>
                 <img className='Ava' src={message.user.avatar.url} alt='avatar' />
               </div>
