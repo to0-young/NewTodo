@@ -84,12 +84,11 @@ const Messages = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         body: msg,
+        first_name: session.user.first_name,
       }),
     })
     setMsg('')
   }
-
-  console.log()
 
   const handleDelete = async (message) => {
     const res = await fetch(`${apiUrl}/messages/${message}`, {
@@ -129,6 +128,7 @@ const Messages = () => {
 
               <div className='avatar'>
                 <img className='Ava' src={message.user.avatar.url} alt='avatar' />
+                <div className='chat__userName'>{message.user.first_name}</div>
               </div>
 
               <p>
@@ -159,7 +159,7 @@ const Messages = () => {
             type='submit'
             variant='contained'
             endIcon={<SendIcon />}
-            disabled={msg === ''}
+            disabled={!msg.trim()}
             color='info'
           >
             Send
