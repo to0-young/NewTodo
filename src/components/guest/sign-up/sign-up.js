@@ -148,7 +148,7 @@ function SignUp() {
 
         <Stack direction='row' alignItems='center' spacing={2}>
           <IconButton color='primary' aria-label='upload picture' component='label'>
-            <input hidden accept='imege/*,.png,.jpg,.gif,.web' type='file' onChange={handleFile} />
+            <input hidden accept='image/*,.png,.jpg,.gif,.web' type='file' onChange={handleFile} />
             <PhotoCamera />
           </IconButton>
         </Stack>
