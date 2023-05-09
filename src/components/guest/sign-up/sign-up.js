@@ -213,7 +213,7 @@ function SignUp() {
 
         <p className='sign-up__advice'>
           Have an account ?{' '}
-          <Link className='sign-in_link' to='/'>
+          <Link className='sign-in__link' to='/'>
             Log in
           </Link>
         </p>

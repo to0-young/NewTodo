@@ -5,13 +5,16 @@ import { useSelector } from 'react-redux'
 import { apiUrl, apiUrlCable } from '../../../exp-const/constants'
 import DeleteIcon from '@mui/icons-material/Delete'
 import SendIcon from '@mui/icons-material/Send'
+import addNotification from 'react-push-notification'
+import logo from '../../../images/logo-todo.png'
 
 const Messages = () => {
   const [messages, setMessages] = React.useState([])
   const [msg, setMsg] = React.useState('')
+  const [lastMessage, setLastMessage] = React.useState('')
+
   const bottomRef = React.useRef(null)
   const session = useSelector((state) => state.session.details)
-
   const ws = React.useRef(null)
 
   useEffect(() => {
@@ -88,6 +91,8 @@ const Messages = () => {
       }),
     })
     setMsg('')
+    clickNotify()
+    setLastMessage(msg)
   }
 
   const handleDelete = async (message) => {
@@ -107,8 +112,24 @@ const Messages = () => {
       if (!endElement) return
       endElement.scrollIntoView({ block: 'center', behavior: 'smooth' })
     }, 100)
+
+    if (lastMessage !== '') {
+      // Якщо є останнє повідомлення, викликаємо функцію clickNotify()
+      clickNotify()
+    }
     return () => clearTimeout(timer)
-  }, [messages])
+  }, [messages, lastMessage])
+
+  const clickNotify = () => {
+    addNotification({
+      title: 'New Message',
+      message: lastMessage,
+      duration: 4000,
+      native: true,
+      icon: logo,
+      onClick: () => (window.location = 'http://localhost:3001/chat'),
+    })
+  }
 
   return (
     <div className='chat'>
