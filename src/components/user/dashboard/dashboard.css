@@ -13,7 +13,7 @@
 }
 
 .dashboard__td_crossed {
-  background-image: linear-gradient(0deg, transparent calc(50% - 1px), black, transparent calc(50% + 1px));
+  background-image: linear-gradient(0deg, transparent calc(50% - 5px), #010c13, transparent calc(50% + 5px));
 }
 
 .pagination {

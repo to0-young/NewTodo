@@ -101,6 +101,7 @@
 .chat__btn {
   display: flex;
   color: #727370;
+  cursor: pointer;
 }
 
 .chat__userName {

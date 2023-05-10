@@ -6,12 +6,11 @@ import { apiUrl, apiUrlCable } from '../../../exp-const/constants'
 import DeleteIcon from '@mui/icons-material/Delete'
 import SendIcon from '@mui/icons-material/Send'
 import addNotification from 'react-push-notification'
-import logo from '../../../images/logo-todo.png'
+import logo from '../../../images/log.jpeg'
 
 const Messages = () => {
   const [messages, setMessages] = React.useState([])
   const [msg, setMsg] = React.useState('')
-  const [lastMessage, setLastMessage] = React.useState('')
 
   const bottomRef = React.useRef(null)
   const session = useSelector((state) => state.session.details)
@@ -92,7 +91,7 @@ const Messages = () => {
     })
     setMsg('')
     clickNotify()
-    setLastMessage(msg)
+    setMsg(msg)
   }
 
   const handleDelete = async (message) => {
@@ -113,17 +112,17 @@ const Messages = () => {
       endElement.scrollIntoView({ block: 'center', behavior: 'smooth' })
     }, 100)
 
-    if (lastMessage !== '') {
-      // Якщо є останнє повідомлення, викликаємо функцію clickNotify()
+    if (msg && messages.id !== messages.id) {
       clickNotify()
     }
+
     return () => clearTimeout(timer)
-  }, [messages, lastMessage])
+  }, [messages, msg])
 
   const clickNotify = () => {
     addNotification({
       title: 'New Message',
-      message: lastMessage,
+      message: msg,
       duration: 4000,
       native: true,
       icon: logo,
