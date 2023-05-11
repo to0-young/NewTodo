@@ -38,38 +38,38 @@
   cursor: pointer;
 }
 
-.sign-up_link {
+.sign-up__link {
   color: #ff0000;
   text-decoration: none;
   white-space: nowrap;
 }
 
-.sign-in_link {
+.sign-in__link {
   color: #ff0000;
   text-decoration: none;
   white-space: nowrap;
 }
 
-.Dashboard_link {
+.dashboard__link {
   color: #1e1e21;
   text-decoration: none;
   white-space: nowrap;
 }
 
-.New-Task_link {
+.new-task__link {
   color: #1e1e21;
   text-decoration: none;
   white-space: nowrap;
 }
 
-.todo_logo {
+.todo__logo {
   color: #fffdfd;
   text-decoration: none;
   white-space: nowrap;
   margin: 10px;
 }
 
-.Chat_link {
+.chat__link {
   color: #1e1e21;
   text-decoration: none;
   white-space: nowrap;

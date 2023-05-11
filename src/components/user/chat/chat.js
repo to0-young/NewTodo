@@ -1,16 +1,21 @@
 import React, { useEffect } from 'react'
 import '../chat/chat.css'
 import Button from '@mui/material/Button'
-import { useSelector } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
 import { apiUrl, apiUrlCable } from '../../../exp-const/constants'
 import DeleteIcon from '@mui/icons-material/Delete'
 import SendIcon from '@mui/icons-material/Send'
+import addNotification from 'react-push-notification'
+import logo from '../../../images/log.jpeg'
+import actionCreator from '../../../services/store/action-creator'
 
 const Messages = () => {
   const [messages, setMessages] = React.useState([])
   const [msg, setMsg] = React.useState('')
+
   const bottomRef = React.useRef(null)
   const session = useSelector((state) => state.session.details)
+  const user = useSelector((state) => state.session.details.user)
 
   const ws = React.useRef(null)
 
@@ -53,6 +58,9 @@ const Messages = () => {
         setMessages((messages) => messages.filter((message) => message.id !== data.message.id))
       } else if (data.message) {
         setMessages((messages) => [...messages, data.message])
+        if (data.message.user_id !== user.id) {
+          clickNotify()
+        }
       }
     }
 
@@ -107,8 +115,20 @@ const Messages = () => {
       if (!endElement) return
       endElement.scrollIntoView({ block: 'center', behavior: 'smooth' })
     }, 100)
+
     return () => clearTimeout(timer)
   }, [messages])
+
+  const clickNotify = () => {
+    addNotification({
+      title: 'New Message',
+      message: msg,
+      duration: 4000,
+      native: true,
+      icon: logo,
+      onClick: () => (window.location = '/chat'),
+    })
+  }
 
   return (
     <div className='chat'>
@@ -170,4 +190,5 @@ const Messages = () => {
   )
 }
 
-export default Messages
+const ConnectedMessages = connect(null, actionCreator)(Messages)
+export default ConnectedMessages
