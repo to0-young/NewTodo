@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import '../chat/chat.css'
 import Button from '@mui/material/Button'
-import { useSelector } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
 import { apiUrl, apiUrlCable } from '../../../exp-const/constants'
 import DeleteIcon from '@mui/icons-material/Delete'
 import SendIcon from '@mui/icons-material/Send'
 import addNotification from 'react-push-notification'
 import logo from '../../../images/log.jpeg'
+import actionCreator from '../../../services/store/action-creator'
 
 const Messages = () => {
   const [messages, setMessages] = React.useState([])
@@ -14,6 +15,8 @@ const Messages = () => {
 
   const bottomRef = React.useRef(null)
   const session = useSelector((state) => state.session.details)
+  const user = useSelector((state) => state.session.details.user)
+
   const ws = React.useRef(null)
 
   useEffect(() => {
@@ -55,6 +58,9 @@ const Messages = () => {
         setMessages((messages) => messages.filter((message) => message.id !== data.message.id))
       } else if (data.message) {
         setMessages((messages) => [...messages, data.message])
+        if (data.message.user_id !== user.id) {
+          clickNotify()
+        }
       }
     }
 
@@ -90,8 +96,6 @@ const Messages = () => {
       }),
     })
     setMsg('')
-    clickNotify()
-    setMsg(msg)
   }
 
   const handleDelete = async (message) => {
@@ -112,12 +116,8 @@ const Messages = () => {
       endElement.scrollIntoView({ block: 'center', behavior: 'smooth' })
     }, 100)
 
-    if (msg && messages.id !== messages.id) {
-      clickNotify()
-    }
-
     return () => clearTimeout(timer)
-  }, [messages, msg])
+  }, [messages])
 
   const clickNotify = () => {
     addNotification({
@@ -126,7 +126,7 @@ const Messages = () => {
       duration: 4000,
       native: true,
       icon: logo,
-      onClick: () => (window.location = 'http://localhost:3001/chat'),
+      onClick: () => (window.location = '/chat'),
     })
   }
 
@@ -190,4 +190,5 @@ const Messages = () => {
   )
 }
 
-export default Messages
+const ConnectedMessages = connect(null, actionCreator)(Messages)
+export default ConnectedMessages
