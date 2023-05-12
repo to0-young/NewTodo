@@ -5,7 +5,6 @@ import { connect, useSelector } from 'react-redux'
 import { apiUrl, apiUrlCable } from '../../../exp-const/constants'
 import DeleteIcon from '@mui/icons-material/Delete'
 import SendIcon from '@mui/icons-material/Send'
-import addNotification from 'react-push-notification'
 import logo from '../../../images/log.jpeg'
 import actionCreator from '../../../services/store/action-creator'
 
@@ -56,10 +55,12 @@ const Messages = () => {
 
       if (data.message.type === 'message_deleted') {
         setMessages((messages) => messages.filter((message) => message.id !== data.message.id))
-      } else if (data.message) {
+        if (data.message.user_id === session.user.id) {
+        }
+      } else {
         setMessages((messages) => [...messages, data.message])
         if (data.message.user_id !== user.id) {
-          clickNotify()
+          clickNotify(data.message.body)
         }
       }
     }
@@ -119,15 +120,26 @@ const Messages = () => {
     return () => clearTimeout(timer)
   }, [messages])
 
-  const clickNotify = () => {
-    addNotification({
-      title: 'New Message',
-      message: msg,
-      duration: 4000,
-      native: true,
-      icon: logo,
-      onClick: () => (window.location = '/chat'),
-    })
+  const clickNotify = (msg) => {
+    if (Notification.permission === 'granted') {
+      new Notification('New Message', {
+        body: msg,
+        icon: logo,
+        duration: 4000,
+        onClick: () => (window.location = '/chat'),
+      })
+    } else if (Notification.permission !== 'denied') {
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          new Notification('New Message', {
+            body: msg,
+            icon: logo,
+            duration: 4000,
+            onClick: () => (window.location = '/chat'),
+          })
+        }
+      })
+    }
   }
 
   return (
