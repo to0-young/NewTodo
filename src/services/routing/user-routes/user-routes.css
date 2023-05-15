@@ -1,8 +1,29 @@
 .user-routes {
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  width: 1850px;
 }
+
 .spinner {
   margin: auto;
+}
+
+@media only screen and (max-width: 375px) and (max-height: 667px) {
+  .user-routes {
+    width: 100vh;
+  }
+
+  .spinner {
+    margin: auto;
+  }
+}
+
+@media only screen and (max-width: 414px) and (max-height: 896px) {
+  .user-routes {
+    width: 100vh;
+  }
+
+  .spinner {
+    margin: auto;
+  }
 }
