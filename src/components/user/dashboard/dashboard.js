@@ -120,7 +120,7 @@ function Dashboard(props) {
 
   return (
     <div className='dashboard'>
-      <table>
+      <table className='dashboard__table'>
         <thead>
           <tr>
             <th className='dashboard__table-th' onClick={sortByTitle}>

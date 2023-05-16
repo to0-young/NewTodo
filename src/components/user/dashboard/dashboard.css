@@ -54,3 +54,11 @@
   position: absolute;
   padding: 0 0 5px;
 }
+
+@media (max-width: 375px) {
+  .dashboard__table-title,
+  .dashboard__table-priority,
+  .dashboard__table-due_date {
+    font-size: 10px;
+  }
+}

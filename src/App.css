@@ -23,3 +23,21 @@ button,
 a {
   cursor: pointer;
 }
+
+@media (max-width: 414px) {
+  html,
+  #root,
+  body {
+    height: auto;
+  }
+
+  #root {
+    display: block;
+  }
+
+  td,
+  th {
+    padding: 2px;
+    font-size: 12px;
+  }
+}

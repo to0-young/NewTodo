@@ -7,16 +7,24 @@ import actionCreator from '../../../services/store/action-creator'
 import { apiUrl } from '../../../exp-const/constants'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
+import ClearIcon from '@mui/icons-material/Clear'
 
 function UserHeader(props) {
   const history = useHistory()
   const session = useSelector((state) => state.session.details)
+  const [isOpened, setOpened] = React.useState(false)
 
   const [anchorEl, setAnchorEl] = React.useState()
   const open = Boolean(anchorEl)
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget)
+  }
+
+  const ClickMenuBtn = () => {
+    setOpened(!isOpened)
   }
 
   const handleClose = () => {
@@ -38,28 +46,25 @@ function UserHeader(props) {
     return json
   }
 
+  const links = [
+    { to: '/dashboard', label: 'Dashboard' },
+    { to: '/tasks/new', label: 'New task' },
+    { to: '/chat', label: 'Chat' },
+  ]
+
   return (
-    <div className='header'>
+    <div className={`header ${isOpened ? 'header-opened' : ''}`}>
       <div className='header__section'>
         <div className='header__section_left'>
           <h2 className='todo__logo'>TODO</h2>
 
-          <div className='header__item header__button'>
-            <Link className='dashboard__link' to='/dashboard'>
-              Dashboard
-            </Link>
-          </div>
-
-          <div className='header__item header__button'>
-            <Link className='new-task__link' to='/tasks/new'>
-              New task
-            </Link>
-          </div>
-          <div className='header__item header__button'>
-            <Link className='chat__link' to='/chat'>
-              Chat
-            </Link>
-          </div>
+          {links.map((l) => (
+            <div key={l.to} className='header__item header__button'>
+              <Link className='header__link' to={l.to}>
+                {l.label}
+              </Link>
+            </div>
+          ))}
         </div>
 
         <Button
@@ -72,10 +77,22 @@ function UserHeader(props) {
           <img className='header__section_right' src={session.user.avatar.url} />
         </Button>
 
+        <IconButton
+          size='large'
+          edge='start'
+          color='inherit'
+          aria-label='menu'
+          className={'mobile-icon-button'}
+          onClick={ClickMenuBtn}
+        >
+          {isOpened ? <ClearIcon /> : <MenuIcon />}
+        </IconButton>
+
         <Menu
           id='basic-menu'
           anchorEl={anchorEl}
           open={open}
+          classes={'mobile-icon-button'}
           onClose={handleClose}
           MenuListProps={{
             'aria-labelledby': 'basic-button',
@@ -83,6 +100,20 @@ function UserHeader(props) {
         >
           <MenuItem onClick={onLogOut}>Logout</MenuItem>
         </Menu>
+      </div>
+
+      <div className={`header__mobile-items ${isOpened ? 'header__mobile-items_opened' : ''}`}>
+        {links.map((l) => (
+          <div key={l.to} className='header__mobile-item'>
+            <Link className='header__link' to={l.to}>
+              {l.label}
+            </Link>
+          </div>
+        ))}
+
+        <div className='header__mobile-item' onClick={onLogOut}>
+          Logout
+        </div>
       </div>
     </div>
   )
