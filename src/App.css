@@ -23,3 +23,31 @@ button,
 a {
   cursor: pointer;
 }
+
+@media (max-width: 375px) {
+  td,
+  th {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 376px) and (max-width: 750px) {
+  td,
+  th {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 751px) and (max-width: 1330px) {
+  td,
+  th {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1331px) {
+  td,
+  th {
+    font-size: 18px;
+  }
+}

@@ -113,7 +113,7 @@ function UserHeader(props) {
           </div>
         ))}
 
-        <div className='header__mobile-item' onClick={onLogOut}>
+        <div className='header__mobile-item-log' onClick={onLogOut}>
           Logout
         </div>
       </div>

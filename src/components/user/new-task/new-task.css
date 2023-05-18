@@ -16,7 +16,7 @@
 
 @media (max-width: 375px) {
   .new-task {
-    width: 100%;
+    width: 90%;
     border-radius: 0px;
     box-shadow: none;
     /*padding: 10px;*/
