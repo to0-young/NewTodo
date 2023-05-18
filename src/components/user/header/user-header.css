@@ -111,6 +111,7 @@
   }
   .header__mobile-items {
     display: none;
+    font-size: 17px;
   }
 
   .header__mobile-items_opened {
