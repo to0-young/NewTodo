@@ -31,6 +31,10 @@ function UserHeader(props) {
     setAnchorEl(null)
   }
 
+  const handleLinkClick = () => {
+    setOpened(false)
+  }
+
   const onLogOut = async () => {
     const res = await fetch(`${apiUrl}/api/v1/sessions`, {
       method: 'DELETE',
@@ -60,7 +64,7 @@ function UserHeader(props) {
 
           {links.map((l) => (
             <div key={l.to} className='header__item header__button'>
-              <Link className='header__link' to={l.to}>
+              <Link className='header__link' to={l.to} onClick={handleLinkClick}>
                 {l.label}
               </Link>
             </div>
@@ -94,7 +98,7 @@ function UserHeader(props) {
           id='basic-menu'
           anchorEl={anchorEl}
           open={open}
-          classes={'mobile-icon-button'}
+          // classes={'mobile-icon-button'}
           onClose={handleClose}
           MenuListProps={{
             'aria-labelledby': 'basic-button',
@@ -107,7 +111,7 @@ function UserHeader(props) {
       <div className={`header__mobile-items ${isOpened ? 'header__mobile-items_opened' : ''}`}>
         {links.map((l) => (
           <div key={l.to} className='header__mobile-item'>
-            <Link className='header__link' to={l.to}>
+            <Link className='header__link' to={l.to} onClick={handleLinkClick}>
               {l.label}
             </Link>
           </div>
