@@ -45,12 +45,12 @@
 }
 
 .header__mobile-item-log {
-  color: #f10606;
+  background-color: #e9eee9;
+  color: #f60505;
   display: inline-block;
   cursor: pointer;
   padding: 10px;
   border-radius: 30px;
-  background: #ebf8f9;
 }
 
 @media (max-width: 769px) {
