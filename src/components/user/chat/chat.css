@@ -118,81 +118,28 @@
   margin: 4px 4px 4px 4px;
 }
 
-@media (max-width: 414px) {
+@media (max-width: 769px) {
   .chat {
-    width: 330px;
+    width: 376px;
     padding: 20px;
   }
-
-  .messageInput {
-    font-size: 12px;
-  }
-
   .messages {
     width: 100%;
     max-height: 300px;
-  }
-
-  .message p {
-    font-size: 12px;
-    padding: 5px;
-  }
-
-  .myMessage p {
-    font-size: 12px;
-    padding: 5px;
-  }
-
-  .Ava {
-    width: 30px;
-    height: 30px;
-  }
-
-  .time {
-    font-size: 11px;
-  }
-
-  .chat__userName {
-    font-size: 10px;
   }
 }
 
 @media (max-width: 414px) {
   .chat {
-    width: 330px;
+    width: 350px;
     padding: 20px;
   }
+}
 
-  .messageInput {
-    font-size: 12px;
-  }
-
-  .messages {
-    width: 100%;
-    max-height: 300px;
-  }
-
-  .message p {
-    font-size: 12px;
-    padding: 5px;
-  }
-
-  .myMessage p {
-    font-size: 12px;
-    padding: 5px;
-  }
-
-  .Ava {
-    width: 30px;
-    height: 30px;
-  }
-
-  .time {
-    font-size: 11px;
-  }
-
-  .chat__userName {
-    font-size: 10px;
+@media (max-width: 390px) {
+  .chat {
+    width: 314px;
+    padding: 20px;
   }
 }
 
@@ -200,37 +147,5 @@
   .chat {
     width: 300px;
     padding: 20px;
-  }
-
-  .messageInput {
-    font-size: 12px;
-  }
-
-  .messages {
-    width: 100%;
-    max-height: 300px;
-  }
-
-  .message p {
-    font-size: 12px;
-    padding: 5px;
-  }
-
-  .myMessage p {
-    font-size: 12px;
-    padding: 5px;
-  }
-
-  .Ava {
-    width: 30px;
-    height: 30px;
-  }
-
-  .time {
-    font-size: 11px;
-  }
-
-  .chat__userName {
-    font-size: 10px;
   }
 }

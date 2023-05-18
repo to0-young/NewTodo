@@ -94,7 +94,7 @@ function UserHeader(props) {
           id='basic-menu'
           anchorEl={anchorEl}
           open={open}
-          classes={'mobile-icon-button'}
+          // classes={'mobile-icon-button'}
           onClose={handleClose}
           MenuListProps={{
             'aria-labelledby': 'basic-button',
