@@ -23,3 +23,27 @@ button,
 a {
   cursor: pointer;
 }
+
+@media (max-width: 414px) {
+  html,
+  #root,
+  body {
+    margin-top: 1px;
+  }
+}
+
+@media (max-width: 390px) {
+  html,
+  #root,
+  body {
+    margin-top: 1px;
+  }
+}
+
+@media (max-width: 375px) {
+  html,
+  #root,
+  body {
+    margin-top: 1px;
+  }
+}

@@ -44,6 +44,15 @@
   cursor: pointer;
 }
 
+.header__mobile-item-log {
+  background-color: #e9eee9;
+  color: #f60505;
+  display: inline-block;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 30px;
+}
+
 @media (max-width: 769px) {
   .header__img {
     display: none;
