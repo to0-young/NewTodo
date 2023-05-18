@@ -67,15 +67,17 @@ function UserHeader(props) {
           ))}
         </div>
 
-        <Button
-          id='basic-button'
-          aria-controls={open ? 'basic-menu' : undefined}
-          aria-haspopup='true'
-          aria-expanded={open ? 'true' : undefined}
-          onClick={handleClick}
-        >
-          <img className='header__section_right' src={session.user.avatar.url} />
-        </Button>
+        <div className='header__img'>
+          <Button
+            id='basic-button'
+            aria-controls={open ? 'basic-menu' : undefined}
+            aria-haspopup='true'
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
+          >
+            <img className='header__section_right' src={session.user.avatar.url} />
+          </Button>
+        </div>
 
         <IconButton
           size='large'
