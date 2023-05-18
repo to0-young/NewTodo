@@ -11,3 +11,9 @@
     width: 100%;
   }
 }
+
+@media (max-width: 375px) {
+  .user-routes {
+    width: 100%;
+  }
+}

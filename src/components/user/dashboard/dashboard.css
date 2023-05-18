@@ -55,19 +55,41 @@
   padding: 0 0 5px;
 }
 
-@media (max-width: 769px) {
+@media (max-width: 768px) {
   .dashboard__table-title,
   .dashboard__table-priority,
   .dashboard__table-due_date {
-    margin: 8px 0;
-    font-size: 14px;
+    margin: 10px;
   }
-
   .dashboard__table {
-    margin-top: 73px;
     width: 100%;
+    margin-top: 72px;
   }
-  .pagination {
-    width: 100%;
+  .dashboard__sort-icon {
+    display: none;
+  }
+}
+
+@media (max-width: 414px) {
+  .dashboard__table-title,
+  .dashboard__table-priority,
+  .dashboard__table-due_date {
+    margin: 5px;
+  }
+}
+
+@media (max-width: 390px) {
+  .dashboard__table-title,
+  .dashboard__table-priority,
+  .dashboard__table-due_date {
+    margin: 2px;
+  }
+}
+
+@media (max-width: 375px) {
+  .dashboard__table-title,
+  .dashboard__table-priority,
+  .dashboard__table-due_date {
+    margin: 1px;
   }
 }
