@@ -6,6 +6,12 @@
   font-family: Ubuntu;
 }
 
+.header-opened {
+  position: relative;
+  inset: 0 0 auto 0;
+  display: block;
+}
+
 .header__section {
   display: flex;
   align-items: center;
@@ -38,6 +44,12 @@
   cursor: pointer;
 }
 
+@media (max-width: 769px) {
+  .header__img {
+    display: none;
+  }
+}
+
 .sign-up__link {
   color: #ff0000;
   text-decoration: none;
@@ -50,27 +62,87 @@
   white-space: nowrap;
 }
 
-.dashboard__link {
-  color: #1e1e21;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.new-task__link {
-  color: #1e1e21;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
 .todo__logo {
   color: #fffdfd;
   text-decoration: none;
   white-space: nowrap;
-  margin: 10px;
+  margin: 5px;
 }
 
-.chat__link {
+.header__link {
   color: #1e1e21;
   text-decoration: none;
   white-space: nowrap;
+}
+
+@media (min-width: 769px) {
+  .header__mobile-item,
+  .header__mobile-items,
+  .mobile-icon-button {
+    display: none !important;
+  }
+}
+
+@media (max-width: 769px) {
+  .header {
+    display: block;
+    position: fixed;
+    height: 52px;
+    top: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    transition: height 0.3s;
+    z-index: 2;
+  }
+  .todo__logo {
+    color: #fffdfd;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .header__mobile-items {
+    display: none;
+  }
+
+  .header__mobile-items_opened {
+    display: flex;
+    margin-top: 32px;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    padding: 70px 0;
+  }
+
+  .header-opened {
+    height: 115vh;
+  }
+
+  .header__section {
+    justify-content: space-between;
+  }
+
+  .header__section_left {
+    width: auto;
+  }
+
+  .header__item {
+    display: none;
+  }
+
+  .header__mobile-item {
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 30px;
+    background: #ebf8f9;
+  }
+
+  .mobile-icon-button {
+    justify-content: center;
+    align-items: center;
+    border-radius: 60%;
+    background: transparent;
+    border: none;
+    margin-right: 10px;
+  }
 }

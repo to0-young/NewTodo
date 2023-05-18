@@ -120,7 +120,7 @@ function Dashboard(props) {
 
   return (
     <div className='dashboard'>
-      <table>
+      <table className='dashboard__table'>
         <thead>
           <tr>
             <th className='dashboard__table-th' onClick={sortByTitle}>
@@ -144,7 +144,7 @@ function Dashboard(props) {
           </tr>
         </thead>
 
-        <tbody>
+        <tbody className='dashboard__section'>
           {tasks.map((row, index) => {
             const crossedClass = row.completed ? 'dashboard__td_crossed' : ''
             return (

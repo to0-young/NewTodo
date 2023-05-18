@@ -117,3 +117,30 @@
   align-items: center;
   margin: 4px 4px 4px 4px;
 }
+
+@media (min-width: 376px) and (max-width: 474px) {
+  .chat {
+    width: 100%;
+    border-radius: 0;
+  }
+  .myMessage {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .chat {
+    width: 100%;
+    border-radius: 0;
+  }
+  .myMessage {
+    width: 100%;
+  }
+}
+
+@media (min-width: 992px) {
+  .chat {
+    width: 512px;
+    border-radius: 30px;
+  }
+}
