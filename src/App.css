@@ -23,3 +23,10 @@ button,
 a {
   cursor: pointer;
 }
+
+@media (max-width: 375px) {
+  td,
+  th {
+    margin-top: 59px;
+  }
+}

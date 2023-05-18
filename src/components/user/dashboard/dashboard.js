@@ -144,7 +144,7 @@ function Dashboard(props) {
           </tr>
         </thead>
 
-        <tbody className='dashboard__section'>
+        <tbody>
           {tasks.map((row, index) => {
             const crossedClass = row.completed ? 'dashboard__td_crossed' : ''
             return (
