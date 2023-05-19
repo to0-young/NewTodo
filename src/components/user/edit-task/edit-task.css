@@ -1,7 +1,7 @@
 .edit-task {
   align-self: center;
   margin: auto;
-  box-shadow: 0px 5px 10px rgba(31, 30, 30, 0.08);
+  box-shadow: 0px 2px 15px 0px rgb(36 255 6 / 30%);
   border-radius: 30px;
   width: 400px;
   padding: 15px 20px;
@@ -12,4 +12,40 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+@media (max-width: 769px) {
+  .edit-task {
+    width: 380px;
+    box-shadow: none;
+  }
+
+  .edit-task__form {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 414px) {
+  .edit-task {
+    width: 340px;
+    box-shadow: none;
+  }
+
+  .edit-task__form {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 375px) {
+  .edit-task {
+    width: 300px;
+    box-shadow: none;
+  }
+
+  .edit-task__form {
+    flex-direction: column;
+    align-items: center;
+  }
 }

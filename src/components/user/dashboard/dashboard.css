@@ -4,6 +4,26 @@
   width: 100%;
 }
 
+.dashboard__table {
+  border-collapse: collapse;
+  color: #010c13;
+}
+
+.dashboard__table thead th {
+  background-color: rgb(255, 214, 2);
+  color: #0e100e;
+  text-align: center;
+  font-weight: bold;
+}
+
+.dashboard__table tbody tr:nth-of-type(even) {
+  background-color: rgba(211, 190, 84, 0.27);
+}
+
+.dashboard__table tbody.dashboard__table-tb {
+  font-weight: bold;
+}
+
 .dashboard__task-btn {
   border: none;
   background-color: transparent;
@@ -21,11 +41,6 @@
   display: flex;
   justify-content: center;
   margin: 15px;
-}
-
-.dashboard__table {
-  border-collapse: collapse;
-  color: #010c13;
 }
 
 .dashboard__table-th {
