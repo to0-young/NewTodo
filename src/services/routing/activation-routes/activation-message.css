@@ -11,3 +11,25 @@
   flex-direction: column;
   align-items: center;
 }
+
+@media (max-width: 769px) {
+  .activation__message {
+    width: 380px;
+    padding: 10px;
+  }
+
+  .activation__message-form {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 375px) {
+  .activation__message {
+    width: 280px;
+    padding: 10px;
+  }
+
+  .activation__message-form {
+    padding: 10px;
+  }
+}
