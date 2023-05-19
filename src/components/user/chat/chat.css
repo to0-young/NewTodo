@@ -122,6 +122,7 @@
   .chat {
     width: 376px;
     padding: 20px;
+    box-shadow: none;
   }
   .messages {
     width: 100%;

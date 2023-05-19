@@ -121,8 +121,8 @@ function Dashboard(props) {
   return (
     <div className='dashboard'>
       <table className='dashboard__table'>
-        <thead>
-          <tr>
+        <thead className='dashboard__table-th'>
+          <tr className='dashboard__table-tr'>
             <th className='dashboard__table-th' onClick={sortByTitle}>
               <span className='dashboard__table-title'>Title</span>
               <span className='dashboard__sort-icon'>{buildIcon('title')}</span>
@@ -144,7 +144,7 @@ function Dashboard(props) {
           </tr>
         </thead>
 
-        <tbody>
+        <tbody className='dashboard__table-tb'>
           {tasks.map((row, index) => {
             const crossedClass = row.completed ? 'dashboard__td_crossed' : ''
             return (
