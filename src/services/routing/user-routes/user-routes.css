@@ -6,14 +6,3 @@
 .spinner {
   margin: auto;
 }
-@media (max-width: 769px) {
-  .user-routes {
-    width: 100%;
-  }
-}
-
-@media (max-width: 375px) {
-  .user-routes {
-    width: 100%;
-  }
-}

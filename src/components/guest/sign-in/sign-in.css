@@ -21,7 +21,7 @@
   .sign-in {
     width: 450px;
     padding: 10px;
-    border-radius: 30px;
+    box-shadow: none;
   }
 
   .sign-in__form {
@@ -37,7 +37,6 @@
   .sign-in {
     width: 300px;
     padding: 10px;
-    border-radius: 30px;
   }
 
   .sign-in__form {
@@ -53,7 +52,6 @@
   .sign-in {
     width: 280px;
     padding: 10px;
-    border-radius: 30px;
   }
 
   .sign-in__form {

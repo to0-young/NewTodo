@@ -2,6 +2,7 @@ html,
 #root,
 body {
   height: 100%;
+  overflow: hidden;
 }
 
 #root {
@@ -27,6 +28,6 @@ a {
 @media (max-width: 375px) {
   td,
   th {
-    margin-top: 59px;
+    width: 320px;
   }
 }

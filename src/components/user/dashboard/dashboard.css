@@ -17,7 +17,7 @@
 }
 
 .dashboard__table tbody tr:nth-of-type(even) {
-  background-color: rgba(211, 190, 84, 0.27);
+  background-color: rgba(42, 126, 246, 0.27);
 }
 
 .dashboard__table tbody.dashboard__table-tb {
@@ -70,11 +70,12 @@
   padding: 0 0 5px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 769px) {
   .dashboard__table-title,
   .dashboard__table-priority,
   .dashboard__table-due_date {
     margin: 10px;
+    width: 350px;
   }
   .dashboard__table {
     width: 100%;
@@ -85,26 +86,14 @@
   }
 }
 
-@media (max-width: 414px) {
-  .dashboard__table-title,
-  .dashboard__table-priority,
-  .dashboard__table-due_date {
-    margin: 5px;
-  }
-}
-
-@media (max-width: 390px) {
-  .dashboard__table-title,
-  .dashboard__table-priority,
-  .dashboard__table-due_date {
-    margin: 2px;
-  }
-}
-
 @media (max-width: 375px) {
   .dashboard__table-title,
   .dashboard__table-priority,
   .dashboard__table-due_date {
-    margin: 1px;
+    width: 100%;
+  }
+
+  .dashboard__sort-icon {
+    display: none;
   }
 }
