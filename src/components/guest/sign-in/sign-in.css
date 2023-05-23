@@ -33,32 +33,3 @@
   }
 }
 
-@media (max-width: 414px) {
-  .sign-in {
-    width: 300px;
-    padding: 10px;
-  }
-
-  .sign-in__form {
-    padding: 10px;
-  }
-
-  .sign-in__forgot {
-    padding: 5px;
-  }
-}
-
-@media (max-width: 375px) {
-  .sign-in {
-    width: 280px;
-    padding: 10px;
-  }
-
-  .sign-in__form {
-    padding: 10px;
-  }
-
-  .sign-in__forgot {
-    padding: 5px;
-  }
-}

@@ -25,24 +25,3 @@
   }
 }
 
-@media (max-width: 414px) {
-  .sign-up {
-    width: 330px;
-    padding: 10px;
-  }
-
-  .sign-up__form {
-    padding: 10px;
-  }
-}
-
-@media (max-width: 375px) {
-  .sign-up {
-    width: 280px;
-    padding: 10px;
-  }
-
-  .sign-up__form {
-    padding: 10px;
-  }
-}
