@@ -125,7 +125,7 @@
     width: 100vw;
     box-shadow: none;
     padding: 0px;
-    margin: 72px 0 0 0  ;
+    margin: 72px 0 0 0;
   }
   .messageHeader {
     display: none;
@@ -145,40 +145,3 @@
   }
 }
 
-/*@media (max-width: 414px) {*/
-/*  .chat {*/
-/*    margin: 72px 0px 0px 0px;*/
-/*  }*/
-/*  .chat__apt {*/
-/*    height: 100%;*/
-/*  }*/
-/*  .messages {*/
-/*    width: 100%;*/
-/*  }*/
-/*}*/
-/*@media (max-width: 390px) {*/
-/*  .chat {*/
-/*    width: 381px;*/
-/*    height: 85%;*/
-/*    margin: 78px 0px 0px 0px;*/
-/*  }*/
-/*  .chat__apt {*/
-/*    height: 97%;*/
-/*    margin: 0px 0px 0px 0px;*/
-/*  }*/
-
-/*  .messages {*/
-/*    width: 100%;*/
-/*  }*/
-/*}*/
-
-/*@media (max-width: 375px) {*/
-/*  .chat {*/
-/*    height: calc(100vh - 72px);*/
-/*    width: 100vw;*/
-/*    margin: 73px;*/
-/*  }*/
-/*  .chat__apt {*/
-/*    padding: 0px;*/
-/*  }*/
-/*}*/

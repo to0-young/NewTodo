@@ -95,9 +95,10 @@
 
 @media (max-width: 769px) {
   .header {
-    display: block;
+    display: flex;
+    padding: 0 12px;
     position: fixed;
-    height: 52px;
+   height: 72px;
     top: 0;
     left: 0;
     right: 0;
@@ -125,11 +126,14 @@
   }
 
   .header-opened {
-    height: 115vh;
+    display: block;
+    height: 100vh;
+
   }
 
   .header__section {
     justify-content: space-between;
+    height: 72px;
   }
 
   .header__section_left {
