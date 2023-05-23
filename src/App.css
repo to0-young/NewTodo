@@ -24,10 +24,10 @@ button,
 a {
   cursor: pointer;
 }
-
-@media (max-width: 375px) {
+@media (max-width: 769px) {
   td,
   th {
-    width: 320px;
+    color: forestgreen;
   }
 }
+
