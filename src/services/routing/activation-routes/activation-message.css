@@ -16,6 +16,7 @@
   .activation__message {
     width: 380px;
     padding: 10px;
+    box-shadow: none;
   }
 
   .activation__message-form {

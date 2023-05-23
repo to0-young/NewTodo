@@ -17,7 +17,7 @@
   .sign-up {
     width: 375px;
     padding: 10px;
-    border-radius: 30px;
+    box-shadow: none;
   }
 
   .sign-up__form {
@@ -29,7 +29,6 @@
   .sign-up {
     width: 330px;
     padding: 10px;
-    border-radius: 30px;
   }
 
   .sign-up__form {
@@ -41,7 +40,6 @@
   .sign-up {
     width: 280px;
     padding: 10px;
-    border-radius: 30px;
   }
 
   .sign-up__form {

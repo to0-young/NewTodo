@@ -35,9 +35,9 @@ function NewTask() {
       dueDate: '',
     }
 
-    if (task.title.length < 3) {
+    if (task.title.length < 3 || task.title.length > 20) {
       valid = false
-      appError.title = 'Sorry your title is too short'
+      appError.title = 'Sorry, your title should be between 3 and 20 characters'
     }
     if (task.priority.length < 1) {
       valid = false

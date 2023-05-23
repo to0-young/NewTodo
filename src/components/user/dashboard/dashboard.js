@@ -10,9 +10,9 @@ import { Link } from 'react-router-dom'
 import Brightness1OutlinedIcon from '@mui/icons-material/Brightness1Outlined'
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
 import Pagination from '@mui/material/Pagination'
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import { apiUrl } from '../../../exp-const/constants'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 
 function Dashboard(props) {
   const tasks = useSelector((state) => state.task.list)
@@ -22,7 +22,7 @@ function Dashboard(props) {
   const [fieldType, setFieldType] = useState('title')
 
   const buildIcon = (field) => {
-    if (field === fieldType) return orderAsc === 'asc' ? <ArrowDownwardIcon /> : <ArrowUpwardIcon />
+    if (field === fieldType) return orderAsc === 'asc' ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />
     return null
   }
 
