@@ -39,19 +39,19 @@ function SignUp() {
       password: '',
     }
 
-    if (user.firstName.length < 3) {
+    if (user.firstName.length < 3 || user.firstName.length > 15 ) {
       valid = false
-      newError.firstName = 'Sorry your first name is too short'
+      newError.firstName = 'Your first name should be between 3 and 15 characters'
     }
 
-    if (user.lastName.length < 3) {
+    if (user.lastName.length < 3  || user.lastName.length > 15 ) {
       valid = false
-      newError.lastName = 'Sorry your last name is too short'
+      newError.lastName = 'Your last name should be between 3 and 15 characters'
     }
 
-    if (user.email.length < 8) {
+    if (user.email.length < 8 || user.email.length > 30 ) {
       valid = false
-      newError.email = 'Sorry your email is too short'
+      newError.email = 'Your email should be between 8 and 30 characters'
     }
 
     if (user.password.length < 1) {
