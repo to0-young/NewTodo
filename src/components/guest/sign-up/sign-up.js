@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './sign-up.css'
@@ -30,40 +30,41 @@ function SignUp() {
     password: '',
   })
 
-  const onValidate = () => {
-    let valid = true
-    const newError = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-    }
+  const onValidate = useMemo(() => {
+    return () => {
+      let valid = true
+      const newError = {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+      }
+      if (user.firstName.length < 3 || user.firstName.length > 15 ) {
+        valid = false
+        newError.firstName = 'Your first name should be between 3 and 15 characters'
+      }
 
-    if (user.firstName.length < 3 || user.firstName.length > 15 ) {
-      valid = false
-      newError.firstName = 'Your first name should be between 3 and 15 characters'
-    }
+      if (user.lastName.length < 3  || user.lastName.length > 15 ) {
+        valid = false
+        newError.lastName = 'Your last name should be between 3 and 15 characters'
+      }
 
-    if (user.lastName.length < 3  || user.lastName.length > 15 ) {
-      valid = false
-      newError.lastName = 'Your last name should be between 3 and 15 characters'
-    }
+      if (user.email.length < 8 || user.email.length > 30 ) {
+        valid = false
+        newError.email = 'Your email should be between 8 and 30 characters'
+      }
 
-    if (user.email.length < 8 || user.email.length > 30 ) {
-      valid = false
-      newError.email = 'Your email should be between 8 and 30 characters'
-    }
+      if (user.password.length < 1) {
+        valid = false
+        newError.password = 'Sorry your password is too short'
+      }
 
-    if (user.password.length < 1) {
-      valid = false
-      newError.password = 'Sorry your password is too short'
+      if (!valid) {
+        changeError(newError)
+      }
+      return valid
     }
-
-    if (!valid) {
-      changeError(newError)
-    }
-    return valid
-  }
+  },[user])
 
   const onSignUp = async (e) => {
     e.preventDefault()

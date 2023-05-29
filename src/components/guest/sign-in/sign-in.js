@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './sign-in.css'
@@ -23,26 +23,28 @@ function SignIn(props) {
   })
   const [errorMsg, setErrorMsg] = React.useState()
 
-  const onValidate = () => {
-    let valid = true
-    const appError = {
-      email: '',
-      password: '',
+  const onValidate = useMemo(() => {
+    return () => {
+      let valid = true
+      const appError = {
+        email: '',
+        password: '',
+      }
+      if (user.email.length < 8) {
+        valid = false
+        appError.email = 'Sorry your email is too short'
+      }
+      if (user.password.length < 1) {
+        valid = false
+        appError.password = 'Sorry your password is too short'
+      }
+      if (!valid) {
+        changeError(appError)
+      }
+      return valid
     }
+  }, [user])
 
-    if (user.email.length < 8) {
-      valid = false
-      appError.email = 'Sorry your email is too short'
-    }
-    if (user.password.length < 1) {
-      valid = false
-      appError.password = 'Sorry your password is too short'
-    }
-    if (!valid) {
-      changeError(appError)
-    }
-    return valid
-  }
   const onSignIn = async (e) => {
     e.preventDefault()
     if (onValidate()) {

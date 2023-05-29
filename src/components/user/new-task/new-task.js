@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 import { apiUrl } from '../../../exp-const/constants'
+import {useMemo} from "react";
 
 function NewTask() {
   const history = useHistory()
@@ -27,28 +28,30 @@ function NewTask() {
     dueDate: '',
   })
 
-  const onValidation = () => {
-    let valid = true
-    const appError = {
-      title: '',
-      priority: '',
-      dueDate: '',
-    }
+  const onValidation = useMemo(() => {
+    return () => {
+      let valid = true
+      const appError = {
+        title: '',
+        priority: '',
+        dueDate: '',
+      }
 
-    if (task.title.length < 3 || task.title.length > 20) {
-      valid = false
-      appError.title = 'Sorry, your title should be between 3 and 20 characters'
-    }
-    if (task.priority.length < 1) {
-      valid = false
-      appError.priority = 'Sorry your priority is missing'
-    }
+      if (task.title.length < 3 || task.title.length > 20) {
+        valid = false
+        appError.title = 'Sorry, your title should be between 3 and 20 characters'
+      }
+      if (task.priority.length < 1) {
+        valid = false
+        appError.priority = 'Sorry your priority is missing'
+      }
 
-    if (!valid) {
-      changeError(appError)
+      if (!valid) {
+        changeError(appError)
+      }
+      return valid
     }
-    return valid
-  }
+  }, [task])
 
   const onCreateTask = async (e) => {
     e.preventDefault()

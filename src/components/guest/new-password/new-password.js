@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './new-password.css'
@@ -20,24 +20,25 @@ function NewPassword() {
     confirmationPassword: '',
   })
 
-  const onValidate = () => {
-    let valid = true
-    const setError = {
-      password: '',
-      confirmationPassword: '',
-    }
+  const onValidate = useMemo(() => {
+    return  () => {
+      let valid = true
+      const setError = {
+        password: '',
+        confirmationPassword: '',
+      }
 
-    if (user.password.length < 6 || user.password !== user.confirmationPassword) {
-      valid = false
-      setError.password = 'Sorry your password is too short'
-      setError.confirmationPassword = 'Sorry your password confirm is too short'
+      if (user.password.length < 6 || user.password !== user.confirmationPassword) {
+        valid = false
+        setError.password = 'Sorry your password is too short'
+        setError.confirmationPassword = 'Sorry your password confirm is too short'
+      }
+      if (!valid) {
+        changeError(setError)
+      }
+      return valid
     }
-
-    if (!valid) {
-      changeError(setError)
-    }
-    return valid
-  }
+  },[user])
 
   const onForgot = async (e) => {
     e.preventDefault()

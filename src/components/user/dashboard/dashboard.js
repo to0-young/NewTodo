@@ -1,6 +1,6 @@
 import * as React from 'react'
 import './dashboard.css'
-import { useEffect, useState } from 'react'
+import {useEffect, useMemo, useState} from 'react'
 import { connect, useSelector } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 import Spinner from '../../reusable/spinner'
@@ -17,32 +17,42 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 function Dashboard(props) {
   const tasks = useSelector((state) => state.task.list)
   const fetched = useSelector((state) => state.task.fetched)
+  const [page, setPage] = useState(1)
+  const [pagesCount, setPagesCount] = useState()
 
   const [orderAsc, setOrderAsc] = useState('asc')
   const [fieldType, setFieldType] = useState('title')
 
-  const buildIcon = (field) => {
-    if (field === fieldType) return orderAsc === 'asc' ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />
-    return null
-  }
+  const buildIcon = useMemo(() => {
+    return (field) => {
+      if (field === fieldType)
+        return orderAsc === 'asc' ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />
+    }
+  }, [fieldType, orderAsc])
 
-  const sortByTitle = () => {
-    setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
-    setFieldType('title')
-  }
 
-  const sortByPriority = () => {
-    setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
-    setFieldType('priority')
-  }
+  const sortByTitle = useMemo(() => {
+    return () => {
+      setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
+      setFieldType('title')
+    }
+  }, [orderAsc])
 
-  const sortByDueDate = () => {
-    setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
-    setFieldType('due_date')
-  }
+  const sortByPriority = useMemo( () => {
+    return () => {
+      setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
+      setFieldType('priority')
+    }
+  }, [orderAsc])
 
-  const [page, setPage] = useState(1)
-  const [pagesCount, setPagesCount] = useState()
+  const sortByDueDate = useMemo(() => {
+    return () => {
+      setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
+      setFieldType('due_date')
+    }
+  }, [orderAsc])
+
+
 
   const onChangePagination = (_, page) => {
     setPage(page)

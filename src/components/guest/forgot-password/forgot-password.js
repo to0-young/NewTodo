@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './forgot-password.css'
@@ -20,20 +20,24 @@ function ForgotPassword() {
   })
   const [errorMsg, setErrorMsg] = React.useState()
 
-  const onValidate = () => {
-    let valid = true
-    const appError = {
-      email: '',
+  const onValidate = useMemo( () => {
+    return () => {
+      let valid = true
+      const appError = {
+        email: '',
+      }
+      if (user.email.length < 16) {
+        valid = false
+        appError.email = 'Sorry your email is too short'
+      }
+      if (!valid) {
+        changeError(appError)
+      }
+      return valid
     }
-    if (user.email.length < 16) {
-      valid = false
-      appError.email = 'Sorry your email is too short'
-    }
-    if (!valid) {
-      changeError(appError)
-    }
-    return valid
-  }
+  },[user])
+
+
   const onForgot = async (e) => {
     e.preventDefault()
     if (onValidate()) {
