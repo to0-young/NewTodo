@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react'
+import React, {useCallback, useMemo} from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './forgot-password.css'
@@ -38,18 +38,19 @@ function ForgotPassword() {
   },[user])
 
 
-  const onForgot = async (e) => {
+  const onForgot = useCallback(async (e) => {
     e.preventDefault()
     if (onValidate()) {
       await onForget()
     }
-  }
-  const onChangeEmail = (e) => {
-    changeUser({
+  }, [])
+
+  const onChangeEmail = useCallback((e) => {
+    changeUser((user) => ({
       ...user,
       email: e.target.value,
-    })
-  }
+    }))
+  }, [])
 
   const onForget = async () => {
     const res = await fetch(`${apiUrl}/api/v1/forget_passwords`, {

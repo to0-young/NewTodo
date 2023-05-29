@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, {useCallback, useEffect} from 'react'
 import '../chat/chat.css'
 import Button from '@mui/material/Button'
 import { connect, useSelector } from 'react-redux'
@@ -81,7 +81,7 @@ const Messages = () => {
     setMsg(event.target.value)
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault()
 
     const body = e.target.message.value
@@ -97,7 +97,7 @@ const Messages = () => {
       }),
     })
     setMsg('')
-  }
+  },[msg])
 
   const handleMessageDelete = async (message) => {
     const res = await fetch(`${apiUrl}/messages/${message}`, {

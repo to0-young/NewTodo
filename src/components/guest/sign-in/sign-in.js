@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react'
+import React, {useCallback, useMemo} from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './sign-in.css'
@@ -45,18 +45,20 @@ function SignIn(props) {
     }
   }, [user])
 
-  const onSignIn = async (e) => {
+  const onSignIn = useCallback(async (e) => {
     e.preventDefault()
     if (onValidate()) {
       await onLogIn()
     }
-  }
-  const onChangeEmail = (e) => {
-    changeUser({
+  },[])
+
+  const onChangeEmail = useCallback((e) => {
+    changeUser((user) => ({
       ...user,
       email: e.target.value,
-    })
-  }
+    }))
+  },[])
+
   const onChangePassword = (e) => {
     changeUser({
       ...user,

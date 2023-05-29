@@ -8,7 +8,7 @@ import Button from '@mui/material/Button'
 import {connect, useSelector} from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 import {useHistory, useParams} from 'react-router-dom'
-import {useEffect, useMemo} from 'react'
+import {useCallback, useEffect, useMemo} from 'react'
 import Spinner from '../../reusable/spinner'
 import {apiUrl} from '../../../exp-const/constants'
 
@@ -56,43 +56,43 @@ function EditTask(props) {
         }
     }, [task])
 
-    const onEditTask = async (e) => {
+    const onEditTask = useCallback( async (e) => {
         e.preventDefault()
         if (onValidation()) {
         }
-    }
+    },[])
 
     useEffect(() => {
         getTask()
     }, [])
 
-    const changeTitle = (e) => {
-        changeTask({
+    const changeTitle = useCallback((e) => {
+        changeTask((task) => ({
             ...task,
-            title: e.target.value,
-        })
-    }
+            title: e.target.value
+        }))
+    },[])
 
-    const changeDescription = (e) => {
-        changeTask({
+    const changeDescription = useCallback((e) => {
+        changeTask((task) => ({
             ...task,
-            description: e.target.value,
-        })
-    }
+            description: e.target.value
+        }))
+    },[])
 
-    const changePriority = (e) => {
-        changeTask({
+    const changePriority = useCallback((e) => {
+        changeTask((task)=> ({
             ...task,
-            priority: e.target.value,
-        })
-    }
+            priority: e.target.value
+        }))
+    },[])
 
-    const changeDate = (value) => {
-        changeTask({
+    const changeDate = useCallback((value) => {
+        changeTask((task)=> ({
             ...task,
-            dueDate: value,
-        })
-    }
+            dueDate: value
+        }))
+    },[])
 
     const updateTask = async () => {
         const res = await fetch(`${apiUrl}/api/v1/tasks/${task.id}`, {

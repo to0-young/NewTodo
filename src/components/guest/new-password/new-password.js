@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react'
+import React, {useCallback, useMemo} from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './new-password.css'
@@ -40,26 +40,26 @@ function NewPassword() {
     }
   },[user])
 
-  const onForgot = async (e) => {
+  const onForgot =  useCallback(async (e) => {
     e.preventDefault()
     if (onValidate()) {
       await updateNewPassword()
     }
-  }
+  },[])
 
-  const onChangePassword = (e) => {
-    changeUser({
+  const onChangePassword = useCallback((e) => {
+    changeUser((user) => ({
       ...user,
       password: e.target.value,
-    })
-  }
+    }))
+  },[])
 
-  const onChangeConfirmationPassword = (e) => {
-    changeUser({
+  const onChangeConfirmationPassword = useCallback((e) => {
+    changeUser((user) => ({
       ...user,
       confirmationPassword: e.target.value,
-    })
-  }
+    }))
+  },[])
 
   const updateNewPassword = async () => {
     const searchParams = new URLSearchParams(history.location.search)

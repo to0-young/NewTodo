@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react'
+import React, {useCallback, useMemo} from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './sign-up.css'
@@ -66,36 +66,40 @@ function SignUp() {
     }
   },[user])
 
-  const onSignUp = async (e) => {
+  const onSignUp = useCallback(async (e) => {
     e.preventDefault()
     if (onValidate()) {
       await createUser()
     }
-  }
+  },[])
 
-  const onChangeFirstName = (e) => {
-    const newFirst = Object.assign({}, user, { firstName: e.target.value })
-    changeUser(newFirst)
-  }
+  const onChangeFirstName = useCallback((e) => {
+    changeUser((user) => ({
+      ...user,
+      firstName: e.target.value
+    }))
+  },[])
 
-  const onChangeLastName = (e) => {
-    changeUser({
+  const onChangeLastName = useCallback((e) => {
+    changeUser((user) => ({
       ...user,
-      lastName: e.target.value,
-    })
-  }
-  const onChangeEmail = (e) => {
-    changeUser({
+      lastName: e.target.value
+    }))
+  },[])
+
+  const onChangeEmail = useCallback((e) => {
+    changeUser((user) => ({
       ...user,
-      email: e.target.value,
-    })
-  }
-  const onChangePassword = (e) => {
-    changeUser({
+      email: e.target.value
+    }))
+  },[])
+
+  const onChangePassword = useCallback((e) => {
+    changeUser((user) => ({
       ...user,
-      password: e.target.value,
-    })
-  }
+      password: e.target.value
+    }))
+  },[])
 
   const handleFile = (e) => {
     setFile(e.target.files[0])

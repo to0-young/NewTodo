@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 import { apiUrl } from '../../../exp-const/constants'
-import {useMemo} from "react";
+import {useCallback, useMemo} from "react";
 
 function NewTask() {
   const history = useHistory()
@@ -53,26 +53,26 @@ function NewTask() {
     }
   }, [task])
 
-  const onCreateTask = async (e) => {
+  const onCreateTask = useCallback(async (e) => {
     e.preventDefault()
     if (onValidation()) {
       await postTask()
     }
-  }
+  },[])
 
-  const onChangeTitle = (e) => {
-    changeTask({
+  const onChangeTitle = useCallback((e) => {
+    changeTask((task)=> ({
       ...task,
       title: e.target.value,
-    })
-  }
+    }))
+  },[])
 
-  const onChangeDescription = (e) => {
-    changeTask({
+  const onChangeDescription = useCallback((e) => {
+    changeTask((task)=>({
       ...task,
       description: e.target.value,
-    })
-  }
+    }))
+  },[])
 
   const onChangePriority = (e) => {
     changeTask({
