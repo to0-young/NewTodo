@@ -192,7 +192,13 @@ function EditTask(props) {
         </LocalizationProvider>
 
         <br />
-        <Button type={'submit'} className='task__update-btn' onClick={updateTask} variant='contained' color='info'>
+        <Button
+            type={'submit'}
+            className='task__update-btn'
+            onClick={updateTask}
+            variant='contained'
+            color='info'
+        >
           save
         </Button>
 

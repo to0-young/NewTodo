@@ -99,7 +99,7 @@ const Messages = () => {
     setMsg('')
   }
 
-  const handleDelete = async (message) => {
+  const handleMessageDelete = async (message) => {
     const res = await fetch(`${apiUrl}/messages/${message}`, {
       method: 'DELETE',
       credentials: 'include',
@@ -145,27 +145,27 @@ const Messages = () => {
   return (
     <div className='chat'>
       <div className='chat__apt'>
-        <div className='messageHeader'>
+        <div className='chat__apt-messageHeader'>
           <h1>Messages</h1>
         </div>
 
-        <div className='messages' id='messages'>
+        <div className='chat__apt-messages'>
           {messages.map((message, index) => (
-            <div className={message.user_id === session.user.id ? 'myMessage' : 'message'} key={`message-${index}`}>
+            <div className={message.user_id === session.user.id ? 'chat__apt-myMessage' : 'chat__apt-message'} key={`chat__apt-message-${index}`}>
               {message.user_id === session.user.id && (
-                <DeleteIcon className='chat__btn' onClick={() => handleDelete(message.id)}>
+                <DeleteIcon className='chat__apt-btn' onClick={() => handleMessageDelete(message.id)}>
                   Delete
                 </DeleteIcon>
               )}
 
-              <div className='avatar'>
-                <img className='Ava' src={message.user.avatar.url} alt='avatar' />
+              <div className='chat__avatar'>
+                <img className='chat__apt-userAva' src={message.user.avatar.url} alt='avatar' />
                 <div className='chat__userName'>{message.user.first_name}</div>
               </div>
 
               <p>
                 {message.body}
-                <span className='time'>
+                <span className='chat__apt-time'>
                   {new Date(message.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </span>
               </p>
@@ -176,10 +176,10 @@ const Messages = () => {
         </div>
       </div>
 
-      <div className='messageForm'>
+      <div className='chat__messageForm'>
         <form onSubmit={handleSubmit} style={{ display: 'flex', width: '100%' }}>
           <input
-            className='messageInput'
+            className='chat__messageInput'
             type='text'
             name='message'
             onChange={handleMessageChange}
@@ -187,7 +187,7 @@ const Messages = () => {
           />
 
           <Button
-            className='messageButton'
+            className='chat__messageButton'
             type='submit'
             variant='contained'
             endIcon={<SendIcon />}
