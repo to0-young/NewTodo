@@ -27,7 +27,6 @@ function NewPassword() {
         password: '',
         confirmationPassword: '',
       }
-
       if (user.password.length < 6 || user.password !== user.confirmationPassword) {
         valid = false
         setError.password = 'Sorry your password is too short'
@@ -45,7 +44,7 @@ function NewPassword() {
     if (onValidate()) {
       await updateNewPassword()
     }
-  },[])
+  },[onValidate])
 
   const onChangePassword = useCallback((e) => {
     changeUser((user) => ({

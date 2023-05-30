@@ -36,7 +36,6 @@ function NewTask() {
         priority: '',
         dueDate: '',
       }
-
       if (task.title.length < 3 || task.title.length > 20) {
         valid = false
         appError.title = 'Sorry, your title should be between 3 and 20 characters'
@@ -53,12 +52,13 @@ function NewTask() {
     }
   }, [task])
 
+
   const onCreateTask = useCallback(async (e) => {
     e.preventDefault()
     if (onValidation()) {
       await postTask()
     }
-  },[])
+  },[onValidation])
 
   const onChangeTitle = useCallback((e) => {
     changeTask((task)=> ({
@@ -68,25 +68,25 @@ function NewTask() {
   },[])
 
   const onChangeDescription = useCallback((e) => {
-    changeTask((task)=>({
+    changeTask((task)=> ({
       ...task,
       description: e.target.value,
     }))
   },[])
 
-  const onChangePriority = (e) => {
-    changeTask({
+  const onChangePriority = useCallback((e) => {
+    changeTask((task)=> ({
       ...task,
       priority: e.target.value,
-    })
-  }
+    }))
+  },[])
 
-  const onChangeDate = (value) => {
-    changeTask({
+  const onChangeDate = useCallback((value) => {
+    changeTask((task)=>({
       ...task,
       dueDate: value,
-    })
-  }
+    }))
+  },[])
 
   const postTask = async () => {
     const res = await fetch(`${apiUrl}/api/v1/tasks`, {

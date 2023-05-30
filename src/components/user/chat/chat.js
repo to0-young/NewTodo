@@ -25,7 +25,6 @@ const Messages = () => {
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
       })
-
       if (res.ok) {
         const data = await res.json()
         setMessages(data)
@@ -52,7 +51,6 @@ const Messages = () => {
       if (data.type === 'ping' || data.type === 'welcome' || data.type === 'confirm_subscription') {
         return
       }
-
       if (data.message.type === 'message_deleted') {
         setMessages((messages) => messages.filter((message) => message.id !== data.message.id))
         if (data.message.user_id === session.user.id) {
@@ -77,8 +75,8 @@ const Messages = () => {
     }
   }, [])
 
-  const handleMessageChange = (event) => {
-    setMsg(event.target.value)
+  const handleMessageChange = (e) => {
+    setMsg(e.target.value)
   }
 
   const handleSubmit = useCallback(async (e) => {
@@ -97,7 +95,7 @@ const Messages = () => {
       }),
     })
     setMsg('')
-  },[msg])
+  },[])
 
   const handleMessageDelete = async (message) => {
     const res = await fetch(`${apiUrl}/messages/${message}`, {
@@ -116,9 +114,9 @@ const Messages = () => {
       if (!endElement) return
       endElement.scrollIntoView({ block: 'center', behavior: 'smooth' })
     }, 100)
-
     return () => clearTimeout(timer)
   }, [messages])
+
 
   const clickNotify = (msg) => {
     if (Notification.permission === 'granted') {

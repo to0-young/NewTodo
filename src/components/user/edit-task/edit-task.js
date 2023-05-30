@@ -39,16 +39,14 @@ function EditTask(props) {
                 priority: '',
                 dueDate: '',
             }
-
-            if (task.title.length < 3 || task.title.length > 20) {
+            if (task.title.length < 3 ) {
                 valid = false
-                appError.title = 'Sorry, your title should be between 3 and 20 characters'
+                appError.title = 'Sorry, your title is missing'
             }
-            if (task.priority.length < 1) {
+            if (task.priority.length < 1 ) {
                 valid = false
                 appError.priority = 'Sorry your priority is missing'
             }
-
             if (!valid) {
                 changeError(appError)
             }
@@ -56,15 +54,18 @@ function EditTask(props) {
         }
     }, [task])
 
+
     const onEditTask = useCallback( async (e) => {
         e.preventDefault()
         if (onValidation()) {
         }
-    },[])
+    },[onValidation])
 
     useEffect(() => {
         getTask()
+        //eslint-disable-next-line
     }, [])
+
 
     const changeTitle = useCallback((e) => {
         changeTask((task) => ({
@@ -106,7 +107,6 @@ function EditTask(props) {
                 due_date: task.dueDate,
             }),
         })
-
         const json = await res.json()
         if (res.ok) {
             history.push('/dashboard')
@@ -115,13 +115,13 @@ function EditTask(props) {
         }
     }
 
+
     const getTask = async () => {
         const res = await fetch(`${apiUrl}/api/v1/tasks/${params.id}`, {
             method: 'GET',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},
         })
-
         const json = await res.json()
         if (res.ok) {
             props.getTaskSuccess(json)

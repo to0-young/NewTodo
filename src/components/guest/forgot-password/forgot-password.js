@@ -43,7 +43,7 @@ function ForgotPassword() {
     if (onValidate()) {
       await onForget()
     }
-  }, [])
+  }, [onValidate])
 
   const onChangeEmail = useCallback((e) => {
     changeUser((user) => ({

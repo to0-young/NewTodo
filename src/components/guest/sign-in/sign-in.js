@@ -50,7 +50,7 @@ function SignIn(props) {
     if (onValidate()) {
       await onLogIn()
     }
-  },[])
+  },[onValidate])
 
   const onChangeEmail = useCallback((e) => {
     changeUser((user) => ({
@@ -59,12 +59,12 @@ function SignIn(props) {
     }))
   },[])
 
-  const onChangePassword = (e) => {
-    changeUser({
+  const onChangePassword = useCallback((e) => {
+    changeUser((user)=>({
       ...user,
       password: e.target.value,
-    })
-  }
+    }))
+  },[])
 
   const onLogIn = async () => {
     const res = await fetch(`${apiUrl}/api/v1/sessions`, {

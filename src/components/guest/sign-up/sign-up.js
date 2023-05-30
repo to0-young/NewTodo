@@ -71,7 +71,7 @@ function SignUp() {
     if (onValidate()) {
       await createUser()
     }
-  },[])
+  },[onValidate])
 
   const onChangeFirstName = useCallback((e) => {
     changeUser((user) => ({
