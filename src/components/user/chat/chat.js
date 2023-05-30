@@ -11,7 +11,6 @@ import actionCreator from '../../../services/store/action-creator'
 const Messages = () => {
   const [messages, setMessages] = React.useState([])
   const [msg, setMsg] = React.useState('')
-
   const bottomRef = React.useRef(null)
   const session = useSelector((state) => state.session.details)
   const user = useSelector((state) => state.session.details.user)
@@ -95,7 +94,7 @@ const Messages = () => {
       }),
     })
     setMsg('')
-  },[])
+  },[msg])
 
   const handleMessageDelete = async (message) => {
     const res = await fetch(`${apiUrl}/messages/${message}`, {
@@ -112,7 +111,7 @@ const Messages = () => {
     const timer = setTimeout(() => {
       const endElement = bottomRef.current
       if (!endElement) return
-      endElement.scrollIntoView({ block: 'center', behavior: 'smooth' })
+      endElement.scrollIntoView({ block: 'start', behavior: 'auto' })
     }, 100)
     return () => clearTimeout(timer)
   }, [messages])

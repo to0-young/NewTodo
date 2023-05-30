@@ -63,7 +63,6 @@ function EditTask(props) {
 
     useEffect(() => {
         getTask()
-        //eslint-disable-next-line
     }, [])
 
 
