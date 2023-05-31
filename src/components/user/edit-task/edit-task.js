@@ -31,8 +31,7 @@ function EditTask(props) {
         dueDate: '',
     })
 
-    const onValidation = useMemo(() => {
-        return () => {
+    const onValidation = () => {
             let valid = true
             const appError = {
                 title: '',
@@ -51,8 +50,7 @@ function EditTask(props) {
                 changeError(appError)
             }
             return valid
-        }
-    }, [task])
+    }
 
 
     const onEditTask = useCallback( async (e) => {
@@ -66,33 +64,33 @@ function EditTask(props) {
     }, [])
 
 
-    const changeTitle = useCallback((e) => {
-        changeTask((task) => ({
+    const changeTitle = (e) => {
+        changeTask({
             ...task,
             title: e.target.value
-        }))
-    },[])
+        })
+    }
 
-    const changeDescription = useCallback((e) => {
-        changeTask((task) => ({
+    const changeDescription = (e) => {
+        changeTask({
             ...task,
             description: e.target.value
-        }))
-    },[])
+        })
+    }
 
-    const changePriority = useCallback((e) => {
-        changeTask((task)=> ({
+    const changePriority = (e) => {
+        changeTask({
             ...task,
             priority: e.target.value
-        }))
-    },[])
+        })
+    }
 
-    const changeDate = useCallback((value) => {
-        changeTask((task)=> ({
+    const changeDate = (value) => {
+        changeTask({
             ...task,
             dueDate: value
-        }))
-    },[])
+        })
+    }
 
     const updateTask = async () => {
         const res = await fetch(`${apiUrl}/api/v1/tasks/${task.id}`, {

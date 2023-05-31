@@ -28,8 +28,7 @@ function NewTask() {
     dueDate: '',
   })
 
-  const onValidation = useMemo(() => {
-    return () => {
+  const onValidation = () => {
       let valid = true
       const appError = {
         title: '',
@@ -49,8 +48,7 @@ function NewTask() {
         changeError(appError)
       }
       return valid
-    }
-  }, [task])
+  }
 
 
   const onCreateTask = useCallback(async (e) => {
@@ -60,33 +58,33 @@ function NewTask() {
     }
   },[onValidation])
 
-  const onChangeTitle = useCallback((e) => {
-    changeTask((task)=> ({
+  const onChangeTitle =(e) => {
+    changeTask({
       ...task,
       title: e.target.value,
-    }))
-  },[])
+    })
+  }
 
-  const onChangeDescription = useCallback((e) => {
-    changeTask((task)=> ({
+  const onChangeDescription = (e) => {
+    changeTask({
       ...task,
       description: e.target.value,
-    }))
-  },[])
+    })
+  }
 
-  const onChangePriority = useCallback((e) => {
-    changeTask((task)=> ({
+  const onChangePriority = (e) => {
+    changeTask({
       ...task,
       priority: e.target.value,
-    }))
-  },[])
+    })
+  }
 
-  const onChangeDate = useCallback((value) => {
-    changeTask((task)=>({
+  const onChangeDate =(value) => {
+    changeTask({
       ...task,
       dueDate: value,
-    }))
-  },[])
+    })
+  }
 
   const postTask = async () => {
     const res = await fetch(`${apiUrl}/api/v1/tasks`, {
@@ -100,7 +98,6 @@ function NewTask() {
         due_date: task.dueDate,
       }),
     })
-
     const json = await res.json()
     if (res.ok) {
       history.push('/dashboard')

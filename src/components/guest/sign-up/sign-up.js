@@ -30,8 +30,7 @@ function SignUp() {
     password: '',
   })
 
-  const onValidate = useMemo(() => {
-    return () => {
+  const onValidate = () => {
       let valid = true
       const newError = {
         firstName: '',
@@ -63,8 +62,7 @@ function SignUp() {
         changeError(newError)
       }
       return valid
-    }
-  },[user])
+  }
 
   const onSignUp = useCallback(async (e) => {
     e.preventDefault()
@@ -73,33 +71,33 @@ function SignUp() {
     }
   },[onValidate])
 
-  const onChangeFirstName = useCallback((e) => {
-    changeUser((user) => ({
+  const onChangeFirstName = (e) => {
+    changeUser({
       ...user,
       firstName: e.target.value
-    }))
-  },[])
+    })
+  }
 
-  const onChangeLastName = useCallback((e) => {
-    changeUser((user) => ({
+  const onChangeLastName = (e) => {
+    changeUser({
       ...user,
       lastName: e.target.value
-    }))
-  },[])
+    })
+  }
 
-  const onChangeEmail = useCallback((e) => {
-    changeUser((user) => ({
+  const onChangeEmail = (e) => {
+    changeUser({
       ...user,
       email: e.target.value
-    }))
-  },[])
+    })
+  }
 
-  const onChangePassword = useCallback((e) => {
-    changeUser((user) => ({
+  const onChangePassword = (e) => {
+    changeUser({
       ...user,
       password: e.target.value
-    }))
-  },[])
+    })
+  }
 
   const handleFile = (e) => {
     setFile(e.target.files[0])

@@ -31,27 +31,20 @@ function Dashboard(props) {
   }, [fieldType, orderAsc])
 
 
-  const sortByTitle = useMemo(() => {
-    return () => {
+  const sortByTitle = () => {
       setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
       setFieldType('title')
-    }
-  }, [orderAsc])
+  }
 
-  const sortByPriority = useMemo( () => {
-    return () => {
+  const sortByPriority = () => {
       setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
       setFieldType('priority')
-    }
-  }, [orderAsc])
+  }
 
-  const sortByDueDate = useMemo(() => {
-    return () => {
+  const sortByDueDate =() => {
       setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
       setFieldType('due_date')
-    }
-  }, [orderAsc])
-
+  }
 
   const onChangePagination = (_, page) => {
     setPage(page)

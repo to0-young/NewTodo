@@ -20,8 +20,7 @@ function ForgotPassword() {
   })
   const [errorMsg, setErrorMsg] = React.useState()
 
-  const onValidate = useMemo( () => {
-    return () => {
+  const onValidate = () => {
       let valid = true
       const appError = {
         email: '',
@@ -35,7 +34,6 @@ function ForgotPassword() {
       }
       return valid
     }
-  },[user])
 
 
   const onForgot = useCallback(async (e) => {
@@ -45,12 +43,12 @@ function ForgotPassword() {
     }
   }, [onValidate])
 
-  const onChangeEmail = useCallback((e) => {
-    changeUser((user) => ({
+  const onChangeEmail =(e) => {
+    changeUser({
       ...user,
       email: e.target.value,
-    }))
-  }, [])
+    })
+  }
 
   const onForget = async () => {
     const res = await fetch(`${apiUrl}/api/v1/forget_passwords`, {

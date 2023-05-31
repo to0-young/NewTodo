@@ -52,19 +52,19 @@ function SignIn(props) {
     }
   },[onValidate])
 
-  const onChangeEmail = useCallback((e) => {
-    changeUser((user) => ({
+  const onChangeEmail = (e) => {
+    changeUser({
       ...user,
       email: e.target.value,
-    }))
-  },[])
+    })
+  }
 
-  const onChangePassword = useCallback((e) => {
-    changeUser((user)=>({
+  const onChangePassword =(e) => {
+    changeUser({
       ...user,
       password: e.target.value,
-    }))
-  },[])
+    })
+  }
 
   const onLogIn = async () => {
     const res = await fetch(`${apiUrl}/api/v1/sessions`, {
