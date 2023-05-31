@@ -31,26 +31,27 @@ function EditTask(props) {
         dueDate: '',
     })
 
-    const onValidation = () => {
-            let valid = true
-            const appError = {
-                title: '',
-                priority: '',
-                dueDate: '',
-            }
-            if (task.title.length < 3 ) {
-                valid = false
-                appError.title = 'Sorry, your title is missing'
-            }
-            if (task.priority.length < 1 ) {
-                valid = false
-                appError.priority = 'Sorry your priority is missing'
-            }
-            if (!valid) {
-                changeError(appError)
-            }
-            return valid
-    }
+    const onValidation = useMemo (() => {
+        let valid = true
+        const appError = {
+            title: "",
+            priority: "",
+            dueDate: "",
+        }
+        if (task.title.length < 3) {
+            valid = false
+            appError.title = "Sorry, your title is missing"
+        }
+        if (task.priority.length < 1) {
+            valid = false
+            appError.priority = "Sorry your priority is missing"
+        }
+        if (!valid) {
+            changeError(appError)
+        }
+        return valid
+    }, [task.title, task.priority])
+
 
 
     const onEditTask = useCallback( async (e) => {
@@ -59,44 +60,45 @@ function EditTask(props) {
         }
     },[onValidation])
 
+
     useEffect(() => {
         getTask()
     }, [])
 
 
-    const changeTitle = (e) => {
-        changeTask({
+    const changeTitle = useCallback((e) => {
+        changeError((task) => ({
             ...task,
-            title: e.target.value
-        })
-    }
+            title: e.target.value,
+        }))
+    }, [])
 
-    const changeDescription = (e) => {
-        changeTask({
+    const changeDescription = useCallback((e) => {
+        changeTask((task)=> ({
             ...task,
             description: e.target.value
-        })
-    }
+        }))
+    },[])
 
-    const changePriority = (e) => {
-        changeTask({
+    const changePriority = useCallback((e) => {
+        changeTask((task)=> ({
             ...task,
             priority: e.target.value
-        })
-    }
+        }))
+    },[])
 
-    const changeDate = (value) => {
-        changeTask({
+    const changeDate = useCallback((value) => {
+        changeTask((task)=> ({
             ...task,
             dueDate: value
-        })
-    }
+        }))
+    },[])
 
-    const updateTask = async () => {
+    const updateTask = useCallback(async () => {
         const res = await fetch(`${apiUrl}/api/v1/tasks/${task.id}`, {
-            method: 'PATCH',
-            credentials: 'include',
-            headers: {'Content-Type': 'application/json'},
+            method: "PATCH",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 title: task.title,
                 description: task.description,
@@ -106,25 +108,29 @@ function EditTask(props) {
         })
         const json = await res.json()
         if (res.ok) {
-            history.push('/dashboard')
-            alert('Task updated')
+            history.push("/dashboard")
+            alert("Task updated")
             return json
         }
-    }
+    }, [task.id, task.title, task.description, task.priority, task.dueDate, history]);
 
 
-    const getTask = async () => {
+
+    const getTask = useCallback(async () => {
         const res = await fetch(`${apiUrl}/api/v1/tasks/${params.id}`, {
-            method: 'GET',
-            credentials: 'include',
-            headers: {'Content-Type': 'application/json'},
+            method: "GET",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
         })
         const json = await res.json()
         if (res.ok) {
             props.getTaskSuccess(json)
-            changeTask({...json, dueDate: json.due_date})
+            changeTask((task) => ({
+                ...json,
+                dueDate: json.due_date,
+            }))
         }
-    }
+    }, [params.id, props.getTaskSuccess])
 
     if (received === false) return <Spinner/>
 

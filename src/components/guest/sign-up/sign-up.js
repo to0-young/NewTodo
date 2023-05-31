@@ -10,6 +10,8 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera'
 import Stack from '@mui/material/Stack'
 
 function SignUp() {
+
+
   const history = useHistory()
 
   const [file, setFile] = React.useState()
@@ -30,7 +32,8 @@ function SignUp() {
     password: '',
   })
 
-  const onValidate = () => {
+  const onValidate = useMemo(() => {
+    return () => {
       let valid = true
       const newError = {
         firstName: '',
@@ -38,17 +41,17 @@ function SignUp() {
         email: '',
         password: '',
       }
-      if (user.firstName.length < 3 || user.firstName.length > 15 ) {
+      if (user.firstName.length < 3 || user.firstName.length > 15) {
         valid = false
         newError.firstName = 'Your first name should be between 3 and 15 characters'
       }
 
-      if (user.lastName.length < 3  || user.lastName.length > 15 ) {
+      if (user.lastName.length < 3 || user.lastName.length > 15) {
         valid = false
         newError.lastName = 'Your last name should be between 3 and 15 characters'
       }
 
-      if (user.email.length < 8 || user.email.length > 30 ) {
+      if (user.email.length < 8 || user.email.length > 30) {
         valid = false
         newError.email = 'Your email should be between 8 and 30 characters'
       }
@@ -62,7 +65,9 @@ function SignUp() {
         changeError(newError)
       }
       return valid
-  }
+    }
+  }, [user])
+
 
   const onSignUp = useCallback(async (e) => {
     e.preventDefault()
@@ -71,33 +76,33 @@ function SignUp() {
     }
   },[onValidate])
 
-  const onChangeFirstName = (e) => {
+  const onChangeFirstName = useCallback((e) => {
     changeUser({
       ...user,
       firstName: e.target.value
     })
-  }
+  },[user])
 
-  const onChangeLastName = (e) => {
+  const onChangeLastName = useCallback((e) => {
     changeUser({
       ...user,
       lastName: e.target.value
     })
-  }
+  },[user])
 
-  const onChangeEmail = (e) => {
+  const onChangeEmail = useCallback((e) => {
     changeUser({
       ...user,
       email: e.target.value
     })
-  }
+  },[user])
 
-  const onChangePassword = (e) => {
+  const onChangePassword = useCallback((e) => {
     changeUser({
       ...user,
       password: e.target.value
     })
-  }
+  },[user])
 
   const handleFile = (e) => {
     setFile(e.target.files[0])
@@ -143,7 +148,7 @@ function SignUp() {
     }
     return json
   }
-
+  console.log("render SingUp")
   return (
     <div className='sign-up'>
       <form onSubmit={onSignUp} className='sign-up__form'>

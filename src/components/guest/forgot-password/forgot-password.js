@@ -20,20 +20,20 @@ function ForgotPassword() {
   })
   const [errorMsg, setErrorMsg] = React.useState()
 
-  const onValidate = () => {
-      let valid = true
-      const appError = {
-        email: '',
-      }
-      if (user.email.length < 16) {
-        valid = false
-        appError.email = 'Sorry your email is too short'
-      }
-      if (!valid) {
-        changeError(appError)
-      }
-      return valid
+  const onValidate = useMemo(() => {
+    let valid = true
+    const appError = {
+      email: '',
     }
+    if (user.email.length < 16) {
+      valid = false
+      appError.email = 'Sorry your email is too short'
+    }
+    if (!valid) {
+      changeError(appError)
+    }
+    return valid
+  }, [user.email])
 
 
   const onForgot = useCallback(async (e) => {
@@ -42,6 +42,7 @@ function ForgotPassword() {
       await onForget()
     }
   }, [onValidate])
+
 
   const onChangeEmail =(e) => {
     changeUser({

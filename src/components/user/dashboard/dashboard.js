@@ -23,12 +23,10 @@ function Dashboard(props) {
   const [orderAsc, setOrderAsc] = useState('asc')
   const [fieldType, setFieldType] = useState('title')
 
-  const buildIcon = useMemo(() => {
-    return (field) => {
-      if (field === fieldType)
-        return orderAsc === 'asc' ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />
-    }
-  }, [fieldType, orderAsc])
+  const buildIcon = (field) => {
+    if (field === fieldType) return orderAsc === 'asc' ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />
+    return null
+  }
 
 
   const sortByTitle = () => {

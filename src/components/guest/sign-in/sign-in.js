@@ -23,48 +23,46 @@ function SignIn(props) {
   })
   const [errorMsg, setErrorMsg] = React.useState()
 
-  const onValidate = useMemo(() => {
-    return () => {
-      let valid = true
-      const appError = {
-        email: '',
-        password: '',
-      }
-      if (user.email.length < 8) {
-        valid = false
-        appError.email = 'Sorry your email is too short'
-      }
-      if (user.password.length < 1) {
-        valid = false
-        appError.password = 'Sorry your password is too short'
-      }
-      if (!valid) {
-        changeError(appError)
-      }
-      return valid
+  const onValidate = () => {
+    let valid = true
+    const appError = {
+      email: '',
+      password: '',
     }
-  }, [user])
+    if (user.email.length < 8) {
+      valid = false
+      appError.email = 'Sorry your email is too short'
+    }
+    if (user.password.length < 1) {
+      valid = false
+      appError.password = 'Sorry your password is too short'
+    }
+    if (!valid) {
+      changeError(appError)
+    }
+    return valid
+  }
 
   const onSignIn = useCallback(async (e) => {
     e.preventDefault()
     if (onValidate()) {
       await onLogIn()
     }
-  },[onValidate])
+  }, [onValidate])
 
-  const onChangeEmail = (e) => {
+  const onChangeEmail = useCallback((e) => {
     changeUser({
       ...user,
       email: e.target.value,
     })
-  }
+  }, [user])
 
-  const onChangePassword =(e) => {
+  const onChangePassword = useCallback((e) => {
     changeUser({
       ...user,
       password: e.target.value,
     })
-  }
+  }, [user])
 
   const onLogIn = async () => {
     const res = await fetch(`${apiUrl}/api/v1/sessions`, {

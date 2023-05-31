@@ -20,7 +20,7 @@ function NewPassword() {
     confirmationPassword: '',
   })
 
-  const onValidate = () => {
+  const onValidate = useMemo(() => {
     let valid = true
     const setError = {
       password: '',
@@ -35,7 +35,7 @@ function NewPassword() {
       changeError(setError)
     }
     return valid
-  }
+  },[user.password])
 
   const onForgot = useCallback(async (e) => {
     e.preventDefault()
