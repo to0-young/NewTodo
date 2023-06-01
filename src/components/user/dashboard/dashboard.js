@@ -178,7 +178,7 @@ function Dashboard(props) {
       </table>
 
       <div className='pagination'>
-        <Pagination age={page} variant='outlined' color='primary' count={pagesCount} onChange={onChangePagination} />
+        <Pagination page={page} variant='outlined' color='primary' count={pagesCount} onChange={onChangePagination} />
       </div>
     </div>
   )

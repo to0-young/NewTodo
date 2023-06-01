@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react'
+import React, {useCallback, useEffect, useMemo} from 'react'
 import '../chat/chat.css'
 import Button from '@mui/material/Button'
 import { connect, useSelector } from 'react-redux'
@@ -7,11 +7,12 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import SendIcon from '@mui/icons-material/Send'
 import logo from '../../../images/log.jpeg'
 import actionCreator from '../../../services/store/action-creator'
+import ReactScrollableFeed from 'react-scrollable-feed'
+
 
 const Messages = () => {
   const [messages, setMessages] = React.useState([])
   const [msg, setMsg] = React.useState('')
-  const bottomRef = React.useRef(null)
   const session = useSelector((state) => state.session.details)
   const user = useSelector((state) => state.session.details.user)
 
@@ -104,17 +105,10 @@ const Messages = () => {
     })
   }
 
-  const now = new Date()
-  const formattedTime = `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const endElement = bottomRef.current
-      if (!endElement) return
-      endElement.scrollIntoView({ block: 'start', behavior: 'auto' })
-    }, 100)
-    return () => clearTimeout(timer)
-  }, [messages])
+  const formattedTime = useMemo(() => {
+    const now = new Date()
+    return `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`
+  }, [])
 
 
   const clickNotify = (msg) => {
@@ -139,6 +133,7 @@ const Messages = () => {
     }
   }
 
+
   return (
     <div className='chat'>
       <div className='chat__apt'>
@@ -147,6 +142,7 @@ const Messages = () => {
         </div>
 
         <div className='chat__apt-messages'>
+        <ReactScrollableFeed>
           {messages.map((message, index) => (
             <div className={message.user_id === session.user.id ? 'chat__apt-myMessage' : 'chat__apt-message'} key={`chat__apt-message-${index}`}>
               {message.user_id === session.user.id && (
@@ -167,9 +163,9 @@ const Messages = () => {
                 </span>
               </p>
 
-              <div ref={bottomRef}></div>
             </div>
           ))}
+        </ReactScrollableFeed>
         </div>
       </div>
 
