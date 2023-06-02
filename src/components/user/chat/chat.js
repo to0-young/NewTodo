@@ -143,9 +143,6 @@ const Messages = () => {
     return () => clearTimeout(timer)
   }, [messages])
 
-
-
-  
   return (
     <div className='chat'>
       <div className='chat__apt'>

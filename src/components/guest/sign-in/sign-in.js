@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react'
+import React, {useCallback, useEffect, useMemo} from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './sign-in.css'
@@ -12,6 +12,8 @@ import { apiUrl } from '../../../exp-const/constants'
 function SignIn(props) {
   const history = useHistory()
 
+
+
   const [user, changeUser] = React.useState({
     email: '',
     password: '',
@@ -22,6 +24,19 @@ function SignIn(props) {
     password: '',
   })
   const [errorMsg, setErrorMsg] = React.useState()
+
+
+  // useEffect(() => {
+  //   const storedEmail = localStorage.getItem('email')
+  //   const storedPassword = localStorage.getItem('password')
+  //
+  //   if (storedEmail && storedPassword) {
+  //     setUser({
+  //       email: storedEmail,
+  //       password: storedPassword,
+  //     })
+  //   }
+  // }, [])
 
   const onValidate = () => {
     let valid = true
@@ -82,6 +97,9 @@ function SignIn(props) {
     } else {
       setErrorMsg(json.message)
     }
+
+    // localStorage.setItem('email', user.email)
+    // localStorage.setItem('password', user.password)
     return json
   }
 

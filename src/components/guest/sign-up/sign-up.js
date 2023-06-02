@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react'
+import React, {useCallback, useEffect, useMemo} from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './sign-up.css'
@@ -31,6 +31,21 @@ function SignUp() {
     email: '',
     password: '',
   })
+
+  // useEffect(() => {
+  //   const storedFirstName = localStorage.getItem('firstName')
+  //   const storedLastName = localStorage.getItem('lastName')
+  //   const storedEmail = localStorage.getItem('email')
+  //
+  //   if (storedFirstName && storedLastName && storedEmail) {
+  //     changeUser({
+  //       firstName: storedFirstName,
+  //       lastName: storedLastName,
+  //       email: storedEmail,
+  //     })
+  //   }
+  // }, [])
+
 
   const onValidate = useMemo(() => {
     return () => {
@@ -146,9 +161,13 @@ function SignUp() {
       setDisabled(false)
       setFetched(false)
     }
+        // localStorage.setItem('firstName', user.firstName)
+        // localStorage.setItem('lastName', user.lastName)
+        // localStorage.setItem('email', user.email)
     return json
   }
-  console.log("render SingUp")
+
+
   return (
     <div className='sign-up'>
       <form onSubmit={onSignUp} className='sign-up__form'>
