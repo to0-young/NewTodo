@@ -13,6 +13,7 @@ import ReactScrollableFeed from 'react-scrollable-feed'
 const Messages = () => {
   const [messages, setMessages] = React.useState([])
   const [msg, setMsg] = React.useState('')
+  const bottomRef = React.useRef(null)
   const session = useSelector((state) => state.session.details)
   const user = useSelector((state) => state.session.details.user)
 
@@ -133,7 +134,18 @@ const Messages = () => {
     }
   }
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const endElement = bottomRef.current
+      if (!endElement) return
+      endElement.scrollIntoView({ block: 'start', behavior: 'auto' })
+    }, 100)
+    return () => clearTimeout(timer)
+  }, [messages])
 
+
+
+  
   return (
     <div className='chat'>
       <div className='chat__apt'>
@@ -142,7 +154,7 @@ const Messages = () => {
         </div>
 
         <div className='chat__apt-messages'>
-        <ReactScrollableFeed>
+        {/*<ReactScrollableFeed>*/}
           {messages.map((message, index) => (
             <div className={message.user_id === session.user.id ? 'chat__apt-myMessage' : 'chat__apt-message'} key={`chat__apt-message-${index}`}>
               {message.user_id === session.user.id && (
@@ -162,10 +174,10 @@ const Messages = () => {
                   {new Date(message.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </span>
               </p>
-
+              <div ref={bottomRef}></div>
             </div>
           ))}
-        </ReactScrollableFeed>
+        {/*</ReactScrollableFeed>*/}
         </div>
       </div>
 

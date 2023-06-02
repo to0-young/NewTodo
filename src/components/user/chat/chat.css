@@ -39,6 +39,7 @@
 }
 
 .chat__apt-messages {
+  overflow-y: scroll;
   padding: 0 5px;
   margin: 1px 1px 10px 1px;
   width: 500px;
