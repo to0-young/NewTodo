@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useCallback, useEffect, useMemo} from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './sign-in.css'
@@ -12,6 +12,8 @@ import { apiUrl } from '../../../exp-const/constants'
 function SignIn(props) {
   const history = useHistory()
 
+
+
   const [user, changeUser] = React.useState({
     email: '',
     password: '',
@@ -23,13 +25,25 @@ function SignIn(props) {
   })
   const [errorMsg, setErrorMsg] = React.useState()
 
+
+  // useEffect(() => {
+  //   const storedEmail = localStorage.getItem('email')
+  //   const storedPassword = localStorage.getItem('password')
+  //
+  //   if (storedEmail && storedPassword) {
+  //     setUser({
+  //       email: storedEmail,
+  //       password: storedPassword,
+  //     })
+  //   }
+  // }, [])
+
   const onValidate = () => {
     let valid = true
     const appError = {
       email: '',
       password: '',
     }
-
     if (user.email.length < 8) {
       valid = false
       appError.email = 'Sorry your email is too short'
@@ -43,24 +57,27 @@ function SignIn(props) {
     }
     return valid
   }
-  const onSignIn = async (e) => {
+
+  const onSignIn = useCallback(async (e) => {
     e.preventDefault()
     if (onValidate()) {
       await onLogIn()
     }
-  }
-  const onChangeEmail = (e) => {
+  }, [onValidate])
+
+  const onChangeEmail = useCallback((e) => {
     changeUser({
       ...user,
       email: e.target.value,
     })
-  }
-  const onChangePassword = (e) => {
+  }, [user])
+
+  const onChangePassword = useCallback((e) => {
     changeUser({
       ...user,
       password: e.target.value,
     })
-  }
+  }, [user])
 
   const onLogIn = async () => {
     const res = await fetch(`${apiUrl}/api/v1/sessions`, {
@@ -80,6 +97,9 @@ function SignIn(props) {
     } else {
       setErrorMsg(json.message)
     }
+
+    // localStorage.setItem('email', user.email)
+    // localStorage.setItem('password', user.password)
     return json
   }
 

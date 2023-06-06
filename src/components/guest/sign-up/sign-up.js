@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useCallback, useEffect, useMemo} from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './sign-up.css'
@@ -10,6 +10,8 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera'
 import Stack from '@mui/material/Stack'
 
 function SignUp() {
+
+
   const history = useHistory()
 
   const [file, setFile] = React.useState()
@@ -30,71 +32,92 @@ function SignUp() {
     password: '',
   })
 
-  const onValidate = () => {
-    let valid = true
-    const newError = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-    }
+  // useEffect(() => {
+  //   const storedFirstName = localStorage.getItem('firstName')
+  //   const storedLastName = localStorage.getItem('lastName')
+  //   const storedEmail = localStorage.getItem('email')
+  //
+  //   if (storedFirstName && storedLastName && storedEmail) {
+  //     changeUser({
+  //       firstName: storedFirstName,
+  //       lastName: storedLastName,
+  //       email: storedEmail,
+  //     })
+  //   }
+  // }, [])
 
-    if (user.firstName.length < 3 || user.firstName.length > 15 ) {
-      valid = false
-      newError.firstName = 'Your first name should be between 3 and 15 characters'
-    }
 
-    if (user.lastName.length < 3  || user.lastName.length > 15 ) {
-      valid = false
-      newError.lastName = 'Your last name should be between 3 and 15 characters'
-    }
+  const onValidate = useMemo(() => {
+    return () => {
+      let valid = true
+      const newError = {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+      }
+      if (user.firstName.length < 3 || user.firstName.length > 15) {
+        valid = false
+        newError.firstName = 'Your first name should be between 3 and 15 characters'
+      }
 
-    if (user.email.length < 8 || user.email.length > 30 ) {
-      valid = false
-      newError.email = 'Your email should be between 8 and 30 characters'
-    }
+      if (user.lastName.length < 3 || user.lastName.length > 15) {
+        valid = false
+        newError.lastName = 'Your last name should be between 3 and 15 characters'
+      }
 
-    if (user.password.length < 1) {
-      valid = false
-      newError.password = 'Sorry your password is too short'
-    }
+      if (user.email.length < 8 || user.email.length > 30) {
+        valid = false
+        newError.email = 'Your email should be between 8 and 30 characters'
+      }
 
-    if (!valid) {
-      changeError(newError)
-    }
-    return valid
-  }
+      if (user.password.length < 1) {
+        valid = false
+        newError.password = 'Sorry your password is too short'
+      }
 
-  const onSignUp = async (e) => {
+      if (!valid) {
+        changeError(newError)
+      }
+      return valid
+    }
+  }, [user])
+
+
+  const onSignUp = useCallback(async (e) => {
     e.preventDefault()
     if (onValidate()) {
       await createUser()
     }
-  }
+  },[onValidate])
 
-  const onChangeFirstName = (e) => {
-    const newFirst = Object.assign({}, user, { firstName: e.target.value })
-    changeUser(newFirst)
-  }
+  const onChangeFirstName = useCallback((e) => {
+    changeUser({
+      ...user,
+      firstName: e.target.value
+    })
+  },[user])
 
-  const onChangeLastName = (e) => {
+  const onChangeLastName = useCallback((e) => {
     changeUser({
       ...user,
-      lastName: e.target.value,
+      lastName: e.target.value
     })
-  }
-  const onChangeEmail = (e) => {
+  },[user])
+
+  const onChangeEmail = useCallback((e) => {
     changeUser({
       ...user,
-      email: e.target.value,
+      email: e.target.value
     })
-  }
-  const onChangePassword = (e) => {
+  },[user])
+
+  const onChangePassword = useCallback((e) => {
     changeUser({
       ...user,
-      password: e.target.value,
+      password: e.target.value
     })
-  }
+  },[user])
 
   const handleFile = (e) => {
     setFile(e.target.files[0])
@@ -138,8 +161,12 @@ function SignUp() {
       setDisabled(false)
       setFetched(false)
     }
+        // localStorage.setItem('firstName', user.firstName)
+        // localStorage.setItem('lastName', user.lastName)
+        // localStorage.setItem('email', user.email)
     return json
   }
+
 
   return (
     <div className='sign-up'>
@@ -147,8 +174,16 @@ function SignUp() {
         <h2>Sign up</h2>
 
         <Stack direction='row' alignItems='center' spacing={2}>
-          <IconButton color='primary' aria-label='upload picture' component='label'>
-            <input hidden accept='image/*,.png,.jpg,.gif,.web' type='file' onChange={handleFile} />
+          <IconButton
+            color='primary'
+            aria-label='upload picture'
+            component='label'
+          >
+            <input
+              hidden accept='image/*,.png,.jpg,.gif,.web'
+              type='file'
+              onChange={handleFile}
+            />
             <PhotoCamera />
           </IconButton>
         </Stack>

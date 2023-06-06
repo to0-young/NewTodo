@@ -1,6 +1,6 @@
 import * as React from 'react'
 import './dashboard.css'
-import { useEffect, useState } from 'react'
+import {useEffect, useMemo, useState} from 'react'
 import { connect, useSelector } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 import Spinner from '../../reusable/spinner'
@@ -17,6 +17,8 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 function Dashboard(props) {
   const tasks = useSelector((state) => state.task.list)
   const fetched = useSelector((state) => state.task.fetched)
+  const [page, setPage] = useState(1)
+  const [pagesCount, setPagesCount] = useState()
 
   const [orderAsc, setOrderAsc] = useState('asc')
   const [fieldType, setFieldType] = useState('title')
@@ -26,23 +28,21 @@ function Dashboard(props) {
     return null
   }
 
+
   const sortByTitle = () => {
-    setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
-    setFieldType('title')
+      setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
+      setFieldType('title')
   }
 
   const sortByPriority = () => {
-    setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
-    setFieldType('priority')
+      setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
+      setFieldType('priority')
   }
 
-  const sortByDueDate = () => {
-    setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
-    setFieldType('due_date')
+  const sortByDueDate =() => {
+      setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
+      setFieldType('due_date')
   }
-
-  const [page, setPage] = useState(1)
-  const [pagesCount, setPagesCount] = useState()
 
   const onChangePagination = (_, page) => {
     setPage(page)
@@ -178,7 +178,7 @@ function Dashboard(props) {
       </table>
 
       <div className='pagination'>
-        <Pagination age={page} variant='outlined' color='primary' count={pagesCount} onChange={onChangePagination} />
+        <Pagination page={page} variant='outlined' color='primary' count={pagesCount} onChange={onChangePagination} />
       </div>
     </div>
   )

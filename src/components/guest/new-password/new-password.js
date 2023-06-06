@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useCallback, useMemo} from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './new-password.css'
@@ -20,31 +20,29 @@ function NewPassword() {
     confirmationPassword: '',
   })
 
-  const onValidate = () => {
+  const onValidate = useMemo(() => {
     let valid = true
     const setError = {
       password: '',
       confirmationPassword: '',
     }
-
     if (user.password.length < 6 || user.password !== user.confirmationPassword) {
       valid = false
       setError.password = 'Sorry your password is too short'
       setError.confirmationPassword = 'Sorry your password confirm is too short'
     }
-
     if (!valid) {
       changeError(setError)
     }
     return valid
-  }
+  },[user.password])
 
-  const onForgot = async (e) => {
+  const onForgot = useCallback(async (e) => {
     e.preventDefault()
     if (onValidate()) {
       await updateNewPassword()
     }
-  }
+  }, [onValidate])
 
   const onChangePassword = (e) => {
     changeUser({
@@ -53,90 +51,89 @@ function NewPassword() {
     })
   }
 
-  const onChangeConfirmationPassword = (e) => {
-    changeUser({
-      ...user,
-      confirmationPassword: e.target.value,
-    })
-  }
-
-  const updateNewPassword = async () => {
-    const searchParams = new URLSearchParams(history.location.search)
-    const recoveryToken = Object.fromEntries(searchParams).recovery_token
-    const res = await fetch(`${apiUrl}/api/v1/users`, {
-      method: 'PATCH',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json', Authorization: recoveryToken },
-      body: JSON.stringify({
-        password: user.password,
-        password_confirmation: user.confirmationPassword,
-      }),
-    })
-
-    const json = await res.json()
-    if (res.ok) {
-      alert('Your password has been successfully changed')
-      history.push('/login')
-      return json
+    const onChangeConfirmationPassword = (e) => {
+      changeUser({
+        ...user,
+        confirmationPassword: e.target.value,
+      })
     }
-  }
 
-  return (
-    <div className='new-password'>
-      <form onSubmit={onForgot} className='new-password__form'>
-        <h2>New password</h2>
+    const updateNewPassword = async () => {
+      const searchParams = new URLSearchParams(history.location.search)
+      const recoveryToken = Object.fromEntries(searchParams).recovery_token
+      const res = await fetch(`${apiUrl}/api/v1/users`, {
+        method: 'PATCH',
+        credentials: 'include',
+        headers: {'Content-Type': 'application/json', Authorization: recoveryToken},
+        body: JSON.stringify({
+          password: user.password,
+          password_confirmation: user.confirmationPassword,
+        }),
+      })
+      const json = await res.json()
+      if (res.ok) {
+        alert('Your password has been successfully changed')
+        history.push('/login')
+        return json
+      }
+    }
 
-        <TextField
-          helperText={error.password}
-          error={'' !== error.password}
-          value={user.password}
-          onChange={onChangePassword}
-          className='forgot-new__password'
-          id='standard-basic'
-          type='password'
-          label='New Password'
-          variant='standard'
-          fullWidth
-        />
+    return (
+      <div className='new-password'>
+        <form onSubmit={onForgot} className='new-password__form'>
+          <h2>New password</h2>
 
-        <br />
+          <TextField
+            helperText={error.password}
+            error={'' !== error.password}
+            value={user.password}
+            onChange={onChangePassword}
+            className='forgot-new__password'
+            id='standard-basic'
+            type='password'
+            label='New Password'
+            variant='standard'
+            fullWidth
+          />
 
-        <TextField
-          helperText={error.confirmationPassword}
-          error={'' !== error.confirmationPassword}
-          value={user.confirmationPassword}
-          onChange={onChangeConfirmationPassword}
-          className='forgot-password__confirmation'
-          id='standard-basic'
-          type='password'
-          label='Password Confirmation'
-          variant='standard'
-          fullWidth
-        />
+          <br/>
 
-        <br />
+          <TextField
+            helperText={error.confirmationPassword}
+            error={'' !== error.confirmationPassword}
+            value={user.confirmationPassword}
+            onChange={onChangeConfirmationPassword}
+            className='forgot-password__confirmation'
+            id='standard-basic'
+            type='password'
+            label='Password Confirmation'
+            variant='standard'
+            fullWidth
+          />
 
-        <Button type={'submit'} variant='contained' onClick={onForgot} color='info'>
-          save
-        </Button>
+          <br/>
 
-        <br />
-        <br />
+          <Button type={'submit'} variant='contained' onClick={onForgot} color='info'>
+            save
+          </Button>
 
-        <Link className='new-password__account' to='/sign_up'>
-          Create new account ?
-        </Link>
+          <br/>
+          <br/>
 
-        <br />
+          <Link className='new-password__account' to='/sign_up'>
+            Create new account ?
+          </Link>
 
-        <Link className='new-password__back' to='/login'>
-          Back to login
-        </Link>
+          <br/>
 
-        <br />
-      </form>
-    </div>
-  )
+          <Link className='new-password__back' to='/login'>
+            Back to login
+          </Link>
+
+          <br/>
+        </form>
+      </div>
+    )
 }
 
 const ConnectedNewPassword = connect(null, actionCreator)(NewPassword)

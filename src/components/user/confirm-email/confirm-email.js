@@ -20,11 +20,11 @@ function ConfirmEmail(props) {
         'Content-Type': 'application/json',
       },
     })
-
     const json = await getSessions.json()
     if (getSessions.status === 401) return props.getSessionError()
     props.getSessionSuccess(json)
   }
+
 
   const confirmEmail = async () => {
     const searchParams = new URLSearchParams(history.location.search)
@@ -37,7 +37,6 @@ function ConfirmEmail(props) {
         email_confirmed: true,
       }),
     })
-
     const json = await res.json()
     if (res.ok) {
       await fetchSession()
@@ -48,7 +47,6 @@ function ConfirmEmail(props) {
       return json
     }
   }
-
   return null
 }
 

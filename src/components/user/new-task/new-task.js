@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 import { apiUrl } from '../../../exp-const/constants'
+import {useCallback, useMemo} from "react";
 
 function NewTask() {
   const history = useHistory()
@@ -28,36 +29,36 @@ function NewTask() {
   })
 
   const onValidation = () => {
-    let valid = true
-    const appError = {
-      title: '',
-      priority: '',
-      dueDate: '',
-    }
+      let valid = true
+      const appError = {
+        title: '',
+        priority: '',
+        dueDate: '',
+      }
+      if (task.title.length < 3 || task.title.length > 20) {
+        valid = false
+        appError.title = 'Sorry, your title should be between 3 and 20 characters'
+      }
+      if (task.priority.length < 1) {
+        valid = false
+        appError.priority = 'Sorry your priority is missing'
+      }
 
-    if (task.title.length < 3 || task.title.length > 20) {
-      valid = false
-      appError.title = 'Sorry, your title should be between 3 and 20 characters'
-    }
-    if (task.priority.length < 1) {
-      valid = false
-      appError.priority = 'Sorry your priority is missing'
-    }
-
-    if (!valid) {
-      changeError(appError)
-    }
-    return valid
+      if (!valid) {
+        changeError(appError)
+      }
+      return valid
   }
 
-  const onCreateTask = async (e) => {
+
+  const onCreateTask = useCallback(async (e) => {
     e.preventDefault()
     if (onValidation()) {
       await postTask()
     }
-  }
+  },[onValidation])
 
-  const onChangeTitle = (e) => {
+  const onChangeTitle =(e) => {
     changeTask({
       ...task,
       title: e.target.value,
@@ -78,7 +79,7 @@ function NewTask() {
     })
   }
 
-  const onChangeDate = (value) => {
+  const onChangeDate =(value) => {
     changeTask({
       ...task,
       dueDate: value,
@@ -97,7 +98,6 @@ function NewTask() {
         due_date: task.dueDate,
       }),
     })
-
     const json = await res.json()
     if (res.ok) {
       history.push('/dashboard')
