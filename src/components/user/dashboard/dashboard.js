@@ -1,6 +1,6 @@
 import * as React from 'react'
 import './dashboard.css'
-import {useEffect, useMemo, useState} from 'react'
+import {useEffect,  useState} from 'react'
 import { connect, useSelector } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 import Spinner from '../../reusable/spinner'

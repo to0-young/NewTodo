@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react'
+import React from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './new-password.css'
@@ -20,7 +20,7 @@ function NewPassword() {
     confirmationPassword: '',
   })
 
-  const onValidate = useMemo(() => {
+  const onValidate = () => {
     let valid = true
     const setError = {
       password: '',
@@ -35,14 +35,14 @@ function NewPassword() {
       changeError(setError)
     }
     return valid
-  },[user.password])
+  }
 
-  const onForgot = useCallback(async (e) => {
+  const onForgot = async (e) => {
     e.preventDefault()
     if (onValidate()) {
       await updateNewPassword()
     }
-  }, [onValidate])
+  }
 
   const onChangePassword = (e) => {
     changeUser({

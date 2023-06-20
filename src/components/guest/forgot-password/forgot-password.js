@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react'
+import React  from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './forgot-password.css'
@@ -20,7 +20,7 @@ function ForgotPassword() {
   })
   const [errorMsg, setErrorMsg] = React.useState()
 
-  const onValidate = useMemo(() => {
+  const onValidate = () => {
     let valid = true
     const appError = {
       email: '',
@@ -33,15 +33,15 @@ function ForgotPassword() {
       changeError(appError)
     }
     return valid
-  }, [user.email])
+  }
 
 
-  const onForgot = useCallback(async (e) => {
+  const onForgot = async (e) => {
     e.preventDefault()
     if (onValidate()) {
       await onForget()
     }
-  }, [onValidate])
+  }
 
 
   const onChangeEmail =(e) => {

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo} from 'react'
+import React, {useCallback,  useMemo} from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './sign-up.css'
@@ -32,19 +32,6 @@ function SignUp() {
     password: '',
   })
 
-  // useEffect(() => {
-  //   const storedFirstName = localStorage.getItem('firstName')
-  //   const storedLastName = localStorage.getItem('lastName')
-  //   const storedEmail = localStorage.getItem('email')
-  //
-  //   if (storedFirstName && storedLastName && storedEmail) {
-  //     changeUser({
-  //       firstName: storedFirstName,
-  //       lastName: storedLastName,
-  //       email: storedEmail,
-  //     })
-  //   }
-  // }, [])
 
 
   const onValidate = useMemo(() => {

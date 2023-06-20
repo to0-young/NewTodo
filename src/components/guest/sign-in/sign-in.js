@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo} from 'react'
+import React  from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import './sign-in.css'
@@ -26,17 +26,6 @@ function SignIn(props) {
   const [errorMsg, setErrorMsg] = React.useState()
 
 
-  // useEffect(() => {
-  //   const storedEmail = localStorage.getItem('email')
-  //   const storedPassword = localStorage.getItem('password')
-  //
-  //   if (storedEmail && storedPassword) {
-  //     setUser({
-  //       email: storedEmail,
-  //       password: storedPassword,
-  //     })
-  //   }
-  // }, [])
 
   const onValidate = () => {
     let valid = true
@@ -58,26 +47,26 @@ function SignIn(props) {
     return valid
   }
 
-  const onSignIn = useCallback(async (e) => {
+  const onSignIn = async (e) => {
     e.preventDefault()
     if (onValidate()) {
       await onLogIn()
     }
-  }, [onValidate])
+  }
 
-  const onChangeEmail = useCallback((e) => {
+  const onChangeEmail = (e) => {
     changeUser({
       ...user,
       email: e.target.value,
     })
-  }, [user])
+  }
 
-  const onChangePassword = useCallback((e) => {
+  const onChangePassword = (e) => {
     changeUser({
       ...user,
       password: e.target.value,
     })
-  }, [user])
+  }
 
   const onLogIn = async () => {
     const res = await fetch(`${apiUrl}/api/v1/sessions`, {
@@ -98,8 +87,6 @@ function SignIn(props) {
       setErrorMsg(json.message)
     }
 
-    // localStorage.setItem('email', user.email)
-    // localStorage.setItem('password', user.password)
     return json
   }
 

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo} from 'react'
+import React, {useEffect} from 'react'
 import '../chat/chat.css'
 import Button from '@mui/material/Button'
 import { connect, useSelector } from 'react-redux'
@@ -7,7 +7,6 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import SendIcon from '@mui/icons-material/Send'
 import logo from '../../../images/log.jpeg'
 import actionCreator from '../../../services/store/action-creator'
-import ReactScrollableFeed from 'react-scrollable-feed'
 
 
 const Messages = () => {
@@ -80,7 +79,7 @@ const Messages = () => {
     setMsg(e.target.value)
   }
 
-  const handleSubmit = useCallback(async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     const body = e.target.message.value
@@ -96,7 +95,7 @@ const Messages = () => {
       }),
     })
     setMsg('')
-  },[msg])
+  }
 
   const handleMessageDelete = async (message) => {
     const res = await fetch(`${apiUrl}/messages/${message}`, {
@@ -106,10 +105,10 @@ const Messages = () => {
     })
   }
 
-  const formattedTime = useMemo(() => {
+  const formattedTime = () => {
     const now = new Date()
     return `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`
-  }, [])
+  }
 
 
   const clickNotify = (msg) => {
