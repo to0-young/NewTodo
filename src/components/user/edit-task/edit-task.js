@@ -8,7 +8,7 @@ import Button from '@mui/material/Button'
 import {connect, useSelector} from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 import {useHistory, useParams} from 'react-router-dom'
-import {useCallback, useEffect, useMemo} from 'react'
+import { useEffect } from 'react'
 import Spinner from '../../reusable/spinner'
 import {apiUrl} from '../../../exp-const/constants'
 
@@ -31,7 +31,7 @@ function EditTask(props) {
         dueDate: '',
     })
 
-    const onValidation = useMemo (() => {
+    const onValidation =  () => {
         let valid = true
         const appError = {
             title: "",
@@ -50,15 +50,14 @@ function EditTask(props) {
             changeError(appError)
         }
         return valid
-    }, [task.title, task.priority])
+    }
 
 
-
-    const onEditTask = useCallback( async (e) => {
+    const onEditTask =  async (e) => {
         e.preventDefault()
         if (onValidation()) {
         }
-    },[onValidation])
+    }
 
 
     useEffect(() => {
@@ -66,35 +65,35 @@ function EditTask(props) {
     }, [])
 
 
-    const changeTitle = useCallback((e) => {
-        changeError((task) => ({
+    const changeTitle = (e) => {
+        changeTask({
             ...task,
             title: e.target.value,
-        }))
-    }, [])
+        })
+    }
 
-    const changeDescription = useCallback((e) => {
-        changeTask((task)=> ({
+    const changeDescription = (e) => {
+        changeTask({
             ...task,
             description: e.target.value
-        }))
-    },[])
+        })
+    }
 
-    const changePriority = useCallback((e) => {
-        changeTask((task)=> ({
+    const changePriority = (e) => {
+        changeTask({
             ...task,
             priority: e.target.value
-        }))
-    },[])
+        })
+    }
 
-    const changeDate = useCallback((value) => {
-        changeTask((task)=> ({
+    const changeDate = (value) => {
+        changeTask({
             ...task,
             dueDate: value
-        }))
-    },[])
+        })
+    }
 
-    const updateTask = useCallback(async () => {
+    const updateTask = async () => {
         const res = await fetch(`${apiUrl}/api/v1/tasks/${task.id}`, {
             method: "PATCH",
             credentials: "include",
@@ -112,11 +111,11 @@ function EditTask(props) {
             alert("Task updated")
             return json
         }
-    }, [task.id, task.title, task.description, task.priority, task.dueDate, history]);
+    }
 
 
 
-    const getTask = useCallback(async () => {
+    const getTask = async () => {
         const res = await fetch(`${apiUrl}/api/v1/tasks/${params.id}`, {
             method: "GET",
             credentials: "include",
@@ -130,7 +129,7 @@ function EditTask(props) {
                 dueDate: json.due_date,
             }))
         }
-    }, [params.id, props.getTaskSuccess])
+    }
 
     if (received === false) return <Spinner/>
 
