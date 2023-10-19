@@ -15,8 +15,8 @@ function SignIn(props) {
 
 
   const [user, changeUser] = React.useState({
-    email: '',
-    password: '',
+    email: '74.boyko@gmail.com',
+    password: 'Dior5580',
   })
 
   const [error, changeError] = React.useState({
