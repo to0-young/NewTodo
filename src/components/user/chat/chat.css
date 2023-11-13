@@ -16,9 +16,10 @@
 
 .chat__apt-messageHeader {
   height: 10%;
-  width: 100%;
+  width: 50%;
   text-align: center;
-  padding: 5px;
+  border-radius: 15px;
+  background-color: #90f3dc;
 }
 
 .chat__messageForm {
