@@ -150,30 +150,33 @@ const Messages = () => {
         </div>
 
         <div className='chat__apt-messages'>
-        {/*<ReactScrollableFeed>*/}
-          {messages.map((message, index) => (
-            <div className={message.user_id === session.user.id ? 'chat__apt-myMessage' : 'chat__apt-message'} key={`chat__apt-message-${index}`}>
-              {message.user_id === session.user.id && (
-                <DeleteIcon className='chat__apt-btn' onClick={() => handleMessageDelete(message.id)}>
-                  Delete
-                </DeleteIcon>
-              )}
+          {messages.map((message, index) => {
+            if (!message.user) {
+              return null;
+            }
+            return (
+              <div className={message.user_id === session.user.id ? 'chat__apt-myMessage' : 'chat__apt-message'} key={`chat__apt-message-${index}`}>
+                {message.user_id === session.user.id && (
+                  <DeleteIcon className='chat__apt-btn' onClick={() => handleMessageDelete(message.id)}>
+                    Delete
+                  </DeleteIcon>
+                )}
 
-              <div className='chat__avatar'>
-                <img className='chat__apt-userAva' src={message.user.avatar.url} alt='avatar' />
-                <div className='chat__userName'>{message.user.first_name}</div>
+                <div className='chat__avatar'>
+                    <img className='chat__apt-userAva' src={message.user.avatar.url} alt='avatar' />
+                  <div className='chat__userName'>{message.user.first_name}</div>
+                </div>
+
+                <p>
+                  {message.body}
+                  <span className='chat__apt-time'>
+            {new Date(message.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          </span>
+                </p>
+                <div ref={bottomRef}></div>
               </div>
-
-              <p>
-                {message.body}
-                <span className='chat__apt-time'>
-                  {new Date(message.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </span>
-              </p>
-              <div ref={bottomRef}></div>
-            </div>
-          ))}
-        {/*</ReactScrollableFeed>*/}
+            );
+          })}
         </div>
       </div>
 
