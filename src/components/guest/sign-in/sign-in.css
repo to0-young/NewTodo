@@ -16,6 +16,10 @@
   text-decoration: none;
   color: forestgreen;
 }
+.sign-in__google {
+  padding: 10px;
+  margin: 15px;
+}
 
 @media (max-width: 769px) {
   .sign-in {
