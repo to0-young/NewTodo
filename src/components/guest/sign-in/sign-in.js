@@ -8,10 +8,11 @@ import Stack from '@mui/material/Stack'
 import { connect } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 import { apiUrl } from '../../../exp-const/constants'
-
+import { GoogleLogin } from '@react-oauth/google'
+import { jwtDecode } from "jwt-decode"
+import axios from 'axios'
 function SignIn(props) {
   const history = useHistory()
-
 
 
   const [user, changeUser] = React.useState({
@@ -25,7 +26,7 @@ function SignIn(props) {
   })
   const [errorMsg, setErrorMsg] = React.useState()
 
-
+const [googleUser, setGoogleUser] = React.useState({})
 
   const onValidate = () => {
     let valid = true
@@ -72,13 +73,14 @@ function SignIn(props) {
     const res = await fetch(`${apiUrl}/api/v1/sessions`, {
       method: 'POST',
       credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
         email: user.email,
         password: user.password,
       }),
     })
-
     const json = await res.json()
     if (res.ok) {
       props.getSessionSuccess(json)
@@ -86,9 +88,36 @@ function SignIn(props) {
     } else {
       setErrorMsg(json.message)
     }
-
     return json
   }
+
+
+
+  const handleGoogleLogin = async (data) => {
+    const res = await fetch(`${apiUrl}/api/v1/google`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        google: {
+                  email: data.email,
+                  google_id: data.sub,
+                }
+      }),
+    })
+    const json = await res.json()
+    if (res.ok) {
+      props.getSessionSuccess(json)
+      history.push('/dashboard')
+    } else {
+      setErrorMsg(json.message)
+    }
+    return json
+  }
+
+
 
   return (
     <div className='sign-in'>
@@ -108,7 +137,7 @@ function SignIn(props) {
           fullWidth
         />
 
-        <br />
+        <br/>
 
         <TextField
           helperText={error.password}
@@ -123,20 +152,20 @@ function SignIn(props) {
           fullWidth
         />
 
-        <br />
+        <br/>
         {errorMsg ? (
-          <Stack sx={{ width: '100%' }} spacing={2}>
+          <Stack sx={{width: '100%'}} spacing={2}>
             <Alert severity='error'>{errorMsg}</Alert>
           </Stack>
         ) : null}
 
-        <br />
+        <br/>
 
         <Button type={'submit'} variant='contained' color='info'>
           log in
         </Button>
 
-        <br />
+        <br/>
 
         <p className='sign-in__advice'>
           Don't have an account ?{' '}
@@ -148,6 +177,18 @@ function SignIn(props) {
         <Link className='sign-in__forgot' to='/passwords/recovery'>
           Forgot password ?
         </Link>
+
+        <div className='sign-in__google'>
+          <GoogleLogin
+            onSuccess={credentialResponse => {
+              const decodedCredentials = jwtDecode(credentialResponse.credential)
+              handleGoogleLogin(decodedCredentials)
+            }}
+            onError={() => {
+              console.log('Login Failed')
+            }}
+          />
+        </div>
       </form>
     </div>
   )
