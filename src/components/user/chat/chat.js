@@ -7,7 +7,6 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import SendIcon from '@mui/icons-material/Send'
 import logo from '../../../images/log.jpeg'
 import actionCreator from '../../../services/store/action-creator'
-import {fetchMessages, sendMessage} from "../../reusable/apiRequests";
 
 const Messages = () => {
   const [messages, setMessages] = React.useState([])
@@ -18,8 +17,19 @@ const Messages = () => {
   const ws = React.useRef(null)
 
   useEffect(() => {
+    const fetchMessages = async () => {
+      const res = await fetch(`${apiUrl}/messages`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+      })
+      if (res.ok) {
+        const data = await res.json()
+        setMessages(data)
+      }
+    }
 
-    fetchMessages(apiUrl, setMessages)
+    fetchMessages()
 
     ws.current = new WebSocket(`${apiUrlCable}/cable`)
     ws.current.onopen = () => {
@@ -69,10 +79,20 @@ const Messages = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
     const body = e.target.message.value
     e.target.message.value = ''
-      await sendMessage(apiUrl, body, session)
-      setMsg('')
+
+    const res = await fetch(`${apiUrl}/messages`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        body: msg,
+        first_name: session.user.first_name,
+      }),
+    })
+    setMsg('')
   }
 
   const handleMessageDelete = async (message) => {
@@ -125,35 +145,31 @@ const Messages = () => {
         <div className='chat__apt-messageHeader'>
           <h1>Messages</h1>
         </div>
-
         <div className='chat__apt-messages'>
-          {messages.map((message, index) => {
-            if (!message.user) {
-              return null;
-            }
-            return (
-              <div className={message.user_id === session.user.id ? 'chat__apt-myMessage' : 'chat__apt-message'} key={`chat__apt-message-${index}`}>
-                {message.user_id === session.user.id && (
-                  <DeleteIcon className='chat__apt-btn' onClick={() => handleMessageDelete(message.id)}>
-                    Delete
-                  </DeleteIcon>
-                )}
+        {/*<ReactScrollableFeed>*/}
+          {messages.map((message, index) => (
+            <div className={message.user_id === session.user.id ? 'chat__apt-myMessage' : 'chat__apt-message'} key={`chat__apt-message-${index}`}>
+              {message.user_id === session.user.id && (
+                <DeleteIcon className='chat__apt-btn' onClick={() => handleMessageDelete(message.id)}>
+                  Delete
+                </DeleteIcon>
+              )}
 
-                <div className='chat__avatar'>
-                    <img className='chat__apt-userAva' src={message.user.avatar.url} alt='avatar' />
-                  <div className='chat__userName'>{message.user.first_name}</div>
-                </div>
-
-                <p>
-                  {message.body}
-                  <span className='chat__apt-time'>
-            {new Date(message.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-          </span>
-                </p>
-                <div ref={bottomRef}></div>
+              <div className='chat__avatar'>
+                <img className='chat__apt-userAva' src={message.user.avatar.url} alt='avatar' />
+                <div className='chat__userName'>{message.user.first_name}</div>
               </div>
-            );
-          })}
+
+              <p>
+                {message.body}
+                <span className='chat__apt-time'>
+                  {new Date(message.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </span>
+              </p>
+              <div ref={bottomRef}></div>
+            </div>
+          ))}
+        {/*</ReactScrollableFeed>*/}
         </div>
       </div>
 

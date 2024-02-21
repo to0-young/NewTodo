@@ -10,12 +10,10 @@ import {updatePassword} from '../../reusable/apiRequests'
 
 function NewPassword() {
   const history = useHistory()
-
   const [user, changeUser] = React.useState({
     password: '',
     confirmationPassword: '',
   })
-
   const [error, changeError] = React.useState({
     password: '',
     confirmationPassword: '',
@@ -69,7 +67,6 @@ function NewPassword() {
       <div className='new-password'>
         <form onSubmit={onForgot} className='new-password__form'>
           <h2>New password</h2>
-
           <TextField
             helperText={error.password}
             error={'' !== error.password}
@@ -82,9 +79,7 @@ function NewPassword() {
             variant='standard'
             fullWidth
           />
-
           <br/>
-
           <TextField
             helperText={error.confirmationPassword}
             error={'' !== error.confirmationPassword}
@@ -97,26 +92,19 @@ function NewPassword() {
             variant='standard'
             fullWidth
           />
-
           <br/>
-
           <Button type={'submit'} variant='contained' onClick={onForgot} color='info'>
             save
           </Button>
-
           <br/>
           <br/>
-
           <Link className='new-password__account' to='/sign_up'>
             Create new account ?
           </Link>
-
           <br/>
-
           <Link className='new-password__back' to='/login'>
             Back to login
           </Link>
-
           <br/>
         </form>
       </div>
