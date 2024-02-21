@@ -9,7 +9,6 @@ import { connect } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 import { GoogleLogin } from '@react-oauth/google'
 import { jwtDecode } from "jwt-decode"
-// import axios from 'axios'
 import {loginUser, loginWithGoogle} from '../../reusable/apiRequests'
 function SignIn(props) {
   const history = useHistory()
