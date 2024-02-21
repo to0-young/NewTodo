@@ -59,7 +59,6 @@ function UserHeader(props) {
       <div className='header__section'>
         <div className='header__section_left'>
           <h2 className='todo__logo'>TODO</h2>
-
           {links.map((l) => (
             <div key={l.to} className='header__item header__button'>
               <Link className='header__link' to={l.to} onClick={handleLinkClick}>
@@ -68,7 +67,6 @@ function UserHeader(props) {
             </div>
           ))}
         </div>
-
         <div className='header__img'>
           <Button
             id='basic-button'

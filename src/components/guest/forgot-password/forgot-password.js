@@ -8,7 +8,7 @@ import Stack from '@mui/material/Stack'
 import { connect } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import { apiUrl } from '../../../exp-const/constants'
+import {forgetPassword} from '../../reusable/apiRequests'
 
 function ForgotPassword() {
   const [user, changeUser] = React.useState({
@@ -49,22 +49,7 @@ function ForgotPassword() {
   }
 
   const onForget = async () => {
-    const res = await fetch(`${apiUrl}/api/v1/forget_passwords`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: user.email,
-      }),
-    })
-
-    const json = await res.json()
-    if (res.ok) {
-      alert('We have sent you a password change request')
-    } else {
-      setErrorMsg(json.message)
-    }
-    return json
+    await forgetPassword(user, setErrorMsg)
   }
 
   return (

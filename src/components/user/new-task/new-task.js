@@ -19,7 +19,6 @@ function NewTask() {
     priority: 1,
     dueDate: new Date(),
   })
-
   const [error, changeError] = React.useState({
     title: '',
     description: '',
@@ -109,7 +108,6 @@ function NewTask() {
         <br />
         <h2>New Task</h2>
         <br />
-
         <TextField
           className='title'
           value={task.title}
