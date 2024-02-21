@@ -64,11 +64,23 @@ function SignIn(props) {
   }
 
   const onLogIn = async () => {
-    await loginUser(user, props, history, setErrorMsg)
-  }
-
-  const handleGoogleLogin = async (data) => {
-    await loginWithGoogle(data, props, history, setErrorMsg)
+    const res = await fetch(`${apiUrl}/api/v1/sessions`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: user.email,
+        password: user.password,
+      }),
+    })
+    const json = await res.json()
+    if (res.ok) {
+      props.getSessionSuccess(json)
+      history.push('/dashboard')
+    } else {
+      setErrorMsg(json.message)
+    }
+    return json
   }
 
   return (
@@ -87,7 +99,7 @@ function SignIn(props) {
           variant='standard'
           fullWidth
         />
-        <br/>
+        <br />
         <TextField
           helperText={error.password}
           error={'' !== error.password}
@@ -100,24 +112,23 @@ function SignIn(props) {
           variant='standard'
           fullWidth
         />
-        <br/>
+        <br />
         {errorMsg ? (
-          <Stack sx={{width: '100%'}} spacing={2}>
+          <Stack sx={{ width: '100%' }} spacing={2}>
             <Alert severity='error'>{errorMsg}</Alert>
           </Stack>
         ) : null}
-        <br/>
+        <br />
         <Button type={'submit'} variant='contained' color='info'>
           log in
         </Button>
-        <br/>
+        <br />
         <p className='sign-in__advice'>
           Don't have an account ?{' '}
           <Link className='sign-up__link' to='/sign_up'>
             Сreate one
           </Link>
         </p>
-
         <Link className='sign-in__forgot' to='/passwords/recovery'>
           Forgot password ?
         </Link>
@@ -133,6 +144,7 @@ function SignIn(props) {
             }}
           />
         </div>
+
       </form>
     </div>
   )

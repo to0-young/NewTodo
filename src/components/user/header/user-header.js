@@ -48,7 +48,6 @@ function UserHeader(props) {
     }
     return json
   }
-
   const links = [
     { to: '/dashboard', label: 'Dashboard' },
     { to: '/tasks/new', label: 'New task' },

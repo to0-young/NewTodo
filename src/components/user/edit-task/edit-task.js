@@ -16,21 +16,18 @@ function EditTask(props) {
   const params = useParams()
   const history = useHistory()
   const received = useSelector((state) => state.task.received)
-
   const [task, changeTask] = React.useState({
     title: '',
     description: '',
     priority: 1,
     dueDate: new Date(),
   })
-
   const [error, changeError] = React.useState({
     title: '',
     description: '',
     priority: '',
     dueDate: '',
   })
-
   const onValidation = () => {
     let valid = true
     const appError = {
@@ -61,6 +58,7 @@ function EditTask(props) {
   useEffect(() => {
     getTask()
   }, [])
+
 
   const changeTitle = (e) => {
     changeTask({
@@ -134,7 +132,6 @@ function EditTask(props) {
         <br/>
         <h2>Edit Task</h2>
         <br/>
-
         <TextField
           className='title'
           value={task.title}
@@ -147,10 +144,8 @@ function EditTask(props) {
           variant='standard'
           fullWidth
         />
-
         <br/>
         <br/>
-
         <TextField
           className='description'
           value={task.description}
@@ -160,10 +155,8 @@ function EditTask(props) {
           variant='standard'
           fullWidth
         />
-
         <br/>
         <br/>
-
         <TextField
           className='priority'
           value={task.priority}
@@ -178,7 +171,6 @@ function EditTask(props) {
         />
         <br/>
         <br/>
-
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DateTimePicker
             label='Due date'
@@ -189,7 +181,6 @@ function EditTask(props) {
             renderInput={(params) => <TextField {...params} />}
           />
         </LocalizationProvider>
-
         <br/>
         <Button
           type={'submit'}
@@ -200,7 +191,6 @@ function EditTask(props) {
         >
           save
         </Button>
-
         <br/>
       </form>
     </div>
