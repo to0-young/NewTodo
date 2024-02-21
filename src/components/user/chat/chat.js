@@ -7,7 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import SendIcon from '@mui/icons-material/Send'
 import logo from '../../../images/log.jpeg'
 import actionCreator from '../../../services/store/action-creator'
-
+import {fetchMessages, sendMessage} from "../../reusable/apiRequests";
 
 const Messages = () => {
   const [messages, setMessages] = React.useState([])
@@ -15,23 +15,11 @@ const Messages = () => {
   const bottomRef = React.useRef(null)
   const session = useSelector((state) => state.session.details)
   const user = useSelector((state) => state.session.details.user)
-
   const ws = React.useRef(null)
 
   useEffect(() => {
-    const fetchMessages = async () => {
-      const res = await fetch(`${apiUrl}/messages`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-      })
-      if (res.ok) {
-        const data = await res.json()
-        setMessages(data)
-      }
-    }
 
-    fetchMessages()
+    fetchMessages(apiUrl, setMessages)
 
     ws.current = new WebSocket(`${apiUrlCable}/cable`)
     ws.current.onopen = () => {
@@ -81,20 +69,10 @@ const Messages = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
     const body = e.target.message.value
     e.target.message.value = ''
-
-    const res = await fetch(`${apiUrl}/messages`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        body: msg,
-        first_name: session.user.first_name,
-      }),
-    })
-    setMsg('')
+      await sendMessage(apiUrl, body, session)
+      setMsg('')
   }
 
   const handleMessageDelete = async (message) => {
@@ -109,7 +87,6 @@ const Messages = () => {
     const now = new Date()
     return `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`
   }
-
 
   const clickNotify = (msg) => {
     if (Notification.permission === 'granted') {
@@ -189,7 +166,6 @@ const Messages = () => {
             onChange={handleMessageChange}
             placeholder='Write a message...'
           />
-
           <Button
             className='chat__messageButton'
             type='submit'

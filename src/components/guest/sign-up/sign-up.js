@@ -8,12 +8,10 @@ import Spinner from '../../reusable/spinner'
 import IconButton from '@mui/material/IconButton'
 import PhotoCamera from '@mui/icons-material/PhotoCamera'
 import Stack from '@mui/material/Stack'
+import {createUser} from '../../reusable/apiRequests'
 
 function SignUp() {
-
-
   const history = useHistory()
-
   const [file, setFile] = React.useState()
   const [disabled, setDisabled] = React.useState(false)
   const [fetched, setFetched] = React.useState(false)
@@ -31,8 +29,6 @@ function SignUp() {
     email: '',
     password: '',
   })
-
-
 
   const onValidate = useMemo(() => {
     return () => {
@@ -74,7 +70,7 @@ function SignUp() {
   const onSignUp = useCallback(async (e) => {
     e.preventDefault()
     if (onValidate()) {
-      await createUser()
+      await onCreateUser()
     }
   },[onValidate])
 
@@ -110,50 +106,9 @@ function SignUp() {
     setFile(e.target.files[0])
   }
 
-  const createUser = async () => {
-    setDisabled(true)
-    setFetched(true)
-
-    const formData = new FormData()
-    formData.append('avatar', file)
-    formData.append('first_name', user.firstName)
-    formData.append('last_name', user.lastName)
-    formData.append('password', user.password)
-    formData.append('email', user.email)
-
-    const res = await fetch(`${apiUrl}/api/v1/users`, {
-      method: 'POST',
-      credentials: 'include',
-      // headers: {'Content-Type': 'application/json'},
-      body: formData,
-    })
-    const json = await res.json()
-
-    if (res.ok) {
-      alert('Please confirm your email registration')
-      history.push('/login')
-    } else {
-      if (json.errors) {
-        const firstError = json.errors.first_name === undefined ? '' : json.errors.first_name[0],
-          lastError = json.errors.last_name === undefined ? '' : json.errors.last_name[0],
-          emailError = json.errors.email === undefined ? '' : json.errors.email[0],
-          passwordError = json.errors.password === undefined ? '' : json.errors.password[0]
-        changeError({
-          firstName: firstError,
-          lastName: lastError,
-          password: passwordError,
-          email: emailError,
-        })
-      }
-      setDisabled(false)
-      setFetched(false)
-    }
-        // localStorage.setItem('firstName', user.firstName)
-        // localStorage.setItem('lastName', user.lastName)
-        // localStorage.setItem('email', user.email)
-    return json
+  const onCreateUser = async () => {
+    await createUser(apiUrl, user, file, history, setDisabled, setFetched, changeError)
   }
-
 
   return (
     <div className='sign-up'>
