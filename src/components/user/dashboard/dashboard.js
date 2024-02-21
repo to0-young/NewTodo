@@ -28,7 +28,6 @@ function Dashboard(props) {
     return null
   }
 
-
   const sortByTitle = () => {
       setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
       setFieldType('title')
