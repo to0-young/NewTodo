@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
 import { GoogleLogin } from '@react-oauth/google'
 import { jwtDecode } from "jwt-decode"
-import axios from 'axios'
+// import axios from 'axios'
 import {loginUser, loginWithGoogle} from '../../reusable/apiRequests'
 function SignIn(props) {
   const history = useHistory()
@@ -76,7 +76,6 @@ function SignIn(props) {
     <div className='sign-in'>
       <form onSubmit={onSignIn} className='sign-in__form'>
         <h2>Sign in</h2>
-
         <TextField
           helperText={error.email}
           error={'' !== error.email}
@@ -125,7 +124,7 @@ function SignIn(props) {
         </Link>
 
         <div className='sign-in__google'>
-          <GoogleLogin
+          <GoogleLogin // using the button for logging Google
             onSuccess={credentialResponse => {
               const decodedCredentials = jwtDecode(credentialResponse.credential)
               handleGoogleLogin(decodedCredentials)
