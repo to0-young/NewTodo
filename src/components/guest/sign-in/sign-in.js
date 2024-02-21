@@ -64,24 +64,13 @@ function SignIn(props) {
   }
 
   const onLogIn = async () => {
-    const res = await fetch(`${apiUrl}/api/v1/sessions`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: user.email,
-        password: user.password,
-      }),
-    })
-    const json = await res.json()
-    if (res.ok) {
-      props.getSessionSuccess(json)
-      history.push('/dashboard')
-    } else {
-      setErrorMsg(json.message)
-    }
-    return json
-  }
+    await loginUser(user, props, history, setErrorMsg);
+  };
+
+  const handleGoogleLogin = async (data) => {
+    await loginWithGoogle(data, props, history, setErrorMsg);
+  };
+
 
   return (
     <div className='sign-in'>
