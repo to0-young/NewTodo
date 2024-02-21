@@ -7,26 +7,21 @@ import Alert from '@mui/material/Alert'
 import Stack from '@mui/material/Stack'
 import { connect } from 'react-redux'
 import actionCreator from '../../../services/store/action-creator'
-import { apiUrl } from '../../../exp-const/constants'
 import { GoogleLogin } from '@react-oauth/google'
 import { jwtDecode } from "jwt-decode"
 import axios from 'axios'
+import {loginUser, loginWithGoogle} from '../../reusable/apiRequests'
 function SignIn(props) {
   const history = useHistory()
-
-
   const [user, changeUser] = React.useState({
     email: '74.boyko@gmail.com',
-    password: '1',
+    password: 'Dior5580',
   })
-
   const [error, changeError] = React.useState({
     email: '',
     password: '',
   })
   const [errorMsg, setErrorMsg] = React.useState()
-
-const [googleUser, setGoogleUser] = React.useState({})
 
   const onValidate = () => {
     let valid = true
@@ -70,54 +65,12 @@ const [googleUser, setGoogleUser] = React.useState({})
   }
 
   const onLogIn = async () => {
-    const res = await fetch(`${apiUrl}/api/v1/sessions`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: user.email,
-        password: user.password,
-      }),
-    })
-    const json = await res.json()
-    if (res.ok) {
-      props.getSessionSuccess(json)
-      history.push('/dashboard')
-    } else {
-      setErrorMsg(json.message)
-    }
-    return json
+    await loginUser(user, props, history, setErrorMsg)
   }
-
-
 
   const handleGoogleLogin = async (data) => {
-    const res = await fetch(`${apiUrl}/api/v1/google`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        google: {
-                  email: data.email,
-                  google_id: data.sub,
-                }
-      }),
-    })
-    const json = await res.json()
-    if (res.ok) {
-      props.getSessionSuccess(json)
-      history.push('/dashboard')
-    } else {
-      setErrorMsg(json.message)
-    }
-    return json
+    await loginWithGoogle(data, props, history, setErrorMsg)
   }
-
-
 
   return (
     <div className='sign-in'>
@@ -136,9 +89,7 @@ const [googleUser, setGoogleUser] = React.useState({})
           variant='standard'
           fullWidth
         />
-
         <br/>
-
         <TextField
           helperText={error.password}
           error={'' !== error.password}
@@ -151,22 +102,17 @@ const [googleUser, setGoogleUser] = React.useState({})
           variant='standard'
           fullWidth
         />
-
         <br/>
         {errorMsg ? (
           <Stack sx={{width: '100%'}} spacing={2}>
             <Alert severity='error'>{errorMsg}</Alert>
           </Stack>
         ) : null}
-
         <br/>
-
         <Button type={'submit'} variant='contained' color='info'>
           log in
         </Button>
-
         <br/>
-
         <p className='sign-in__advice'>
           Don't have an account ?{' '}
           <Link className='sign-up__link' to='/sign_up'>
