@@ -13,14 +13,12 @@ import {useCallback, useMemo} from "react";
 
 function NewTask() {
   const history = useHistory()
-
   const [task, changeTask] = React.useState({
     title: '',
     description: '',
     priority: 1,
     dueDate: new Date(),
   })
-
   const [error, changeError] = React.useState({
     title: '',
     description: '',
@@ -49,7 +47,6 @@ function NewTask() {
       }
       return valid
   }
-
 
   const onCreateTask = useCallback(async (e) => {
     e.preventDefault()
@@ -111,7 +108,6 @@ function NewTask() {
         <br />
         <h2>New Task</h2>
         <br />
-
         <TextField
           className='title'
           value={task.title}
@@ -123,10 +119,8 @@ function NewTask() {
           variant='standard'
           fullWidth
         />
-
         <br />
         <br />
-
         <TextField
           className='description'
           value={task.description}
@@ -135,10 +129,8 @@ function NewTask() {
           variant='standard'
           fullWidth
         />
-
         <br />
         <br />
-
         <TextField
           className='priority'
           value={task.priority}
@@ -152,7 +144,6 @@ function NewTask() {
         />
         <br />
         <br />
-
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DateTimePicker
             label='Due date'
@@ -163,7 +154,6 @@ function NewTask() {
             renderInput={(params) => <TextField {...params} />}
           />
         </LocalizationProvider>
-
         <br />
         <Button type={'submit'} variant='contained' color='info'>
           create
