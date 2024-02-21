@@ -10,29 +10,22 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera'
 import Stack from '@mui/material/Stack'
 
 function SignUp() {
-
-
   const history = useHistory()
-
   const [file, setFile] = React.useState()
   const [disabled, setDisabled] = React.useState(false)
   const [fetched, setFetched] = React.useState(false)
-
   const [user, changeUser] = React.useState({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
   })
-
   const [error, changeError] = React.useState({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
   })
-
-
 
   const onValidate = useMemo(() => {
     return () => {
@@ -47,29 +40,24 @@ function SignUp() {
         valid = false
         newError.firstName = 'Your first name should be between 3 and 15 characters'
       }
-
       if (user.lastName.length < 3 || user.lastName.length > 15) {
         valid = false
         newError.lastName = 'Your last name should be between 3 and 15 characters'
       }
-
       if (user.email.length < 8 || user.email.length > 30) {
         valid = false
         newError.email = 'Your email should be between 8 and 30 characters'
       }
-
       if (user.password.length < 1) {
         valid = false
         newError.password = 'Sorry your password is too short'
       }
-
       if (!valid) {
         changeError(newError)
       }
       return valid
     }
   }, [user])
-
 
   const onSignUp = useCallback(async (e) => {
     e.preventDefault()
@@ -113,7 +101,6 @@ function SignUp() {
   const createUser = async () => {
     setDisabled(true)
     setFetched(true)
-
     const formData = new FormData()
     formData.append('avatar', file)
     formData.append('first_name', user.firstName)
@@ -154,12 +141,10 @@ function SignUp() {
     return json
   }
 
-
   return (
     <div className='sign-up'>
       <form onSubmit={onSignUp} className='sign-up__form'>
         <h2>Sign up</h2>
-
         <Stack direction='row' alignItems='center' spacing={2}>
           <IconButton
             color='primary'
@@ -174,7 +159,6 @@ function SignUp() {
             <PhotoCamera />
           </IconButton>
         </Stack>
-
         <TextField
           helperText={error.firstName}
           error={'' !== error.firstName}
@@ -186,9 +170,7 @@ function SignUp() {
           variant='standard'
           fullWidth
         />
-
         <br />
-
         <TextField
           helperText={error.lastName}
           error={'' !== error.lastName}
@@ -200,9 +182,7 @@ function SignUp() {
           variant='standard'
           fullWidth
         />
-
         <br />
-
         <TextField
           helperText={error.email}
           error={'' !== error.email}
@@ -215,9 +195,7 @@ function SignUp() {
           variant='standard'
           fullWidth
         />
-
         <br />
-
         <TextField
           helperText={error.password}
           error={'' !== error.password}
@@ -230,18 +208,14 @@ function SignUp() {
           variant='standard'
           fullWidth
         />
-
         <br />
-
         <p className='sign-up__advice'>
           Have an account ?{' '}
           <Link className='sign-in__link' to='/'>
             Log in
           </Link>
         </p>
-
         <br />
-
         <Button
           type={'submit'}
           variant='contained'
@@ -250,7 +224,6 @@ function SignUp() {
         >
           create
         </Button>
-
         <br />
       </form>
     </div>

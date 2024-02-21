@@ -15,7 +15,6 @@ function UserHeader(props) {
   const history = useHistory()
   const session = useSelector((state) => state.session.details)
   const [isOpened, setOpened] = React.useState(false)
-
   const [anchorEl, setAnchorEl] = React.useState()
   const open = Boolean(anchorEl)
 
@@ -49,7 +48,6 @@ function UserHeader(props) {
     }
     return json
   }
-
   const links = [
     { to: '/dashboard', label: 'Dashboard' },
     { to: '/tasks/new', label: 'New task' },

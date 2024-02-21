@@ -28,7 +28,6 @@ function Dashboard(props) {
     return null
   }
 
-
   const sortByTitle = () => {
       setOrderAsc(orderAsc === 'asc' ? 'desc' : 'asc')
       setFieldType('title')
@@ -127,9 +126,7 @@ function Dashboard(props) {
               <span className='dashboard__table-title'>Title</span>
               <span className='dashboard__sort-icon'>{buildIcon('title')}</span>
             </th>
-
             <th>Description</th>
-
             <th className='dashboard__table-th' onClick={sortByPriority}>
               <span className='dashboard__table-priority'>Priority</span>
               <span className='dashboard__sort-icon'>{buildIcon('priority')}</span>
@@ -139,7 +136,6 @@ function Dashboard(props) {
               <span className='dashboard__table-due_date'>Due date</span>
               <span className='dashboard__sort-icon'>{buildIcon('due_date')}</span>
             </th>
-
             <th>Actions</th>
           </tr>
         </thead>
@@ -160,7 +156,6 @@ function Dashboard(props) {
                   <Link to={`/tasks/${row.id}`}>
                     <EditIcon />
                   </Link>
-
                   {row.completed ? (
                     <button className='dashboard__task-btn' onClick={donCompletedTask(row.id)}>
                       <Brightness1OutlinedIcon />
@@ -176,7 +171,6 @@ function Dashboard(props) {
           })}
         </tbody>
       </table>
-
       <div className='pagination'>
         <Pagination page={page} variant='outlined' color='primary' count={pagesCount} onChange={onChangePagination} />
       </div>

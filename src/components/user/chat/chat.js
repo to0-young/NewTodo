@@ -8,14 +8,12 @@ import SendIcon from '@mui/icons-material/Send'
 import logo from '../../../images/log.jpeg'
 import actionCreator from '../../../services/store/action-creator'
 
-
 const Messages = () => {
   const [messages, setMessages] = React.useState([])
   const [msg, setMsg] = React.useState('')
   const bottomRef = React.useRef(null)
   const session = useSelector((state) => state.session.details)
   const user = useSelector((state) => state.session.details.user)
-
   const ws = React.useRef(null)
 
   useEffect(() => {
@@ -110,7 +108,6 @@ const Messages = () => {
     return `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`
   }
 
-
   const clickNotify = (msg) => {
     if (Notification.permission === 'granted') {
       new Notification('New Message', {
@@ -148,7 +145,6 @@ const Messages = () => {
         <div className='chat__apt-messageHeader'>
           <h1>Messages</h1>
         </div>
-
         <div className='chat__apt-messages'>
         {/*<ReactScrollableFeed>*/}
           {messages.map((message, index) => (
@@ -186,7 +182,6 @@ const Messages = () => {
             onChange={handleMessageChange}
             placeholder='Write a message...'
           />
-
           <Button
             className='chat__messageButton'
             type='submit'

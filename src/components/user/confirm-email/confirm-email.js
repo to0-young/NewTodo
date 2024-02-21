@@ -25,7 +25,6 @@ function ConfirmEmail(props) {
     props.getSessionSuccess(json)
   }
 
-
   const confirmEmail = async () => {
     const searchParams = new URLSearchParams(history.location.search)
     const confirmToken = Object.fromEntries(searchParams).confirm_token

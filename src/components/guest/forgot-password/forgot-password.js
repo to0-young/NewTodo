@@ -14,7 +14,6 @@ function ForgotPassword() {
   const [user, changeUser] = React.useState({
     email: '',
   })
-
   const [error, changeError] = React.useState({
     email: '',
   })
@@ -35,14 +34,12 @@ function ForgotPassword() {
     return valid
   }
 
-
   const onForgot = async (e) => {
     e.preventDefault()
     if (onValidate()) {
       await onForget()
     }
   }
-
 
   const onChangeEmail =(e) => {
     changeUser({
@@ -74,12 +71,9 @@ function ForgotPassword() {
     <div className='forgot-password'>
       <form onSubmit={onForgot} className='forgot-password__form'>
         <LockOutlinedIcon></LockOutlinedIcon>
-
         <h2>Trouble logging in?</h2>
         <div>Enter your email,and we'll send you a link to get back into your account. </div>
-
         <br />
-
         <TextField
           helperText={error.email}
           error={'' !== error.email}
@@ -92,33 +86,25 @@ function ForgotPassword() {
           variant='outlined'
           fullWidth
         />
-
         <br />
-
         {errorMsg ? (
           <Stack sx={{ width: '100%' }} spacing={2}>
             <Alert severity='error'>{errorMsg}</Alert>
           </Stack>
         ) : null}
         <br />
-
         <Button type={'submit'} variant='contained' color='info'>
           send login link
         </Button>
-
         <br />
         <br />
-
         <Link className='forgot-password__account' to='/sign_up'>
           Link create new account
         </Link>
-
         <br />
-
         <Link className='forgot-password__back' to='/login'>
           Back to login
         </Link>
-
         <br />
       </form>
     </div>

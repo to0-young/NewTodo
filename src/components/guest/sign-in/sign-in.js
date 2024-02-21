@@ -11,21 +11,15 @@ import { apiUrl } from '../../../exp-const/constants'
 
 function SignIn(props) {
   const history = useHistory()
-
-
-
   const [user, changeUser] = React.useState({
     email: '74.boyko@gmail.com',
     password: 'Dior5580',
   })
-
   const [error, changeError] = React.useState({
     email: '',
     password: '',
   })
   const [errorMsg, setErrorMsg] = React.useState()
-
-
 
   const onValidate = () => {
     let valid = true
@@ -78,7 +72,6 @@ function SignIn(props) {
         password: user.password,
       }),
     })
-
     const json = await res.json()
     if (res.ok) {
       props.getSessionSuccess(json)
@@ -86,7 +79,6 @@ function SignIn(props) {
     } else {
       setErrorMsg(json.message)
     }
-
     return json
   }
 
@@ -94,7 +86,6 @@ function SignIn(props) {
     <div className='sign-in'>
       <form onSubmit={onSignIn} className='sign-in__form'>
         <h2>Sign in</h2>
-
         <TextField
           helperText={error.email}
           error={'' !== error.email}
@@ -107,9 +98,7 @@ function SignIn(props) {
           variant='standard'
           fullWidth
         />
-
         <br />
-
         <TextField
           helperText={error.password}
           error={'' !== error.password}
@@ -122,29 +111,23 @@ function SignIn(props) {
           variant='standard'
           fullWidth
         />
-
         <br />
         {errorMsg ? (
           <Stack sx={{ width: '100%' }} spacing={2}>
             <Alert severity='error'>{errorMsg}</Alert>
           </Stack>
         ) : null}
-
         <br />
-
         <Button type={'submit'} variant='contained' color='info'>
           log in
         </Button>
-
         <br />
-
         <p className='sign-in__advice'>
           Don't have an account ?{' '}
           <Link className='sign-up__link' to='/sign_up'>
             Сreate one
           </Link>
         </p>
-
         <Link className='sign-in__forgot' to='/passwords/recovery'>
           Forgot password ?
         </Link>
