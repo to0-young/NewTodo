@@ -134,13 +134,13 @@ function SignIn(props) {
         </Link>
 
         <div className='sign-in__google'>
-          <GoogleLogin // using the button for logging Google
+          <GoogleLogin
             onSuccess={credentialResponse => {
               const decodedCredentials = jwtDecode(credentialResponse.credential)
               handleGoogleLogin(decodedCredentials)
             }}
             onError={() => {
-              console.log('Login Failed')
+              console.log('Error Login Failed ')
             }}
           />
         </div>

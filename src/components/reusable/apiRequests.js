@@ -1,4 +1,3 @@
-// apiRequests.js
 import {apiUrl} from '../../exp-const/constants'
 
 export const loginUser = async (user, props, history, setErrorMsg) => {
