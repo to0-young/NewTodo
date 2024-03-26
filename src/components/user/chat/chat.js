@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react'
 import '../chat/chat.css'
 import Button from '@mui/material/Button'
-import { connect, useSelector } from 'react-redux'
-import { apiUrl, apiUrlCable } from '../../../exp-const/constants'
+import {connect, useSelector} from 'react-redux'
+import {apiUrl, apiUrlCable} from '../../../exp-const/constants'
 import DeleteIcon from '@mui/icons-material/Delete'
 import SendIcon from '@mui/icons-material/Send'
 import logo from '../../../images/log.jpeg'
@@ -21,7 +21,7 @@ const Messages = () => {
       const res = await fetch(`${apiUrl}/messages`, {
         method: 'GET',
         credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {'Content-Type': 'application/json'},
       })
       if (res.ok) {
         const data = await res.json()
@@ -86,7 +86,7 @@ const Messages = () => {
     const res = await fetch(`${apiUrl}/messages`, {
       method: 'POST',
       credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         body: msg,
         first_name: session.user.first_name,
@@ -99,7 +99,7 @@ const Messages = () => {
     const res = await fetch(`${apiUrl}/messages/${message}`, {
       method: 'DELETE',
       credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type': 'application/json'},
     })
   }
 
@@ -134,7 +134,7 @@ const Messages = () => {
     const timer = setTimeout(() => {
       const endElement = bottomRef.current
       if (!endElement) return
-      endElement.scrollIntoView({ block: 'start', behavior: 'auto' })
+      endElement.scrollIntoView({block: 'start', behavior: 'auto'})
     }, 100)
     return () => clearTimeout(timer)
   }, [messages])
@@ -146,35 +146,29 @@ const Messages = () => {
           <h1>Messages</h1>
         </div>
         <div className='chat__apt-messages'>
-        {/*<ReactScrollableFeed>*/}
           {messages.map((message, index) => (
-            <div className={message.user_id === session.user.id ? 'chat__apt-myMessage' : 'chat__apt-message'} key={`chat__apt-message-${index}`}>
-              {message.user_id === session.user.id && (
-                <DeleteIcon className='chat__apt-btn' onClick={() => handleMessageDelete(message.id)}>
-                  Delete
-                </DeleteIcon>
+            <div className={message.user_id === session.user.id ? 'chat__apt-myMessage' : 'chat__apt-message'}
+                 key={`chat__apt-message-${index}`}>
+              {message.user && message.user.avatar && (
+                <div className='chat__avatar'>
+                  <img className='chat__apt-userAva' src={message.user.avatar.url} alt='avatar'/>
+                  <div className='chat__userName'>{message.user.first_name}</div>
+                </div>
               )}
-
-              <div className='chat__avatar'>
-                <img className='chat__apt-userAva' src={message.user.avatar.url} alt='avatar' />
-                <div className='chat__userName'>{message.user.first_name}</div>
-              </div>
-
               <p>
                 {message.body}
                 <span className='chat__apt-time'>
-                  {new Date(message.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    {new Date(message.created_at).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}
                 </span>
               </p>
               <div ref={bottomRef}></div>
             </div>
           ))}
-        {/*</ReactScrollableFeed>*/}
         </div>
       </div>
 
       <div className='chat__messageForm'>
-        <form onSubmit={handleSubmit} style={{ display: 'flex', width: '100%' }}>
+        <form onSubmit={handleSubmit} style={{display: 'flex', width: '100%'}}>
           <input
             className='chat__messageInput'
             type='text'
@@ -186,7 +180,7 @@ const Messages = () => {
             className='chat__messageButton'
             type='submit'
             variant='contained'
-            endIcon={<SendIcon />}
+            endIcon={<SendIcon/>}
             disabled={!msg.trim()}
             color='info'
           >
